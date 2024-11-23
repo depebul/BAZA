@@ -154,7 +154,7 @@ CREATE TABLE CourseLessonMeetingTypes(
 
 CREATE TABLE CourseLessons(
     ModuleID INT,
-    LessonID INT,
+    LessonID INT PRIMARY KEY ,
     CourseID INT,
     LessonName VARCHAR(100) NOT NULL,
     LessonDescription VARCHAR(500),
@@ -167,16 +167,17 @@ CREATE TABLE CourseLessons(
     CourseLessonMeetingTypeID INT,
     IsTranslatedToPolish BIT,
     TranslatorID INT,
-    FOREIGN KEY (ModuleID) REFERENCES CourseModule (ModuleID),
+    FOREIGN KEY (ModuleID) REFERENCES CourseModules (ModuleID),
     FOREIGN KEY (CourseID) REFERENCES Courses (CourseID),
-    FOREIGN KEY (LessonLanguageID) REFERENCES Language (LanguageID),
-    FOREIGN KEY (CourseLessonMeetingTypeID) REFERENCES CourseLessonMeetingType (CourseLessonMeetingTypeID)
+    FOREIGN KEY (LessonLanguageID) REFERENCES Languages (LanguageID),
+    FOREIGN KEY (CourseLessonMeetingTypeID) REFERENCES CourseLessonMeetingTypes (CourseLessonMeetingTypeID),
     FOREIGN KEY (TranslatorID) REFERENCES Employees (EmployeeID),
 )
 
 CREATE TABLE CourseModulesPassed(
     StudentID INT,
     ModuleID INT,
+    PRIMARY KEY (StudentID, ModuleID),
     FOREIGN KEY (ModuleID) REFERENCES CourseModules (ModuleID),
     FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
 )
@@ -184,15 +185,15 @@ CREATE TABLE CourseModulesPassed(
 CREATE TABLE CourseLessonsPassed(
     StudentID INT,
     LessonID INT,
-    ModuleID INT,
+    PRIMARY KEY (StudentID, LessonID),
     FOREIGN KEY (LessonID) REFERENCES CourseLessons (LessonID),
-    FOREIGN KEY (ModuleID) REFERENCES CourseModules (ModuleID),
     FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
 )
 
 CREATE TABLE WebinarsPassed(
     StudentID INT,
-    ModuleID INT,
+    WebinarID INT,
+    PRIMARY KEY (StudentID, WebinarID),
     FOREIGN KEY (WebinarID) REFERENCES Webinars (WebinarID),
     FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
 )
@@ -208,7 +209,8 @@ CREATE TABLE OrderDetails(
     OrderID INT,
     AmountPaid MONEY NOT NULL,
     PaidDate DATE,
-    PostponementDate DATE
+    PostponementDate DATE,
+    FOREIGN KEY (OrderID) REFERENCES Orders (OrderID)
 )
 
 CREATE TABLE OrderWebinars(
