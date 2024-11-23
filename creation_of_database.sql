@@ -82,7 +82,7 @@ CREATE TABLE Webinars(
     WebinarName VARCHAR(100) NOT NULL,
     WebinarStartDate DATE NOT NULL,
     WebinarEndDate DATE NOT NULL,
-    WebinarDescription VARCHAR(500),
+    WebinarDescription VARCHAR(MAX),
     WebinarLanguageID INT,
     WebinarPrice MONEY,
     WebinarTranslatorID INT,
@@ -123,7 +123,7 @@ CREATE TABLE Courses(
     CourseID INT PRIMARY KEY,
     CourseName VARCHAR(100) NOT NULL,
     CourseModuleQuantity INT NOT NULL,
-    CourseDescription VARCHAR(500),
+    CourseDescription VARCHAR(MAX),
     CourseLanguageID INT,
     CoursePrice MONEY NOT NULL,
     FOREIGN KEY (CourseLanguageID) REFERENCES Languages (LanguageID),
@@ -138,7 +138,7 @@ CREATE TABLE CourseModules(
     CourseID INT,
     ModuleID INT PRIMARY KEY,
     ModuleName VARCHAR(100) NOT NULL,
-    ModuleDescription VARCHAR(500),
+    ModuleDescription VARCHAR(MAX),
     ModuleLanguageID INT,
     CourseModuleMeetingTypeID INT,
     CourseModuleLessonQuantity INT NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE CourseLessons(
     LessonID INT PRIMARY KEY ,
     CourseID INT,
     LessonName VARCHAR(100) NOT NULL,
-    LessonDescription VARCHAR(500),
+    LessonDescription VARCHAR(MAX),
     LessonLanguageID INT,
     LessonMeetingLink VARCHAR(100),
     LessonMeetingPlace VARCHAR(100),
@@ -167,11 +167,13 @@ CREATE TABLE CourseLessons(
     CourseLessonMeetingTypeID INT,
     IsTranslatedToPolish BIT,
     TranslatorID INT,
+    TeacherID INT,
     FOREIGN KEY (ModuleID) REFERENCES CourseModules (ModuleID),
     FOREIGN KEY (CourseID) REFERENCES Courses (CourseID),
     FOREIGN KEY (LessonLanguageID) REFERENCES Languages (LanguageID),
     FOREIGN KEY (CourseLessonMeetingTypeID) REFERENCES CourseLessonMeetingTypes (CourseLessonMeetingTypeID),
     FOREIGN KEY (TranslatorID) REFERENCES Employees (EmployeeID),
+    FOREIGN KEY (TeacherID) REFERENCES Employees (EmployeeID),
 )
 
 CREATE TABLE CourseModulesPassed(
@@ -220,13 +222,6 @@ CREATE TABLE OrderWebinars(
     FOREIGN KEY (WebinarID) REFERENCES Webinars (WebinarID)
 )
 
-CREATE TABLE OrderStudies(
-    StudiesID INT PRIMARY KEY,
-    OrderDetailID INT,
-    FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
-    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
-)
-
 CREATE TABLE OrderCourses(
     CourseID INT PRIMARY KEY,
     OrderDetailID INT,
@@ -234,3 +229,103 @@ CREATE TABLE OrderCourses(
     FOREIGN KEY (CourseID) REFERENCES Courses (CourseID)
 )
 
+CREATE TABLE Studies(
+    StudiesID INT PRIMARY KEY,
+    StudiesDescription VARCHAR(MAX),
+    StudiesName VARCHAR(100),
+    StudiesEntryFee MONEY,
+    StudiesStartDate DATE,
+    StudiesEndDate DATE
+)
+
+CREATE TABLE Syllabuses(
+    SyllabusID INT PRIMARY KEY,
+    StudiesID INT,
+    SemesterNumber INT NOT NULL,
+    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
+)
+
+CREATE TABLE Subjects(
+    SubjectID INT PRIMARY KEY,
+    SubjectName VARCHAR(100),
+    SubjectDescription VARCHAR(MAX),
+    SubjectsCount INT NOT NULL,
+    CoordinatorID INT,
+    SyllabusID INT,
+    FOREIGN KEY (CoordinatorID) REFERENCES Employees (EmployeeID),
+    FOREIGN KEY (SyllabusID) REFERENCES Syllabuses (SyllabusID)
+)
+
+CREATE TABLE StudiesLessonMeetingTypes(
+    StudiesLessonMeetingTypeID INT PRIMARY KEY,
+    StudiesLessonMeetingTypeName VARCHAR(50) NOT NULL
+)
+
+CREATE TABLE StudiesLessons(
+    StudiesID INT,
+    SubjectID INT,
+    LessonID INT PRIMARY KEY,
+    LessonName VARCHAR(100) NOT NULL,
+    LessonDescription VARCHAR(MAX),
+    LessonLanguageID INT,
+    LessonMeetingLink VARCHAR(100),
+    LessonMeetingPlace VARCHAR(100),
+    LessonMeetingDateStart DATE NOT NULL,
+    LessonMeetingDateEnd DATE NOT NULL,
+    LessonCapacity INT,
+    LessonGuestCapacity INT,
+    LessonPrice MONEY,
+    LessonGuestPrice MONEY,
+    CourseLessonMeetingTypeID INT,
+    IsTranslatedToPolish BIT,
+    TranslatorID INT,
+    TeacherID INT,
+    StudiesLessonMeetingTypeID INT,
+    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID),
+    FOREIGN KEY (SubjectID) REFERENCES Subjects (SubjectID),
+    FOREIGN KEY (LessonLanguageID) REFERENCES Languages (LanguageID),
+    FOREIGN KEY (CourseLessonMeetingTypeID) REFERENCES CourseLessonMeetingTypes (CourseLessonMeetingTypeID),
+    FOREIGN KEY (TranslatorID) REFERENCES Employees (EmployeeID),
+    FOREIGN KEY (TeacherID) REFERENCES Employees (EmployeeID),
+    FOREIGN KEY (StudiesLessonMeetingTypeID) REFERENCES StudiesLessonMeetingTypes (StudiesLessonMeetingTypeID),
+)
+
+CREATE TABLE StudiesLessonPassed(
+    StudentID INT,
+    LessonID INT,
+    PRIMARY KEY (StudentID, LessonID),
+    FOREIGN KEY (LessonID) REFERENCES StudiesLessons (LessonID),
+    FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
+)
+
+CREATE TABLE StudentStudies(
+    StudentID INT,
+    StudiesID INT,
+    StudentGrade INT,
+    PRIMARY KEY (StudentID, StudiesID),
+    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID),
+    FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
+)
+
+CREATE TABLE Internships(
+    InternshipID INT PRIMARY KEY,
+    InternshipCompany VARCHAR(100),
+    InternshipStartDate DATE,
+    StudiesID INT,
+    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
+)
+
+CREATE TABLE InternshipMeetingPassed(
+    StudentID INT,
+    InternshipID INT,
+    PRIMARY KEY (StudentID, InternshipID),
+    FOREIGN KEY (InternshipID) REFERENCES Internships (InternshipID),
+    FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
+)
+
+CREATE TABLE OrderStudies(
+    StudiesID INT PRIMARY KEY,
+    OrderDetailID INT,
+    FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
+    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
+)
