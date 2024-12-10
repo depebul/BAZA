@@ -209,8 +209,10 @@ CREATE TABLE WebinarsPassed(
 
 CREATE TABLE Orders(
     OrderID INT PRIMARY KEY,
+    UserID INT,
     OrderDate DATE NOT NULL,
     OrderPaymentLink VARCHAR(100) NOT NULL
+    FOREIGN KEY (UserID) REFERENCES Users (UserID)
 )
 
 CREATE TABLE OrderDetails(
