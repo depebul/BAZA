@@ -19,6 +19,13 @@ CREATE TABLE Languages
     LanguageName VARCHAR(50) NOT NULL
 );
 
+-- aktualne
+CREATE TABLE CurrencyRates(
+    CurrencyID INT PRIMARY KEY,
+    CurrencyName VARCHAR(100) NOT NULL,
+    RateToPLN MONEY NOT NULL
+);
+
 -- CREATE TABLE UserLanguage
 -- (
 --     UserID     INT,
@@ -210,9 +217,13 @@ CREATE TABLE OrderDetails(
     OrderDetailID INT PRIMARY KEY,
     OrderID INT,
     AmountPaid MONEY NOT NULL,
+    AmountToPay MONEY NOT NULL,
+    CurrencyID INT,
+    CurrencyRate MONEY,
     PaidDate DATE,
     PostponementDate DATE,
-    FOREIGN KEY (OrderID) REFERENCES Orders (OrderID)
+    FOREIGN KEY (OrderID) REFERENCES Orders (OrderID),
+    FOREIGN KEY (CurrencyID) REFERENCES CurrencyRates (CurrencyID)
 )
 
 CREATE TABLE OrderWebinars(
