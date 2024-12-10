@@ -340,3 +340,10 @@ CREATE TABLE OrderStudies(
     FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
     FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
 )
+
+CREATE TABLE RODOSigns (
+    UserID INT PRIMARY KEY,
+    IsSigned BIT NOT NULL,
+    SignDate Date,
+    FOREIGN KEY (UserID) REFERENCES Users (UserID)
+)
