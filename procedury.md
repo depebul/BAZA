@@ -1,6 +1,8 @@
  - AddUser - Dodaje nowego użytkownika do systemu.
  - UpdateUserProfile - Aktualizuje dane profilu użytkownika.
  - DeleteUser - Usuwa użytkownika z systemu.
+ - AddRole - Dodawanie użytkownikowi nowej roli
+ - RemoveRole - Usuwanie użytkownikowi roli
  - AddEvent - Dodaje nowe wydarzenie (webinar, kurs, studium).
  - UpdateEventDetails - Aktualizuje szczegóły wydarzenia.
  - DeleteEvent - Usuwa wydarzenie z systemu.
