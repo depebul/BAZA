@@ -1,10 +1,10 @@
-- Przechowywanie listy dostępnych webinarów, kursów i studiów.
-- Przechowywanie sylabusów i harmonogramów.
-- Przechowywanie szczegółów wydarzenia (np. daty, miejsca, linków do spotkań online).
-- Przechowywanie statusu zaliczeń (moduły kursowe, frekwencja na studiach).
-- Sprawdzanie statusu płatności.
-- Generowanie raportów finansowych (przychody dla każdego typu wydarzeń).
-- Wyświetlanie raportu liczby zapisanych osób.
-- Tworzenie list obecności oraz raportów dotyczących frekwencji.
-- Automatyczne weryfikowanie udziału w wydarzeniach online.
-- Filtrowanie po rodzaju (webinary, kursy, studia), formie (stacjonarne, online, hybrydowe), języku, dostępności miejsc, cenie.
+- **Przechowywanie listy dostępnych webinarów, kursów i studiów.**
+- **Przechowywanie sylabusów i harmonogramów.**
+- **Przechowywanie szczegółów wydarzenia** (np. daty, miejsca, linków do spotkań online).
+- **Przechowywanie statusu zaliczeń** (moduły kursowe, frekwencja na studiach).
+- **Sprawdzanie statusu płatności.**
+- **Generowanie raportów finansowych** (przychody dla każdego typu wydarzeń).
+- **Wyświetlanie raportu liczby zapisanych osób.**
+- **Tworzenie list obecności oraz raportów dotyczących frekwencji.**
+- **Automatyczne weryfikowanie udziału w wydarzeniach online.**
+- **Filtrowanie po rodzaju** (webinary, kursy, studia), formie (stacjonarne, online, hybrydowe), języku, dostępności miejsc, cenie.
