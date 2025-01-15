@@ -41,121 +41,303 @@ INNER JOIN
 -- View for viewing the list of registered participants for a lecturer's events
 CREATE VIEW RegisteredParticipants AS
 SELECT 
-    Events.EventID,
-    Events.EventName,
+    Webinars.WebinarID AS EventID,
+    Webinars.WebinarName AS EventName,
     Users.UserID,
     Users.UserName,
     Users.UserSurname
 FROM 
-    Events
+    Webinars
 INNER JOIN 
-    EventRegistrations ON Events.EventID = EventRegistrations.EventID
+    StudentBoughtWebinars ON Webinars.WebinarID = StudentBoughtWebinars.WebinarID
 INNER JOIN 
-    Users ON EventRegistrations.UserID = Users.UserID
+    Users ON StudentBoughtWebinars.StudentID = Users.UserID
 WHERE 
-    Events.LecturerID = CURRENT_USER;
+    Webinars.WebinarTeacherID = CURRENT_USER
+UNION
+SELECT 
+    Courses.CourseID AS EventID,
+    Courses.CourseName AS EventName,
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname
+FROM 
+    Courses
+INNER JOIN 
+    CourseModulesPassed ON Courses.CourseID = CourseModulesPassed.ModuleID
+INNER JOIN 
+    Users ON CourseModulesPassed.StudentID = Users.UserID
+WHERE 
+    Courses.CourseID IN (SELECT CourseID FROM CourseModules WHERE ModuleID = CourseModulesPassed.ModuleID)
+UNION
+SELECT 
+    StudiesLessons.LessonID AS EventID,
+    StudiesLessons.LessonName AS EventName,
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname
+FROM 
+    StudiesLessons
+INNER JOIN 
+    StudiesLessonPassed ON StudiesLessons.LessonID = StudiesLessonPassed.LessonID
+INNER JOIN 
+    Users ON StudiesLessonPassed.StudentID = Users.UserID
+WHERE 
+    StudiesLessons.TeacherID = CURRENT_USER;
 
 -- View for viewing event details for a lecturer
 CREATE VIEW EventDetails AS
 SELECT 
-    Events.EventID,
-    Events.EventName,
-    Events.EventDate,
-    Events.EventDescription,
-    Events.LecturerID
+    Webinars.WebinarID AS EventID,
+    Webinars.WebinarName AS EventName,
+    Webinars.WebinarStartDate AS EventDate,
+    Webinars.WebinarDescription AS EventDescription,
+    Webinars.WebinarTeacherID AS LecturerID
 FROM 
-    Events
+    Webinars
 WHERE 
-    Events.LecturerID = CURRENT_USER;
+    Webinars.WebinarTeacherID = CURRENT_USER
+UNION
+SELECT 
+    Courses.CourseID AS EventID,
+    Courses.CourseName AS EventName,
+    NULL AS EventDate,
+    Courses.CourseDescription AS EventDescription,
+    NULL AS LecturerID
+FROM 
+    Courses
+UNION
+SELECT 
+    StudiesLessons.LessonID AS EventID,
+    StudiesLessons.LessonName AS EventName,
+    StudiesLessons.LessonMeetingDateStart AS EventDate,
+    StudiesLessons.LessonDescription AS EventDescription,
+    StudiesLessons.TeacherID AS LecturerID
+FROM 
+    StudiesLessons
+WHERE 
+    StudiesLessons.TeacherID = CURRENT_USER;
 
 -- View for viewing attendance reports for a lecturer's events
 CREATE VIEW AttendanceReports AS
 SELECT 
-    Events.EventID,
-    Events.EventName,
+    Webinars.WebinarID AS EventID,
+    Webinars.WebinarName AS EventName,
     Users.UserID,
     Users.UserName,
     Users.UserSurname,
-    Attendance.AttendanceDate
+    WebinarsPassed.PassedDate AS AttendanceDate
 FROM 
-    Events
+    Webinars
 INNER JOIN 
-    Attendance ON Events.EventID = Attendance.EventID
+    WebinarsPassed ON Webinars.WebinarID = WebinarsPassed.WebinarID
 INNER JOIN 
-    Users ON Attendance.UserID = Users.UserID
+    Users ON WebinarsPassed.StudentID = Users.UserID
 WHERE 
-    Events.LecturerID = CURRENT_USER;
+    Webinars.WebinarTeacherID = CURRENT_USER
+UNION
+SELECT 
+    Courses.CourseID AS EventID,
+    Courses.CourseName AS EventName,
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname,
+    CourseLessonsPassed.PassedDate AS AttendanceDate
+FROM 
+    Courses
+INNER JOIN 
+    CourseLessonsPassed ON Courses.CourseID = CourseLessonsPassed.LessonID
+INNER JOIN 
+    Users ON CourseLessonsPassed.StudentID = Users.UserID
+WHERE 
+    Courses.CourseID IN (SELECT CourseID FROM CourseModules WHERE ModuleID = CourseLessonsPassed.LessonID)
+UNION
+SELECT 
+    StudiesLessons.LessonID AS EventID,
+    StudiesLessons.LessonName AS EventName,
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname,
+    StudiesLessonPassed.PassedDate AS AttendanceDate
+FROM 
+    StudiesLessons
+INNER JOIN 
+    StudiesLessonPassed ON StudiesLessons.LessonID = StudiesLessonPassed.LessonID
+INNER JOIN 
+    Users ON StudiesLessonPassed.StudentID = Users.UserID
+WHERE 
+    StudiesLessons.TeacherID = CURRENT_USER;
 
 -- View for viewing the list of events a translator is assigned to
 CREATE VIEW TranslatedEvents AS
 SELECT 
-    Events.EventID,
-    Events.EventName,
-    Events.EventDate,
-    Events.EventDescription,
-    Events.TranslatorID
+    Webinars.WebinarID AS EventID,
+    Webinars.WebinarName AS EventName,
+    Webinars.WebinarStartDate AS EventDate,
+    Webinars.WebinarDescription AS EventDescription,
+    Webinars.WebinarTranslatorID AS TranslatorID
 FROM 
-    Events
+    Webinars
 WHERE 
-    Events.TranslatorID = CURRENT_USER;
+    Webinars.WebinarTranslatorID = CURRENT_USER
+UNION
+SELECT 
+    Courses.CourseID AS EventID,
+    Courses.CourseName AS EventName,
+    NULL AS EventDate,
+    Courses.CourseDescription AS EventDescription,
+    NULL AS TranslatorID
+FROM 
+    Courses
+UNION
+SELECT 
+    StudiesLessons.LessonID AS EventID,
+    StudiesLessons.LessonName AS EventName,
+    StudiesLessons.LessonMeetingDateStart AS EventDate,
+    StudiesLessons.LessonDescription AS EventDescription,
+    StudiesLessons.TranslatorID AS TranslatorID
+FROM 
+    StudiesLessons
+WHERE 
+    StudiesLessons.TranslatorID = CURRENT_USER;
 
 -- View for viewing event details for a translator
 CREATE VIEW TranslatorEventDetails AS
 SELECT 
-    Events.EventID,
-    Events.EventName,
-    Events.EventDate,
-    Events.EventDescription,
-    Events.TranslatorID
+    Webinars.WebinarID AS EventID,
+    Webinars.WebinarName AS EventName,
+    Webinars.WebinarStartDate AS EventDate,
+    Webinars.WebinarDescription AS EventDescription,
+    Webinars.WebinarTranslatorID AS TranslatorID
 FROM 
-    Events
+    Webinars
 WHERE 
-    Events.TranslatorID = CURRENT_USER;
+    Webinars.WebinarTranslatorID = CURRENT_USER
+UNION
+SELECT 
+    Courses.CourseID AS EventID,
+    Courses.CourseName AS EventName,
+    NULL AS EventDate,
+    Courses.CourseDescription AS EventDescription,
+    NULL AS TranslatorID
+FROM 
+    Courses
+UNION
+SELECT 
+    StudiesLessons.LessonID AS EventID,
+    StudiesLessons.LessonName AS EventName,
+    StudiesLessons.LessonMeetingDateStart AS EventDate,
+    StudiesLessons.LessonDescription AS EventDescription,
+    StudiesLessons.TranslatorID AS TranslatorID
+FROM 
+    StudiesLessons
+WHERE 
+    StudiesLessons.TranslatorID = CURRENT_USER;
 
 -- View for viewing available events for students
 CREATE VIEW AvailableEvents AS
 SELECT 
-    Events.EventID,
-    Events.EventName,
-    Events.EventDate,
-    Events.EventDescription
+    Webinars.WebinarID AS EventID,
+    Webinars.WebinarName AS EventName,
+    Webinars.WebinarStartDate AS EventDate,
+    Webinars.WebinarDescription AS EventDescription
 FROM 
-    Events
+    Webinars
 WHERE 
-    Events.EventDate > CURRENT_DATE;
+    Webinars.WebinarStartDate > CURRENT_DATE
+UNION
+SELECT 
+    Courses.CourseID AS EventID,
+    Courses.CourseName AS EventName,
+    NULL AS EventDate,
+    Courses.CourseDescription AS EventDescription
+FROM 
+    Courses
+UNION
+SELECT 
+    StudiesLessons.LessonID AS EventID,
+    StudiesLessons.LessonName AS EventName,
+    StudiesLessons.LessonMeetingDateStart AS EventDate,
+    StudiesLessons.LessonDescription AS EventDescription
+FROM 
+    StudiesLessons
+WHERE 
+    StudiesLessons.LessonMeetingDateStart > CURRENT_DATE;
 
 -- View for viewing registered event details for students
 CREATE VIEW RegisteredEventDetails AS
 SELECT 
-    Events.EventID,
-    Events.EventName,
-    Events.EventDate,
-    Events.EventDescription,
-    EventRegistrations.UserID
+    Webinars.WebinarID AS EventID,
+    Webinars.WebinarName AS EventName,
+    Webinars.WebinarStartDate AS EventDate,
+    Webinars.WebinarDescription AS EventDescription,
+    StudentBoughtWebinars.StudentID
 FROM 
-    Events
+    Webinars
 INNER JOIN 
-    EventRegistrations ON Events.EventID = EventRegistrations.EventID
+    StudentBoughtWebinars ON Webinars.WebinarID = StudentBoughtWebinars.WebinarID
 WHERE 
-    EventRegistrations.UserID = CURRENT_USER;
+    StudentBoughtWebinars.StudentID = CURRENT_USER
+UNION
+SELECT 
+    Courses.CourseID AS EventID,
+    Courses.CourseName AS EventName,
+    NULL AS EventDate,
+    Courses.CourseDescription AS EventDescription,
+    CourseModulesPassed.StudentID
+FROM 
+    Courses
+INNER JOIN 
+    CourseModulesPassed ON Courses.CourseID = CourseModulesPassed.ModuleID
+WHERE 
+    CourseModulesPassed.StudentID = CURRENT_USER
+UNION
+SELECT 
+    StudiesLessons.LessonID AS EventID,
+    StudiesLessons.LessonName AS EventName,
+    StudiesLessons.LessonMeetingDateStart AS EventDate,
+    StudiesLessons.LessonDescription AS EventDescription,
+    StudiesLessonPassed.StudentID
+FROM 
+    StudiesLessons
+INNER JOIN 
+    StudiesLessonPassed ON StudiesLessons.LessonID = StudiesLessonPassed.LessonID
+WHERE 
+    StudiesLessonPassed.StudentID = CURRENT_USER;
 
 -- View for viewing completion status for students
 CREATE VIEW CompletionStatus AS
 SELECT 
-    Courses.CourseID,
-    Courses.CourseName,
-    Users.UserID,
-    Users.UserName,
-    Users.UserSurname,
-    CourseCompletions.CompletionDate
+    CourseModulesPassed.StudentID,
+    CourseModulesPassed.ModuleID AS ItemID,
+    'CourseModule' AS ItemType,
+    'Passed' AS Status
 FROM 
-    Courses
-INNER JOIN 
-    CourseCompletions ON Courses.CourseID = CourseCompletions.CourseID
-INNER JOIN 
-    Users ON CourseCompletions.UserID = Users.UserID
-WHERE 
-    CourseCompletions.UserID = CURRENT_USER;
+    CourseModulesPassed
+UNION
+SELECT 
+    CourseLessonsPassed.StudentID,
+    CourseLessonsPassed.LessonID AS ItemID,
+    'CourseLesson' AS ItemType,
+    'Passed' AS Status
+FROM 
+    CourseLessonsPassed
+UNION
+SELECT 
+    WebinarsPassed.StudentID,
+    WebinarsPassed.WebinarID AS ItemID,
+    'Webinar' AS ItemType,
+    'Passed' AS Status
+FROM 
+    WebinarsPassed
+UNION
+SELECT 
+    StudiesLessonPassed.StudentID,
+    StudiesLessonPassed.LessonID AS ItemID,
+    'StudiesLesson' AS ItemType,
+    'Passed' AS Status
+FROM 
+    StudiesLessonPassed;
 
 -- View for viewing payment status for students
 CREATE VIEW StudentPaymentStatus AS
