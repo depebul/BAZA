@@ -96,6 +96,7 @@ CREATE TABLE Webinars(
     WebinarTeacherID INT,
     WebinarMeetingLink VARCHAR(100),
     WebinarAccessDateEnd DATE NOT NULL,
+    WebinarRecordingLink VARCHAR(100)
     FOREIGN KEY (WebinarLanguageID) REFERENCES Languages (LanguageID),
     FOREIGN KEY (WebinarTranslatorID) REFERENCES Employees (EmployeeID),
     FOREIGN KEY (WebinarTeacherID) REFERENCES Employees (EmployeeID)
@@ -133,7 +134,18 @@ CREATE TABLE Courses(
     CourseDescription VARCHAR(MAX),
     CourseLanguageID INT,
     CoursePrice MONEY NOT NULL,
+    CourseStartDate DATE NOT NULL,
+    CourseEndDate DATE NOT NULL,
+    CourseRecordingLink VARCHAR(100)
     FOREIGN KEY (CourseLanguageID) REFERENCES Languages (LanguageID),
+)
+
+CREATE Table StudentBoughtCourses(
+    StudentID INT,
+    CourseID INT,
+    PRIMARY KEY (StudentID, CourseID),
+    FOREIGN KEY (StudentID) REFERENCES Students (StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Courses (CourseID)
 )
 
 CREATE TABLE CourseModuleMeetingTypes(
@@ -209,7 +221,7 @@ CREATE TABLE WebinarsPassed(
 
 CREATE TABLE Orders(
     OrderID INT PRIMARY KEY,
-    UserID INT,
+    UserID INT NOT NULL,
     OrderDate DATE NOT NULL,
     OrderPaymentLink VARCHAR(100) NOT NULL
     FOREIGN KEY (UserID) REFERENCES Users (UserID)
@@ -274,8 +286,21 @@ CREATE TABLE StudiesLessonMeetingTypes(
     StudiesLessonMeetingTypeName VARCHAR(50) NOT NULL
 )
 
-CREATE TABLE StudiesLessons(
+CREATE TABLE StudiesSessions(
     StudiesID INT,
+    SubjectID INT,
+    SessionID INT PRIMARY KEY,
+    SessionStartDate DATE NOT NULL,
+    SessionEndDate DATE NOT NULL,
+    SessionCapacity INT NOT NULL,
+    SessionGuestCapacity INT NOT NULL,
+    SessionPrice MONEY NOT NULL
+    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID),
+    FOREIGN KEY (SubjectID) REFERENCES Subjects (SubjectID)
+)
+
+CREATE TABLE StudiesLessons(
+    SessionID INT,
     SubjectID INT,
     LessonID INT PRIMARY KEY,
     LessonName VARCHAR(100) NOT NULL,
@@ -285,16 +310,16 @@ CREATE TABLE StudiesLessons(
     LessonMeetingPlace VARCHAR(100),
     LessonMeetingDateStart DATE NOT NULL,
     LessonMeetingDateEnd DATE NOT NULL,
-    LessonCapacity INT,
-    LessonGuestCapacity INT,
-    LessonPrice MONEY,
-    LessonGuestPrice MONEY,
+    LessonCapacity INT NOT NULL,
+    LessonGuestCapacity INT NOT NULL,
+    LessonPrice MONEY NOT NULL,
+    LessonGuestPrice MONEY NOT NULL,
     CourseLessonMeetingTypeID INT,
-    IsTranslatedToPolish BIT,
+    IsTranslatedToPolish BIT NOT NULL,
     TranslatorID INT,
     TeacherID INT,
     StudiesLessonMeetingTypeID INT,
-    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID),
+    FOREIGN KEY (SessionID) REFERENCES StudiesSessions (SessionID),
     FOREIGN KEY (SubjectID) REFERENCES Subjects (SubjectID),
     FOREIGN KEY (LessonLanguageID) REFERENCES Languages (LanguageID),
     FOREIGN KEY (CourseLessonMeetingTypeID) REFERENCES CourseLessonMeetingTypes (CourseLessonMeetingTypeID),
@@ -303,7 +328,7 @@ CREATE TABLE StudiesLessons(
     FOREIGN KEY (StudiesLessonMeetingTypeID) REFERENCES StudiesLessonMeetingTypes (StudiesLessonMeetingTypeID),
 )
 
-CREATE TABLE StudiesLessonPassed(
+CREATE TABLE StudiesLessonsPassed(
     StudentID INT,
     LessonID INT,
     PRIMARY KEY (StudentID, LessonID),
@@ -320,15 +345,38 @@ CREATE TABLE StudentStudies(
     FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
 )
 
+CREATE Table StudentBoughtStudies(
+    StudentID INT,
+    StudiesID INT,
+    PRIMARY KEY (StudentID, StudiesID),
+    FOREIGN KEY (StudentID) REFERENCES Students (StudentID),
+    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
+)
+
+CREATE Table StudentBoughtSessions(
+    StudentID INT,
+    SessionID INT,
+    PRIMARY KEY (StudentID, SessionID),
+    FOREIGN KEY (StudentID) REFERENCES Students (StudentID),
+    FOREIGN KEY (SessionID) REFERENCES StudiesSessions (SessionID)
+)
+
+CREATE TABLE InternshipMeetingTypes(
+    InternshipMeetingTypeID INT PRIMARY KEY,
+    InternshipMeetingTypeName VARCHAR(50) NOT NULL
+)
+
 CREATE TABLE Internships(
     InternshipID INT PRIMARY KEY,
     InternshipCompany VARCHAR(100),
     InternshipStartDate DATE,
     StudiesID INT,
-    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
+    InternshipMeetingType INT,
+    FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID),
+    FOREIGN KEY (InternshipMeetingType) REFERENCES InternshipMeetingTypes (InternshipMeetingTypeID)
 )
 
-CREATE TABLE InternshipMeetingPassed(
+CREATE TABLE InternshipMeetingsPassed(
     StudentID INT,
     InternshipID INT,
     PRIMARY KEY (StudentID, InternshipID),
@@ -341,6 +389,13 @@ CREATE TABLE OrderStudies(
     OrderDetailID INT,
     FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
     FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
+)
+
+CREATE TABLE OrderSessions(
+    SessionID INT PRIMARY KEY,
+    OrderDetailID INT,
+    FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
+    FOREIGN KEY (SessionID) REFERENCES StudiesSessions (SessionID)
 )
 
 CREATE TABLE RODOSigns (
