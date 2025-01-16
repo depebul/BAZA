@@ -1,7 +1,7 @@
 from common_imports import *
 
 faker = Faker("pl_PL")
-n = 2
+n = 1000
 
 
 @dataclass

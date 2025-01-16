@@ -7,21 +7,21 @@ translating_languages = f.translating_languages()
 @dataclass
 class Row:
     WebinarName: str
-    WebinarStartDate: date
-    WebinarEndDate: date
+    WebinarStartDate: datetime
+    WebinarEndDate: datetime
     WebinarDescription: str
     WebinarLanguageID: int
     WebinarPrice: float
     WebinarTranslatorID: int
     WebinarTeacherID: int
     WebinarMeetingLink: str
-    WebinarAccessDateEnd: date
+    WebinarAccessDateEnd: datetime
     WebinarRecordingLink: str
 
 
 data = []
 for i in range(430):
-    start_date = faker.date_between(start_date="-1y", end_date="+1y")
+    start_date = faker.date_time_between(start_date="-1y", end_date="+1y")
     translator = random.choice(translating_languages)
     data.append(
         asdict(

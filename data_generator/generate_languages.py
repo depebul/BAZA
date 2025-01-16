@@ -14,7 +14,7 @@ class Row:
 def generate_data(n):
     languages = [
         "English",
-        "Polish",
+        "Czech",
         "Spanish",
         "French",
         "German",

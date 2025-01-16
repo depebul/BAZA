@@ -2,6 +2,7 @@ from common_imports import *
 
 
 def insert_data(data, table_name):
+    print("starting insertion")
     conn = create_connection()
     cursor = conn.cursor()
 

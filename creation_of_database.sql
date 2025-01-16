@@ -229,14 +229,16 @@ CREATE TABLE OrderDetails(
 )
 
 CREATE TABLE OrderWebinars(
-    WebinarID INT PRIMARY KEY IDENTITY(1,1),
+    OrderWebinarID INT PRIMARY KEY IDENTITY(1,1),
+    WebinarID INT NOT NULL,
     OrderDetailID INT NOT NULL,
     FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
     FOREIGN KEY (WebinarID) REFERENCES Webinars (WebinarID)
 )
 
 CREATE TABLE OrderCourses(
-    CourseID INT PRIMARY KEY IDENTITY(1,1),
+    OrderCourseID INT PRIMARY KEY IDENTITY(1,1),
+    CourseID INT NOT NULL,
     OrderDetailID INT NOT NULL,
     FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
     FOREIGN KEY (CourseID) REFERENCES Courses (CourseID)
@@ -372,21 +374,24 @@ CREATE TABLE InternshipMeetingsPassed(
 )
 
 CREATE TABLE OrderStudies(
-    StudiesID INT PRIMARY KEY IDENTITY(1,1),
+    OrderStudiesID INT PRIMARY KEY IDENTITY(1,1),
+    StudiesID INT NOT NULL,
     OrderDetailID INT NOT NULL,
     FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
     FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
 )
 
 CREATE TABLE OrderSessions(
-    SessionID INT PRIMARY KEY IDENTITY(1,1),
+    OrderSessionID INT PRIMARY KEY IDENTITY(1,1),
+    SessionID INT NOT NULL,
     OrderDetailID INT NOT NULL,
     FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
     FOREIGN KEY (SessionID) REFERENCES StudiesSessions (SessionID)
 )
 
 CREATE TABLE RODOSigns (
-    UserID INT PRIMARY KEY IDENTITY(1,1),
+    SignID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT NOT NULL,
     IsSigned BIT NOT NULL,
     SignDate DATE NOT NULL,
     FOREIGN KEY (UserID) REFERENCES Users (UserID)
