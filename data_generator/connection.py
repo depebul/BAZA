@@ -1,17 +1,22 @@
 import pyodbc
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 
 def create_connection():
-    server = ""  # Update with your server name
-    port = ""  # Update with your port number if different
-    database = ""  # Update with your database name
-    username = ""  # Update with your username
-    password = ""  # Update with your password
+    server = os.getenv("SERVER")
+    port = os.getenv("PORT")
+    database = os.getenv("DATABASE")
+    usernamed = os.getenv("USERNAMED")
+    password = os.getenv("PASSWORD")
+
     conn_str = (
         f"DRIVER={{ODBC Driver 18 for SQL Server}};"
         f"SERVER={server},{port};"
         f"DATABASE={database};"
-        f"UID={username};"
+        f"UID={usernamed};"
         f"PWD={password};"
         f"TrustServerCertificate=yes;"
     )
