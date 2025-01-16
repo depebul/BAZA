@@ -78,6 +78,10 @@ Projekt systemu bazodanowego dla firmy oferującej różnego rodzaju kursy i szk
 
 - **HandleWebinarPayment**: Obsługuje płatności za webinary.
 
+## Diagram
+
+![Database Diagram](BAZA_diagram.png)
+
 ## Autorzy
 
 - [Dawid Żak](https://github.com/depebul)
