@@ -2,11 +2,11 @@ import pyodbc
 
 
 def create_connection():
-    server = "dbmanage.lab.ii.agh.edu.pl"  # Update with your server name
-    port = "1433"  # Update with your port number if different
-    database = "u_dzak"  # Update with your database name
-    username = "u_dzak"  # Update with your username
-    password = "kochamtft"  # Update with your password
+    server = ""  # Update with your server name
+    port = ""  # Update with your port number if different
+    database = ""  # Update with your database name
+    username = ""  # Update with your username
+    password = ""  # Update with your password
     conn_str = (
         f"DRIVER={{ODBC Driver 18 for SQL Server}};"
         f"SERVER={server},{port};"
