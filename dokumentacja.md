@@ -1042,7 +1042,7 @@ WHERE
 
 ### PaymentStatus
 
-Ten widok zapewnia status płatności zamówień, wskazując, czy są opłacone, czy oczekujące.
+Ten widok zapewnia status płatności zamówień, wskazując, czy są opłacone(`Paid`), czy oczekujące(`Pending`).
 
 ```sql
 CREATE VIEW PaymentStatus AS
@@ -1434,7 +1434,9 @@ WHERE
 
 ## Funkcje
 
-### Przechowywanie listy dostępnych webinarów, kursów i studiów
+### AvailableWebinarsCoursesStudies
+
+Przechowywanie listy dostępnych webinarów, kursów i studiów
 
 ```sql
 CREATE VIEW AvailableWebinarsCoursesStudies AS
@@ -1448,7 +1450,9 @@ SELECT StudiesID AS ID, StudiesName AS Name, 'Studies' AS Type
 FROM Studies;
 ```
 
-### Przechowywanie sylabusów i harmonogramów
+### SyllabusesAndSchedules
+
+Przechowywanie sylabusów i harmonogramów
 
 ```sql
 CREATE VIEW SyllabusesAndSchedules AS
@@ -1459,7 +1463,9 @@ SELECT LessonID, StudiesID, LessonMeetingDateStart, LessonMeetingDateEnd
 FROM StudiesLessons;
 ```
 
-### Przechowywanie szczegółów wydarzenia (np. daty, miejsca, linków do spotkań online)
+### EventDetails
+
+Przechowywanie szczegółów wydarzenia (np. daty, miejsca, linków do spotkań online)
 
 ```sql
 CREATE VIEW EventDetails AS
@@ -1472,7 +1478,9 @@ UNION
 SELECT StudiesID AS EventID, StudiesName AS EventName, StudiesStartDate AS StartDate, StudiesEndDate AS EndDate, NULL AS MeetingLink, StudiesDescription AS Description;
 ```
 
-### Przechowywanie statusu zaliczeń (moduły kursowe, frekwencja na studiach)
+### CompletionStatus
+
+Przechowywanie statusu zaliczeń (moduły kursowe, frekwencja na studiach)
 
 ```sql
 CREATE VIEW CompletionStatus AS
@@ -1489,7 +1497,9 @@ SELECT StudentID, LessonID AS ItemID, 'StudiesLesson' AS ItemType, 'Passed' AS S
 FROM StudiesLessonPassed;
 ```
 
-### Sprawdzanie statusu płatności
+### PaymentStatus
+
+Sprawdzanie statusu płatności
 
 ```sql
 CREATE VIEW PaymentStatus AS
@@ -1501,7 +1511,9 @@ END AS Status
 FROM OrderDetails;
 ```
 
-### Generowanie raportów finansowych (przychody dla każdego typu wydarzeń)
+### FinancialReports
+
+Generowanie raportów finansowych (przychody dla każdego typu wydarzeń)
 
 ```sql
 CREATE VIEW FinancialReports AS
@@ -1521,7 +1533,9 @@ INNER JOIN OrderDetails ON OrderStudies.OrderDetailID = OrderDetails.OrderDetail
 GROUP BY StudiesID;
 ```
 
-### Wyświetlanie raportu liczby zapisanych osób
+### EnrollmentReport
+
+Wyświetlanie raportu liczby zapisanych osób
 
 ```sql
 CREATE VIEW EnrollmentReport AS
@@ -1538,7 +1552,9 @@ FROM StudentStudies
 GROUP BY StudiesID;
 ```
 
-### Tworzenie list obecności oraz raportów dotyczących frekwencji
+### AttendanceReports
+
+Tworzenie list obecności oraz raportów dotyczących frekwencji
 
 ```sql
 CREATE VIEW AttendanceReports AS
@@ -1551,21 +1567,9 @@ FROM StudiesLessonPassed
 GROUP BY LessonID;
 ```
 
-### Automatyczne weryfikowanie udziału w wydarzeniach online
+### FilteredEvents
 
-```sql
-CREATE TRIGGER VerifyOnlineParticipation
-ON StudentBoughtWebinars
-AFTER INSERT
-AS
-BEGIN
-    UPDATE StudentBoughtWebinars
-    SET WebinarAccessDateEnd = DATEADD(DAY, 30, WebinarBoughtDate)
-    WHERE WebinarAccessDateEnd IS NULL;
-END;
-```
-
-### Filtrowanie po rodzaju (webinary, kursy, studia), formie (stacjonarne, online, hybrydowe), języku, dostępności miejsc, cenie
+Filtrowanie po rodzaju (webinary, kursy, studia), formie (stacjonarne, online, hybrydowe), języku, dostępności miejsc, cenie
 
 ```sql
 CREATE VIEW FilteredEvents AS
@@ -1581,7 +1585,9 @@ FROM Studies;
 
 ## Procedury
 
-### AddUser - Dodaje nowego użytkownika do systemu
+### AddUser
+
+Dodaje nowego użytkownika do systemu
 
 ```sql
 CREATE PROCEDURE AddUser
@@ -1602,7 +1608,9 @@ BEGIN
 END;
 ```
 
-### UpdateUserProfile - Aktualizuje dane profilu użytkownika
+### UpdateUserProfile
+
+Aktualizuje dane profilu użytkownika
 
 ```sql
 CREATE PROCEDURE UpdateUserProfile
@@ -1634,7 +1642,9 @@ BEGIN
 END;
 ```
 
-### DeleteUser - Usuwa użytkownika z systemu
+### DeleteUser
+
+Usuwa użytkownika z systemu
 
 ```sql
 CREATE PROCEDURE DeleteUser
@@ -1646,7 +1656,9 @@ BEGIN
 END;
 ```
 
-### AddRole - Dodawanie użytkownikowi nowej roli
+### AddRole
+
+Dodawanie użytkownikowi nowej roli
 
 ```sql
 CREATE PROCEDURE AddRole
@@ -1659,7 +1671,9 @@ BEGIN
 END;
 ```
 
-### RemoveRole - Usuwanie użytkownikowi roli
+### RemoveRole
+
+Usuwanie użytkownikowi roli
 
 ```sql
 CREATE PROCEDURE RemoveRole
@@ -1672,7 +1686,9 @@ BEGIN
 END;
 ```
 
-### AddEvent - Dodaje nowe wydarzenie (webinar, kurs, studium)
+### AddEvent
+
+Dodaje nowe wydarzenie (webinar, kurs, studium)
 
 ```sql
 CREATE PROCEDURE AddEvent
@@ -1706,7 +1722,9 @@ BEGIN
 END;
 ```
 
-### UpdateEventDetails - Aktualizuje szczegóły wydarzenia
+### UpdateEventDetails
+
+Aktualizuje szczegóły wydarzenia
 
 ```sql
 CREATE PROCEDURE UpdateEventDetails
@@ -1758,7 +1776,9 @@ BEGIN
 END;
 ```
 
-### DeleteEvent - Usuwa wydarzenie z systemu
+### DeleteEvent
+
+Usuwa wydarzenie z systemu
 
 ```sql
 CREATE PROCEDURE DeleteEvent
@@ -1784,7 +1804,9 @@ BEGIN
 END;
 ```
 
-### CreatePaymentLink - Generuje link do płatności
+### CreatePaymentLink
+
+Generuje link do płatności
 
 ```sql
 CREATE PROCEDURE CreatePaymentLink
@@ -1798,7 +1820,9 @@ BEGIN
 END;
 ```
 
-### ProcessPaymentResult - Przetwarza wynik płatności (udana/nieudana)
+### ProcessPaymentResult
+
+Przetwarza wynik płatności (udana/nieudana)
 
 ```sql
 CREATE PROCEDURE ProcessPaymentResult
@@ -1814,7 +1838,9 @@ BEGIN
 END;
 ```
 
-### ApplyPaymentException - Zapisuje wyjątek płatniczy (np. odroczenie)
+### ApplyPaymentException
+
+Zapisuje wyjątek płatniczy (np. odroczenie)
 
 ```sql
 CREATE PROCEDURE ApplyPaymentException
@@ -1828,7 +1854,9 @@ BEGIN
 END;
 ```
 
-### RegisterForEvent - Rejestruje użytkownika na wydarzenie
+### RegisterForEvent
+
+Rejestruje użytkownika na wydarzenie
 
 ```sql
 CREATE PROCEDURE RegisterForEvent
@@ -1855,7 +1883,9 @@ BEGIN
 END;
 ```
 
-### CancelRegistration - Anuluje rejestrację na wydarzenie
+### CancelRegistration
+
+Anuluje rejestrację na wydarzenie
 
 ```sql
 CREATE PROCEDURE CancelRegistration
@@ -2058,6 +2088,21 @@ BEGIN
         WHERE inserted.AmountPaid = inserted.AmountToPay OR inserted.PostponementDate > GETDATE()
         AND StudiesStartDate > GETDATE())
     END
+END;
+```
+
+### VerifyOnlineParticipation
+Ten trigger automatyczne weryfikowanie udziału w wydarzeniach online
+
+```sql
+CREATE TRIGGER VerifyOnlineParticipation
+ON StudentBoughtWebinars
+AFTER INSERT
+AS
+BEGIN
+    UPDATE StudentBoughtWebinars
+    SET WebinarAccessDateEnd = DATEADD(DAY, 30, WebinarBoughtDate)
+    WHERE WebinarAccessDateEnd IS NULL;
 END;
 ```
 
