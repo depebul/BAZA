@@ -12,11 +12,11 @@ Grupa 10, wtorek 18:30
 W bazie danych utworzone są następujące role:
 
 - Administrator
-- Wykładowca
-- Tłumacz
+- Lecturer
+- Translator
 - Student
-- DyrektorSzkoły
-- Księgowy
+- SchoolDirector
+- Accountant
 
 ## Uprawnienia
 
@@ -46,9 +46,9 @@ GRANT SELECT ON Orders TO Administrator;
 GRANT SELECT ON OrderDetails TO Administrator;
 ```
 
-### Wykładowca
+### Lecturer
 
-Rola `Wykładowca` ma następujące uprawnienia:
+Rola `Lecturer` ma następujące uprawnienia:
 
 - Może przeglądać dane: studentów
 - Może przeglądać dane: zakupionych webinarów przez studentów
@@ -66,9 +66,9 @@ GRANT SELECT ON WebinarsPassed TO Lecturer;
 GRANT SELECT ON StudiesLessonPassed TO Lecturer;
 ```
 
-### Tłumacz
+### Translator
 
-Rola `Tłumacz` ma następujące uprawnienia:
+Rola `Translator` ma następujące uprawnienia:
 
 - Może przeglądać dane: webinarów
 - Może przeglądać dane: kursów
@@ -104,9 +104,9 @@ GRANT SELECT ON WebinarsPassed TO Student;
 GRANT SELECT ON StudiesLessonPassed TO Student;
 ```
 
-### DyrektorSzkoły
+### SchoolDirector
 
-Rola `DyrektorSzkoły` ma następujące uprawnienia:
+Rola `SchoolDirector` ma następujące uprawnienia:
 
 - Ma pełne uprawnienia (dodawanie, zmienianie, usuwanie, przeglądanie) do danych dla: użytkowników
 - Ma pełne uprawnienia (dodawanie, zmienianie, usuwanie, przeglądanie) do danych dla: pracowników
@@ -126,9 +126,9 @@ GRANT ALL ON Orders TO SchoolDirector;
 GRANT ALL ON OrderDetails TO SchoolDirector;
 ```
 
-### Księgowy
+### Accountant
 
-Rola `Księgowy` ma następujące uprawnienia:
+Rola `Accountant` ma następujące uprawnienia:
 
 - Może przeglądać dane dla: zamówień
 - Może przeglądać dane dla: szczegółów zamówień
@@ -144,287 +144,873 @@ GRANT SELECT ON OrderDetails TO Accountant;
 
 ## Opis tabel
 
-- **Users**: Przechowuje informacje o użytkownikach.
+- **Users**: Przechowuje informacje o użytkownikach systemu.
     - **Klucz podstawowy**: UserID
-    - **Pozostałe pola tabeli**:
-        - UserName: Nazwa użytkownika
-        - Password: Hasło użytkownika
-        - Email: Adres email użytkownika
+    - **Pola tabeli**:
+        - UserID: ID użytkownika
+        - UserName: Imię użytkownika
+        - UserSurname: Nazwisko użytkownika
+        - UserDateOfBirth: Data urodzenia użytkownika
+        - UserSex: Płeć użytkownika
+        - UserEmail: Adres email użytkownika
+        - UserPhoneNumber: Numer telefonu użytkownika
+        - UserAddress: Adres użytkownika
+        - UserCity: Miasto użytkownika
+        - UserCountry: Kraj użytkownika
+        - UserPostalCode: Kod pocztowy użytkownika
         
-        ![Kod tabeli Users](img/tables/users_table.png)
+    ```sql
+    CREATE TABLE Users
+    (
+        UserID          INT PRIMARY KEY IDENTITY(1,1),
+        UserName        VARCHAR(50)  NOT NULL,
+        UserSurname     VARCHAR(50)  NOT NULL,
+        UserDateOfBirth DATE         NOT NULL,
+        UserSex         CHAR(1)      NOT NULL,
+        UserEmail       VARCHAR(100) NOT NULL,
+        UserPhoneNumber VARCHAR(20),
+        UserAddress     VARCHAR(100) NOT NULL,
+        UserCity        VARCHAR(50) NOT NULL,
+        UserCountry     VARCHAR(50) NOT NULL,
+        UserPostalCode  VARCHAR(10) NOT NULL
+    )
+    ```
 
 - **Languages**: Przechowuje informacje o językach.
     - **Klucz podstawowy**: LanguageID
-    - **Pozostałe pola tabeli**:
+    - **Pola tabeli**:
+        - LanguageID: ID języka
         - LanguageName: Nazwa języka
         
-        ![Kod tabeli Languages](img/tables/languages_table.png)
+    ```sql
+    CREATE TABLE Languages
+    (
+        LanguageID   INT PRIMARY KEY IDENTITY(1,1),
+        LanguageName VARCHAR(50) NOT NULL
+    )
+    ```
 
 - **CurrencyRates**: Przechowuje kursy walut.
-    - **Klucz podstawowy**: CurrencyRateID
-    - **Pozostałe pola tabeli**:
-        - CurrencyCode: Kod waluty
-        - Rate: Kurs waluty
+    - **Klucz podstawowy**: CurrencyID
+    - **Pola tabeli**:
+        - CurrencyID: ID waluty
+        - CurrencyName: Nazwa waluty
+        - RateToPLN: Kurs waluty do PLN
         
-        ![Kod tabeli CurrencyRates](img/tables/currencyRates_table.png)
+    ```sql
+    CREATE TABLE CurrencyRates(
+        CurrencyID INT PRIMARY KEY IDENTITY(1,1),
+        CurrencyName VARCHAR(100) NOT NULL,
+        RateToPLN MONEY NOT NULL
+    )
+    ```
 
 - **EmployeeTypes**: Przechowuje typy pracowników.
     - **Klucz podstawowy**: EmployeeTypeID
-    - **Pozostałe pola tabeli**:
-        - TypeName: Nazwa typu pracownika
+    - **Pola tabeli**:
+        - EmployeeTypeID: ID typu pracownika
+        - EmployeeTypeName: Nazwa typu pracownika
         
-        ![Kod tabeli EmployeeTypes](img/tables/employeeTypes_table.png)
+    ```sql
+    CREATE TABLE EmployeeTypes
+    (
+        EmployeeTypeID   INT PRIMARY KEY IDENTITY(1,1),
+        EmployeeTypeName VARCHAR(50) NOT NULL
+    )
+    ```
 
 - **Employees**: Przechowuje informacje o pracownikach.
     - **Klucz podstawowy**: EmployeeID
-    - **Klucz obcy**: EmployeeTypeID (z tabeli EmployeeTypes)
-    - **Pozostałe pola tabeli**:
-        - FirstName: Imię pracownika
-        - LastName: Nazwisko pracownika
+    - **Klucze obce**: UserID (z tabeli Users), EmployeeTypeID (z tabeli EmployeeTypes)
+    - **Pola tabeli**:
+        - EmployeeID: ID pracownika
+        - UserID: ID użytkownika
+        - EmployeeTypeID: ID typu pracownika
+        - HireDate: Data zatrudnienia
+        - Salary: Wynagrodzenie
         
-        ![Kod tabeli Employees](img/tables/employees_table.png)
+    ```sql
+    CREATE TABLE Employees
+    (
+        EmployeeID     INT PRIMARY KEY IDENTITY(1,1),
+        UserID         INT NOT NULL,
+        EmployeeTypeID INT NOT NULL,
+        HireDate       DATE NOT NULL,
+        Salary         MONEY NOT NULL,
+        FOREIGN KEY (UserID) REFERENCES Users (UserID),
+        FOREIGN KEY (EmployeeTypeID) REFERENCES EmployeeTypes (EmployeeTypeID)
+    )
+    ```
 
 - **TeachingLanguages**: Przechowuje informacje o językach, w których uczą pracownicy.
-    - **Klucz podstawowy**: TeachingLanguageID
-    - **Klucz obcy**: EmployeeID (z tabeli Employees), LanguageID (z tabeli Languages)
-    - **Pozostałe pola tabeli**:
-        - ProficiencyLevel: Poziom biegłości
+    - **Klucze podstawowe**: EmployeeID, LanguageID
+    - **Klucze obce**: EmployeeID (z tabeli Employees), LanguageID (z tabeli Languages)
+    - **Pola tabeli**:
+        - EmployeeID: ID pracownika
+        - LanguageID: ID języka
         
-        ![Kod tabeli TeachingLanguages](img/tables/teachingLanguages_table.png)
+    ```sql
+    CREATE TABLE TeachingLanguages(
+        EmployeeID INT,
+        LanguageID INT,
+        PRIMARY KEY (EmployeeID, LanguageID),
+        FOREIGN KEY (EmployeeID) REFERENCES Employees (EmployeeID),
+        FOREIGN KEY (LanguageID) REFERENCES Languages (LanguageID)
+    )
+    ```
 
 - **Students**: Przechowuje informacje o studentach.
     - **Klucz podstawowy**: StudentID
-    - **Pozostałe pola tabeli**:
-        - FirstName: Imię studenta
-        - LastName: Nazwisko studenta
+    - **Klucz obcy**: UserID (z tabeli Users)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - UserID: ID użytkownika
         
-        ![Kod tabeli Students](img/tables/students_table.png)
+    ```sql
+    CREATE TABLE Students
+    (
+        StudentID  INT PRIMARY KEY IDENTITY(1,1),
+        UserID     INT NOT NULL,
+        FOREIGN KEY (UserID) REFERENCES Users (UserID)
+    )
+    ```
 
-- **StudyingLanguages**: Przechowuje informacje o językach, w których uczą się studenci.
-    - **Klucz podstawowy**: StudyingLanguageID
-    - **Klucz obcy**: StudentID (z tabeli Students), LanguageID (z tabeli Languages)
-    - **Pozostałe pola tabeli**:
-        - ProficiencyLevel: Poziom biegłości
+- **StudyingLanguages**: Przechowuje informacje o językach, w których chce uczyć się student.
+    - **Klucze podstawowe**: StudentID, LanguageID
+    - **Klucze obce**: StudentID (z tabeli Students), LanguageID (z tabeli Languages)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - LanguageID: ID języka
         
-        ![Kod tabeli StudyingLanguages](img/tables/studyingLanguages_table.png)
+    ```sql
+    CREATE TABLE StudyingLanguages(
+        StudentID INT,
+        LanguageID INT,
+        PRIMARY KEY (StudentID, LanguageID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID),
+        FOREIGN KEY (LanguageID) REFERENCES Languages (LanguageID)
+    )
+    ```
 
-- **TranslatingLanguages**: Przechowuje informacje o językach, które tłumaczą pracownicy.
-    - **Klucz podstawowy**: TranslatingLanguageID
-    - **Klucz obcy**: EmployeeID (z tabeli Employees), LanguageID (z tabeli Languages)
-    - **Pozostałe pola tabeli**:
-        - ProficiencyLevel: Poziom biegłości
+- **TranslatingLanguages**: Przechowuje informacje o języku, jaki może tłumaczyć tłumacz.
+    - **Klucze podstawowe**: EmployeeID, LanguageID
+    - **Klucze obce**: EmployeeID (z tabeli Employees), LanguageID (z tabeli Languages)
+    - **Pola tabeli**:
+        - EmployeeID: ID pracownika
+        - LanguageID: ID języka
         
-        ![Kod tabeli TranslatingLanguages](img/tables/translatingLanguages_table.png)
+     ```sql
+    CREATE TABLE TranslatingLanguages(
+        EmployeeID INT,
+        LanguageID INT,
+        PRIMARY KEY (EmployeeID, LanguageID),
+        FOREIGN KEY (EmployeeID) REFERENCES Employees (EmployeeID),
+        FOREIGN KEY (LanguageID) REFERENCES Languages (LanguageID)
+    )
+    ```
 
 - **Webinars**: Przechowuje informacje o webinarach.
     - **Klucz podstawowy**: WebinarID
-    - **Pozostałe pola tabeli**:
+    - **Klucze obce**: WebinarLanguageID (z tabeli Languages), WebinarTranslatorID (z tabeli Employees), WebinarTeacherID (z tabeli Employees)
+    - **Pola tabeli**:
+        - WebinarID: ID webinaru
         - WebinarName: Nazwa webinaru
-        - Description: Opis webinaru
+        - WebinarStartDate: Data rozpoczęcia webinaru
+        - WebinarEndDate: Data zakończenia webinaru
+        - WebinarDescription: Opis webinaru
+        - WebinarLanguageID: ID języka webinaru
+        - WebinarPrice: Cena webinaru
+        - WebinarTranslatorID: ID tłumacza webinaru
+        - WebinarTeacherID: ID nauczyciela webinaru
+        - WebinarMeetingLink: Link do spotkania webinaru
+        - WebinarAccessDateEnd: Data zakończenia dostępu do webinaru
+        - WebinarRecordingLink: Link do nagrania webinaru
         
-        ![Kod tabeli Webinars](img/tables/webinars_table.png)
+     ```sql
+    CREATE TABLE Webinars(
+        WebinarID INT PRIMARY KEY IDENTITY(1,1),
+        WebinarName VARCHAR(100) NOT NULL,
+        WebinarStartDate SMALLDATETIME NOT NULL,
+        WebinarEndDate SMALLDATETIME NOT NULL,
+        WebinarDescription VARCHAR(MAX) NOT NULL,
+        WebinarLanguageID INT NOT NULL,
+        WebinarPrice MONEY,
+        WebinarTranslatorID INT,
+        WebinarTeacherID INT NOT NULL,
+        WebinarMeetingLink VARCHAR(100),
+        WebinarAccessDateEnd SMALLDATETIME NOT NULL,
+        WebinarRecordingLink VARCHAR(100)
+        FOREIGN KEY (WebinarLanguageID) REFERENCES Languages (LanguageID),
+        FOREIGN KEY (WebinarTranslatorID) REFERENCES Employees (EmployeeID),
+        FOREIGN KEY (WebinarTeacherID) REFERENCES Employees (EmployeeID)
+    )
+    ```
 
 - **StudentBoughtWebinars**: Przechowuje informacje o zakupionych webinarach przez studentów.
-    - **Klucz podstawowy**: StudentBoughtWebinarID
-    - **Klucz obcy**: StudentID (z tabeli Students), WebinarID (z tabeli Webinars)
-    - **Pozostałe pola tabeli**:
-        - PurchaseDate: Data zakupu
+    - **Klucze podstawowe**: StudentID, WebinarID
+    - **Klucze obce**: StudentID (z tabeli Students), WebinarID (z tabeli Webinars)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - WebinarID: ID webinaru
+        - WebinarBoughtDate: Data zakupu webinaru
+        - WebinarAccessDateEnd: Data zakończenia dostępu do webinaru
         
-        ![Kod tabeli StudentBoughtWebinars](img/tables/studentBoughtWebinars_table.png)
+     ```sql
+    CREATE Table StudentBoughtWebinars(
+        StudentID INT,
+        WebinarID INT,
+        WebinarBoughtDate SMALLDATETIME NOT NULL,
+        WebinarAccessDateEnd SMALLDATETIME NOT NULL,
+        PRIMARY KEY (StudentID, WebinarID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID),
+        FOREIGN KEY (WebinarID) REFERENCES Webinars (WebinarID)
+    )
+    ```
 
 - **Cities**: Przechowuje informacje o miastach.
     - **Klucz podstawowy**: CityID
-    - **Pozostałe pola tabeli**:
+    - **Pola tabeli**:
+        - CityID: ID miasta
         - CityName: Nazwa miasta
         
-        ![Kod tabeli Cities](img/tables/cities_table.png)
+     ```sql
+    CREATE TABLE Cities(
+        CityID INT PRIMARY KEY IDENTITY(1,1),
+        CityName VARCHAR(50) NOT NULL
+    )
+    ```
 
 - **UserAvailableCities**: Przechowuje informacje o dostępnych miastach dla użytkowników.
-    - **Klucz podstawowy**: UserAvailableCityID
-    - **Klucz obcy**: UserID (z tabeli Users), CityID (z tabeli Cities)
-    - **Pozostałe pola tabeli**:
-        - AvailabilityStatus: Status dostępności
+    - **Klucze podstawowe**: UserID, CityID
+    - **Klucze obce**: UserID (z tabeli Users), CityID (z tabeli Cities) 
+    - **Pola tabeli**:
+        - UserID: ID użytkownika
+        - CityID: ID miasta
         
-        ![Kod tabeli UserAvailableCities](img/tables/userAvailableCities_table.png)
+     ```sql
+    CREATE TABLE UserAvailableCities(
+        UserID INT,
+        CityID INT,
+        PRIMARY KEY (UserID, CityID),
+        FOREIGN KEY (UserID) REFERENCES Users (UserID),
+        FOREIGN KEY (CityID) REFERENCES Cities (CityID)
+    )
+    ```
 
 - **Courses**: Przechowuje informacje o kursach.
     - **Klucz podstawowy**: CourseID
-    - **Pozostałe pola tabeli**:
+    - **Klucz obcy**: CourseLanguageID (z tabeli Languages)
+    - **Pola tabeli**:
+        - CourseID: ID kursu
         - CourseName: Nazwa kursu
-        - Description: Opis kursu
+        - CourseModuleQuantity: Ilość modułów kursu
+        - CourseDescription: Opis kursu
+        - CourseLanguageID: ID języka kursu
+        - CoursePrice: Cena kursu
+        - CourseStartDate: Data rozpoczęcia kursu
+        - CourseEndDate: Data zakończenia kursu
+        - CourseCapacity: Maksymalna ilość osób w kursie
+        - CourseRecordingLink: Link do nagrania kursu
         
-        ![Kod tabeli Courses](img/tables/courses_table.png)
+     ```sql
+    CREATE TABLE Courses(
+        CourseID INT PRIMARY KEY IDENTITY(1,1),
+        CourseName VARCHAR(100) NOT NULL,
+        CourseModuleQuantity INT NOT NULL,
+        CourseDescription VARCHAR(MAX) NOT NULL,
+        CourseLanguageID INT NOT NULL,
+        CoursePrice MONEY NOT NULL,
+        CourseStartDate SMALLDATETIME NOT NULL,
+        CourseEndDate SMALLDATETIME NOT NULL,
+        CourseCapacity INT NOT NULL,
+        CourseRecordingLink VARCHAR(100)
+        FOREIGN KEY (CourseLanguageID) REFERENCES Languages (LanguageID),
+    )
+    ```
+
+- **StudentBoughtCourses**: Przechowuje powiązanie studenta z zakupionymi kursami.
+    - **Klucze podstawowe**: StudentID, CourseID
+    - **Klucze obce**: StudentID (z tabeli Students), CourseID (z tabeli Courses)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - CourseID: ID kursu
+
+    ```sql
+    CREATE Table StudentBoughtCourses(
+        StudentID INT,
+        CourseID INT,
+        PRIMARY KEY (StudentID, CourseID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID),
+        FOREIGN KEY (CourseID) REFERENCES Courses (CourseID)
+    )
+    ```
 
 - **CourseModuleMeetingTypes**: Przechowuje typy spotkań modułów kursów.
     - **Klucz podstawowy**: CourseModuleMeetingTypeID
-    - **Pozostałe pola tabeli**:
-        - MeetingTypeName: Nazwa typu spotkania
+    - **Pola tabeli**:
+        - CourseModuleMeetingTypeID: ID typu spotkania modułu
+        - CourseModuleMeetingTypeName: Nazwa typu spotkania
         
-        ![Kod tabeli CourseModuleMeetingTypes](img/tables/courseModuleMeetingTypes_table.png)
+     ```sql
+    CREATE TABLE CourseModuleMeetingTypes(
+        CourseModuleMeetingTypeID INT PRIMARY KEY IDENTITY(1,1),
+        CourseModuleMeetingTypeName VARCHAR(50) NOT NULL
+    )
+    ```
 
 - **CourseModules**: Przechowuje informacje o modułach kursów.
     - **Klucz podstawowy**: CourseModuleID
-    - **Klucz obcy**: CourseID (z tabeli Courses)
-    - **Pozostałe pola tabeli**:
+    - **Klucze obce**: CourseID (z tabeli Course), ModuleLanguageID (z tabeli Languages), CourseModuleMeetingTypeID (z tabeli CourseModuleMeetingTypes)
+    - **Pola tabeli**:
+        - ModuleID: ID modułu
+        - CourseID: ID kursu
         - ModuleName: Nazwa modułu
-        - Description: Opis modułu
+        - ModuleDescription: Opis modułu
+        - ModuleLanguageID: ID języka modułu
+        - CourseModuleMeetingTypeID: ID typu spotkania modułu
+        - CourseModuleLessonQuantity: Ilość lekcji modułu
         
-        ![Kod tabeli CourseModules](img/tables/courseModules_table.png)
+     ```sql
+    CREATE TABLE CourseModules(
+        ModuleID INT PRIMARY KEY IDENTITY(1,1),
+        CourseID INT NOT NULL,
+        ModuleName VARCHAR(100) NOT NULL,
+        ModuleDescription VARCHAR(MAX) NOT NULL,
+        ModuleLanguageID INT NOT NULL,
+        CourseModuleMeetingTypeID INT NOT NULL,
+        CourseModuleLessonQuantity INT NOT NULL,
+        FOREIGN KEY (CourseID) REFERENCES Courses (CourseID),
+        FOREIGN KEY (ModuleLanguageID) REFERENCES Languages (LanguageID),
+        FOREIGN KEY (CourseModuleMeetingTypeID) REFERENCES CourseModuleMeetingTypes (CourseModuleMeetingTypeID)
+    )
+    ```
 
 - **CourseLessonMeetingTypes**: Przechowuje typy spotkań lekcji kursów.
     - **Klucz podstawowy**: CourseLessonMeetingTypeID
-    - **Pozostałe pola tabeli**:
-        - MeetingTypeName: Nazwa typu spotkania
+    - **Pola tabeli**:
+        - CourseLessonMeetingTypeID: ID typu spotkania lekcji
+        - CourseLessonMeetingTypeName: Nazwa typu spotkania
         
-        ![Kod tabeli CourseLessonMeetingTypes](img/tables/courseLessonMeetingTypes_table.png)
+     ```sql
+    CREATE TABLE CourseLessonMeetingTypes(
+        CourseLessonMeetingTypeID INT PRIMARY KEY IDENTITY(1,1),
+        CourseLessonMeetingTypeName VARCHAR(50) NOT NULL
+    )
+    ```
 
 - **CourseLessons**: Przechowuje informacje o lekcjach kursów.
     - **Klucz podstawowy**: CourseLessonID
-    - **Klucz obcy**: CourseModuleID (z tabeli CourseModules)
-    - **Pozostałe pola tabeli**:
+    - **Klucze obce**: ModuleID (z tabeli CourseModules), CourseID (z tabeli Courses), LessonLanguageID (z tabeli Languages), CourseLessonMeetingTypeID (z tabeli CourseLessonMeetingTypes) TranslatorID (z tabeli Employees), TeacherID (z tabeli Employees)
+    - **Pola tabeli**:
+        - LessonID: ID lekcji
+        - ModuleID: ID modułu
+        - CourseID: ID kursu
         - LessonName: Nazwa lekcji
-        - Description: Opis lekcji
-        
-        ![Kod tabeli CourseLessons](img/tables/courseLessons_table.png)
+        - LessonDescription: Opis lekcji
+        - LessonLanguageID: ID języka lekcji
+        - LessonMeetingLink: Link do spotkania lekcji
+        - LessonMeetingPlace: Miejsce spotkania lekcji
+        - LessonMeetingDateStart: Data rozpoczęcia spotkania lekcji
+        - LessonMeetingDateEnd: Data zakończenia spotkania lekcji
+        - LessonCapacity: Maksymalna ilość osób na lekcji
+        - CourseLessonMeetingTypeID: ID typu spotkania lekcji
+        - IsTranslatedToPolish: Czy lekcja jest tłumaczona na polski
+        - TranslatorID: ID tłumacza
+        - TeacherID: ID nauczyciela
+
+    ```sql
+    CREATE TABLE CourseLessons(
+        LessonID INT PRIMARY KEY IDENTITY(1,1),
+        ModuleID INT NOT NULL,
+        CourseID INT NOT NULL,
+        LessonName VARCHAR(100) NOT NULL,
+        LessonDescription VARCHAR(MAX) NOT NULL,
+        LessonLanguageID INT NOT NULL,
+        LessonMeetingLink VARCHAR(100) NOT NULL,
+        LessonMeetingPlace VARCHAR(100) NOT NULL,
+        LessonMeetingDateStart SMALLDATETIME NOT NULL,
+        LessonMeetingDateEnd SMALLDATETIME NOT NULL,
+        LessonCapacity INT NOT NULL,
+        CourseLessonMeetingTypeID INT NOT NULL,
+        IsTranslatedToPolish BIT NOT NULL,
+        TranslatorID INT,
+        TeacherID INT NOT NULL,
+        FOREIGN KEY (ModuleID) REFERENCES CourseModules (ModuleID),
+        FOREIGN KEY (CourseID) REFERENCES Courses (CourseID),
+        FOREIGN KEY (LessonLanguageID) REFERENCES Languages (LanguageID),
+        FOREIGN KEY (CourseLessonMeetingTypeID) REFERENCES CourseLessonMeetingTypes (CourseLessonMeetingTypeID),
+        FOREIGN KEY (TranslatorID) REFERENCES Employees (EmployeeID),
+        FOREIGN KEY (TeacherID) REFERENCES Employees (EmployeeID),
+    )
+    ```
 
 - **CourseModulesPassed**: Przechowuje informacje o zaliczonych modułach kursów przez studentów.
-    - **Klucz podstawowy**: CourseModulePassedID
-    - **Klucz obcy**: StudentID (z tabeli Students), CourseModuleID (z tabeli CourseModules)
-    - **Pozostałe pola tabeli**:
-        - PassDate: Data zaliczenia
-        
-        ![Kod tabeli CourseModulesPassed](img/tables/courseModulesPassed_table.png)
+    - **Klucze podstawowe**: StudentID, CourseID
+    - **Klucze obce**: StudentID (z tabeli Students), ModuleID (z tabeli CourseModules)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - ModuleID: ID modułu
+
+    ```sql
+    CREATE TABLE CourseModulesPassed(
+        StudentID INT,
+        ModuleID INT,
+        PRIMARY KEY (StudentID, ModuleID),
+        FOREIGN KEY (ModuleID) REFERENCES CourseModules (ModuleID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
+    )
+    ```
 
 - **CourseLessonsPassed**: Przechowuje informacje o zaliczonych lekcjach kursów przez studentów.
-    - **Klucz podstawowy**: CourseLessonPassedID
-    - **Klucz obcy**: StudentID (z tabeli Students), CourseLessonID (z tabeli CourseLessons)
-    - **Pozostałe pola tabeli**:
-        - PassDate: Data zaliczenia
-        
-        ![Kod tabeli CourseLessonsPassed](img/tables/courseLessonsPassed_table.png)
+    - **Klucze podstawowe**: StudentID, LessonID
+    - **Klucze obce**: StudentID (z tabeli Students), LessonID (z tabeli CourseLessons)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - LessonID: ID lekcji
+
+    ```sql
+    CREATE TABLE CourseLessonsPassed(
+        StudentID INT,
+        LessonID INT,
+        PRIMARY KEY (StudentID, LessonID),
+        FOREIGN KEY (LessonID) REFERENCES CourseLessons (LessonID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
+    )
+    ```
 
 - **WebinarsPassed**: Przechowuje informacje o zaliczonych webinarach przez studentów.
-    - **Klucz podstawowy**: WebinarPassedID
-    - **Klucz obcy**: StudentID (z tabeli Students), WebinarID (z tabeli Webinars)
-    - **Pozostałe pola tabeli**:
-        - PassDate: Data zaliczenia
-        
-        ![Kod tabeli WebinarsPassed](img/tables/webinarsPassed_table.png)
+    - **Klucze podstawowe**: StudentID, WebinarID
+    - **Klucze obce**: StudentID (z tabeli Students), WebinarID (z tabeli Webinars)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - WebinarID: ID webinaru
+
+    ```sql
+    CREATE TABLE WebinarsPassed(
+        StudentID INT,
+        WebinarID INT,
+        PRIMARY KEY (StudentID, WebinarID),
+        FOREIGN KEY (WebinarID) REFERENCES Webinars (WebinarID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
+    )
+    ```
 
 - **Orders**: Przechowuje informacje o zamówieniach.
     - **Klucz podstawowy**: OrderID
-    - **Pozostałe pola tabeli**:
+    - **Klucz obcy**: UserID (z tabeli Users)
+    - **Pola tabeli**:
+        - OrderID: ID zamówienia
+        - UserID: ID użytkownika
         - OrderDate: Data zamówienia
-        - TotalAmount: Całkowita kwota
-        
-        ![Kod tabeli Orders](img/tables/orders_table.png)
+        - OrderPaymentLink: Link do płatności zamówienia
+
+    ```sql
+    CREATE TABLE Orders(
+        OrderID INT PRIMARY KEY IDENTITY(1,1),
+        UserID INT NOT NULL,
+        OrderDate SMALLDATETIME NOT NULL,
+        OrderPaymentLink VARCHAR(100) NOT NULL,
+        FOREIGN KEY (UserID) REFERENCES Users (UserID)
+    )
+    ```
 
 - **OrderDetails**: Przechowuje szczegóły zamówień.
     - **Klucz podstawowy**: OrderDetailID
-    - **Klucz obcy**: OrderID (z tabeli Orders)
-    - **Pozostałe pola tabeli**:
-        - ProductID: ID produktu
-        - Quantity: Ilość
-        - Price: Cena
-        
-        ![Kod tabeli OrderDetails](img/tables/orderDetails_table.png)
+    - **Klucze obce**: OrderID (z tabeli Orders), CurrencyID (z tabeli CurrencyRates)
+    - **Pola tabeli**:
+        - OrderDetailID: ID szczegółu zamówienia
+        - OrderID: ID zamówienia
+        - AmountPaid: Kwota zapłacona
+        - AmountToPay: Kwota do zapłaty
+        - CurrencyID: ID waluty
+        - CurrencyRate: Kurs waluty
+        - PaidDate: Data płatności
+        - PostponementDate: Data odroczenia płatności
+
+    ```sql
+    CREATE TABLE OrderDetails(
+        OrderDetailID INT PRIMARY KEY IDENTITY(1,1),
+        OrderID INT NOT NULL,
+        AmountPaid MONEY NOT NULL,
+        AmountToPay MONEY NOT NULL,
+        CurrencyID INT,
+        CurrencyRate MONEY,
+        PaidDate SMALLDATETIME,
+        PostponementDate SMALLDATETIME,
+        FOREIGN KEY (OrderID) REFERENCES Orders (OrderID),
+        FOREIGN KEY (CurrencyID) REFERENCES CurrencyRates (CurrencyID)
+    )
+    ```
 
 - **OrderWebinars**: Przechowuje informacje o webinarach w zamówieniach.
     - **Klucz podstawowy**: OrderWebinarID
-    - **Klucz obcy**: OrderID (z tabeli Orders), WebinarID (z tabeli Webinars)
-    - **Pozostałe pola tabeli**:
-        - Quantity: Ilość
-        
-        ![Kod tabeli OrderWebinars](img/tables/orderWebinars_table.png)
+    - **Klucze obce**: OrderDetailID (z tabeli OrderDetails), WebinarID (z tabeli Webinars)
+    - **Pola tabeli**:
+        - OrderWebinarID: ID webinaru w zamówieniu
+        - WebinarID: ID webinaru
+        - OrderDetailID: ID szczegółu zamówienia
 
-- **OrderCourses**: Przechowuje informacje o kursach w zamówieniach.
+    ```sql
+    CREATE TABLE OrderWebinars(
+        OrderWebinarID INT PRIMARY KEY IDENTITY(1,1),
+        WebinarID INT NOT NULL,
+        OrderDetailID INT NOT NULL,
+        FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
+        FOREIGN KEY (WebinarID) REFERENCES Webinars (WebinarID)
+    )
+    ```
+
+- **OrderCourses**: Przechowuje informacje o zamówionych kursach.
     - **Klucz podstawowy**: OrderCourseID
-    - **Klucz obcy**: OrderID (z tabeli Orders), CourseID (z tabeli Courses)
-    - **Pozostałe pola tabeli**:
-        - Quantity: Ilość
-        
-        ![Kod tabeli OrderCourses](img/tables/orderCourses_table.png)
+    - **Klucze obce**: OrderDetailID (z tabeli OrderDetails), CourseID (z tabeli Courses)
+    - **Pola tabeli**:
+        - OrderCourseID: ID kursu w zamówieniu
+        - CourseID: ID kursu
+        - OrderDetailID: ID szczegółu zamówienia
+
+    ```sql
+    CREATE TABLE OrderCourses(
+        OrderCourseID INT PRIMARY KEY IDENTITY(1,1),
+        CourseID INT NOT NULL,
+        OrderDetailID INT NOT NULL,
+        FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
+        FOREIGN KEY (CourseID) REFERENCES Courses (CourseID)
+    )
+    ```
 
 - **Studies**: Przechowuje informacje o studiach.
-    - **Klucz podstawowy**: StudyID
-    - **Pozostałe pola tabeli**:
-        - StudyName: Nazwa studiów
-        - Description: Opis studiów
-        
-        ![Kod tabeli Studies](img/tables/studies_table.png)
+    - **Klucz podstawowy**: StudiesID
+    - **Pola tabeli**:
+        - StudiesID: ID studiów
+        - StudiesDescription: Opis studiów
+        - StudiesName: Nazwa studiów
+        - StudiesEntryFee: Opłata za studia
+        - StudiesStartDate: Data rozpoczęcia studiów
+        - StudiesEndDate: Data zakończenia studiów
+        - StudiesCapacity: Maksymalna ilość osób na studiach
+
+    ```sql
+    CREATE TABLE Studies(
+        StudiesID INT PRIMARY KEY IDENTITY(1,1),
+        StudiesDescription VARCHAR(MAX) NOT NULL,
+        StudiesName VARCHAR(100) NOT NULL,
+        StudiesEntryFee MONEY NOT NULL,
+        StudiesStartDate DATE NOT NULL,
+        StudiesEndDate DATE NOT NULL,
+        StudiesCapacity INT NOT NULL
+    )
+    ```
 
 - **Syllabuses**: Przechowuje informacje o sylabusach.
     - **Klucz podstawowy**: SyllabusID
-    - **Klucz obcy**: StudyID (z tabeli Studies)
-    - **Pozostałe pola tabeli**:
-        - SyllabusName: Nazwa sylabusa
-        - Description: Opis sylabusa
-        
-        ![Kod tabeli Syllabuses](img/tables/syllabuses_table.png)
+    - **Klucz obcy**: StudiesID (z tabeli Studies)
+    - **Pola tabeli**:
+        - SyllabusID: ID sylabusa
+        - StudiesID: ID studiów
+        - SemesterNumber: Numer semestru
+
+    ```sql
+    CREATE TABLE Syllabuses(
+        SyllabusID INT PRIMARY KEY IDENTITY(1,1),
+        StudiesID INT NOT NULL,
+        SemesterNumber INT NOT NULL,
+        FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
+    )
+    ```
 
 - **Subjects**: Przechowuje informacje o przedmiotach.
     - **Klucz podstawowy**: SubjectID
-    - **Pozostałe pola tabeli**:
+    - **Klucze obce**: CoordinatorID (z tabeli Employees), SyllabusID (z tabeli Syllabuses)
+    - **Pola tabeli**:
+        - SubjectID: ID przedmiotu
         - SubjectName: Nazwa przedmiotu
-        - Description: Opis przedmiotu
+        - SubjectDescription: Opis przedmiotu
+        - SubjectsCount: Liczba zajęć na przedmiocie
+        - CoordinatorID: ID koordynatora
+        - SyllabusID: ID sylabusa
         
-        ![Kod tabeli Subjects](img/tables/subjects_table.png)
+    ```sql
+    CREATE TABLE Subjects(
+        SubjectID INT PRIMARY KEY IDENTITY(1,1),
+        SubjectName VARCHAR(100) NOT NULL,
+        SubjectDescription VARCHAR(MAX) NOT NULL,
+        SubjectsCount INT NOT NULL,
+        CoordinatorID INT NOT NULL,
+        SyllabusID INT NOT NULL,
+        FOREIGN KEY (CoordinatorID) REFERENCES Employees (EmployeeID),
+        FOREIGN KEY (SyllabusID) REFERENCES Syllabuses (SyllabusID)
+    )
+    ```
 
 - **StudiesLessonMeetingTypes**: Przechowuje typy spotkań lekcji studiów.
     - **Klucz podstawowy**: StudiesLessonMeetingTypeID
-    - **Pozostałe pola tabeli**:
-        - MeetingTypeName: Nazwa typu spotkania
+    - **Pola tabeli**:
+        - StudiesLessonMeetingTypeID: ID typu spotkania lekcji
+        - StudiesLessonMeetingTypeName: Nazwa typu spotkania
         
-        ![Kod tabeli StudiesLessonMeetingTypes](img/tables/studiesLessonMeetingTypes_table.png)
+    ```sql
+    CREATE TABLE StudiesLessonMeetingTypes(
+        StudiesLessonMeetingTypeID INT PRIMARY KEY IDENTITY(1,1),
+        StudiesLessonMeetingTypeName VARCHAR(50) NOT NULL
+    )
+    ```
+
+- **StudiesSessions**: Przechowuje informacje o semestrach na studiach.
+    - **Klucz podstawowy**: SessionID
+    - **Klucze obce**: StudiesID (z tabeli Studies), SubjectID (z tabeli Subjects)
+    - **Pola tabeli**:
+        - SessionID: ID semestru
+        - StudiesID: ID studiów
+        - SubjectID: ID przedmiotu
+        - SessionStartDate: Data rozpoczęcia semestru
+        - SessionEndDate: Data zakończenia semestru
+        - SessionCapacity: Ilość osób na semestrze
+        - SessionGuestCapacity: Ilość gości na semestrze
+        - SessionPrice: Cena za semestr
+        
+    ```sql
+    CREATE TABLE StudiesSessions(
+        SessionID INT PRIMARY KEY IDENTITY(1,1),
+        StudiesID INT NOT NULL,
+        SubjectID INT NOT NULL,
+        SessionStartDate DATE NOT NULL,
+        SessionEndDate DATE NOT NULL,
+        SessionCapacity INT NOT NULL,
+        SessionGuestCapacity INT NOT NULL,
+        SessionPrice MONEY NOT NULL,
+        FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID),
+        FOREIGN KEY (SubjectID) REFERENCES Subjects (SubjectID)
+    )
+    ```
 
 - **StudiesLessons**: Przechowuje informacje o lekcjach studiów.
-    - **Klucz podstawowy**: StudiesLessonID
-    - **Klucz obcy**: StudyID (z tabeli Studies)
-    - **Pozostałe pola tabeli**:
+    - **Klucz podstawowy**: LessonID
+    - **Klucze obce**: SessionID (z tabeli StudiesSessions), SubjectID (z tabeli Subjects), LessonLanguageID (z tabeli Languages), TranslatorID (z tabeli Employees), TeacherID (z tabeli Employees), StudiesLessonMeetingTypeID (z tabeli StudiesLessonMeetingTypes)
+    - **Pola tabeli**:
+        - LessonID: ID lekcji
+        - SessionID: ID semestru
+        - SubjectID: ID przedmiotu
         - LessonName: Nazwa lekcji
-        - Description: Opis lekcji
+        - LessonDescription: Opis lekcji
+        - LessonLanguageID: ID języka lekcji
+        - LessonMeetingLink: Link do spotkania lekcji
+        - LessonMeetingPlace: Miejsce spotkania lekcji
+        - LessonMeetingDateStart: Data rozpoczęcia spotkania lekcji
+        - LessonMeetingDateEnd: Data zakończenia spotkania lekcji
+        - LessonCapacity: Ilość osób na lekcji
+        - LessonGuestCapacity: Ilość gości na lekcji
+        - LessonPrice: Cena lekcji
+        - LessonGuestPrice: Cena dla gości
+        - IsTranslatedToPolish: Czy lekcja jest tłumaczona na polski
+        - TranslatorID: ID tłumacza
+        - TeacherID: ID nauczyciela
+        - StudiesLessonMeetingTypeID: ID typu spotkania lekcji
         
-        ![Kod tabeli StudiesLessons](img/tables/studiesLessons_table.png)
+    ```sql
+    CREATE TABLE StudiesLessons(
+        LessonID INT PRIMARY KEY IDENTITY(1,1),
+        SessionID INT NOT NULL,
+        SubjectID INT NOT NULL,
+        LessonName VARCHAR(100) NOT NULL,
+        LessonDescription VARCHAR(MAX) NOT NULL,
+        LessonLanguageID INT NOT NULL,
+        LessonMeetingLink VARCHAR(100),
+        LessonMeetingPlace VARCHAR(100),
+        LessonMeetingDateStart SMALLDATETIME NOT NULL,
+        LessonMeetingDateEnd SMALLDATETIME NOT NULL,
+        LessonCapacity INT NOT NULL,
+        LessonGuestCapacity INT NOT NULL,
+        LessonPrice MONEY NOT NULL,
+        LessonGuestPrice MONEY NOT NULL,
+        IsTranslatedToPolish BIT NOT NULL,
+        TranslatorID INT,
+        TeacherID INT NOT NULL,
+        StudiesLessonMeetingTypeID INT NOT NULL,
+        FOREIGN KEY (SessionID) REFERENCES StudiesSessions (SessionID),
+        FOREIGN KEY (SubjectID) REFERENCES Subjects (SubjectID),
+        FOREIGN KEY (LessonLanguageID) REFERENCES Languages (LanguageID),
+        FOREIGN KEY (TranslatorID) REFERENCES Employees (EmployeeID),
+        FOREIGN KEY (TeacherID) REFERENCES Employees (EmployeeID),
+        FOREIGN KEY (StudiesLessonMeetingTypeID) REFERENCES StudiesLessonMeetingTypes (StudiesLessonMeetingTypeID),
+    )
+    ```
 
-- **StudiesLessonPassed**: Przechowuje informacje o zaliczonych lekcjach studiów przez studentów.
-    - **Klucz podstawowy**: StudiesLessonPassedID
-    - **Klucz obcy**: StudentID (z tabeli Students), StudiesLessonID (z tabeli StudiesLessons)
-    - **Pozostałe pola tabeli**:
-        - PassDate: Data zaliczenia
+- **StudiesLessonsPassed**: Przechowuje informacje o zaliczonych lekcjach studiów przez studentów.
+    - **Klucze podstawowe**: StudentID, LessonID
+    - **Klucze obce**: StudentID (z tabeli Students), LessonID (z tabeli StudiesLessons)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - LessonID: ID lekcji
         
-        ![Kod tabeli StudiesLessonPassed](img/tables/studiesLessonPassed_table.png)
+    ```sql
+    CREATE TABLE StudiesLessonsPassed(
+        StudentID INT,
+        LessonID INT,
+        PRIMARY KEY (StudentID, LessonID),
+        FOREIGN KEY (LessonID) REFERENCES StudiesLessons (LessonID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
+    )
+    ```
+
+- **StudentStudiesGrades**: Przechowuje oceny studentów za studia.
+    - **Klucze podstawowe**: StudentID, StudiesID
+    - **Klucze obce**: StudentID (z tabeli Students), StudiesID (z tabeli Studies)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - StudiesID: ID studiów
+        - StudentGrade: Ocena studenta
+        
+    ```sql
+    CREATE TABLE StudentStudiesGrades(
+        StudentID INT,
+        StudiesID INT,
+        StudentGrade INT NOT NULL,
+        PRIMARY KEY (StudentID, StudiesID),
+        FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
+    )
+    ```
+
+- **StudentBoughtStudies**: Przechowuje informacje o zakupionych studiach przez studentów.
+    - **Klucze podstawowe**: StudentID, StudiesID
+    - **Klucze obce**: StudentID (z tabeli Students), StudiesID (z tabeli Studies)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - StudiesID: ID studiów
+        
+    ```sql
+    CREATE TABLE StudentBoughtStudies(
+        StudentID INT,
+        StudiesID INT,
+        PRIMARY KEY (StudentID, StudiesID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID),
+        FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
+    )
+    ```
+
+- **StudentBoughtSessions**: Przechowuje informacje o zakupionych sesjach przez studentów.
+    - **Klucze podstawowe**: StudentID, SessionID
+    - **Klucze obce**: StudentID (z tabeli Students), SessionID (z tabeli StudiesSessions)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - SessionID: ID sesji
+        
+    ```sql
+    CREATE TABLE StudentBoughtSessions(
+        StudentID INT,
+        SessionID INT,
+        PRIMARY KEY (StudentID, SessionID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID),
+        FOREIGN KEY (SessionID) REFERENCES StudiesSessions (SessionID)
+    )
+    ```
+
+- **InternshipMeetingTypes**: Przechowuje typy spotkań praktyk.
+    - **Klucz podstawowy**: InternshipMeetingTypeID
+    - **Pola tabeli**:
+        - InternshipMeetingTypeID: ID typu spotkania
+        - InternshipMeetingTypeName: Nazwa typu spotkania
+        
+    ```sql
+    CREATE TABLE InternshipMeetingTypes(
+        InternshipMeetingTypeID INT PRIMARY KEY IDENTITY(1,1),
+        InternshipMeetingTypeName VARCHAR(50) NOT NULL
+    )
+    ```
 
 - **Internships**: Przechowuje informacje o praktykach.
     - **Klucz podstawowy**: InternshipID
-    - **Pozostałe pola tabeli**:
-        - InternshipName: Nazwa praktyki
-        - Description: Opis praktyki
+    - **Klucze obce**: StudiesID (z tabeli Studies), InternshipMeetingType (z tabeli InternshipMeetingTypes)
+    - **Pola tabeli**:
+        - InternshipID: ID praktyk
+        - InternshipCompany: Firma praktyk
+        - InternshipStartDate: Data rozpoczęcia praktyk
+        - StudiesID: ID studiów
+        - InternshipMeetingType: ID typu spotkania
         
-        ![Kod tabeli Internships](img/tables/internships_table.png)
+    ```sql
+    CREATE TABLE Internships(
+        InternshipID INT PRIMARY KEY IDENTITY(1,1),
+        InternshipCompany VARCHAR(100) NOT NULL,
+        InternshipStartDate DATE NOT NULL,
+        StudiesID INT NOT NULL,
+        InternshipMeetingType INT NOT NULL,
+        FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID),
+        FOREIGN KEY (InternshipMeetingType) REFERENCES InternshipMeetingTypes (InternshipMeetingTypeID)
+    )
+    ```
 
-- **InternshipMeetingPassed**: Przechowuje informacje o zaliczonych praktykach przez studentów.
-    - **Klucz podstawowy**: InternshipMeetingPassedID
-    - **Klucz obcy**: StudentID (z tabeli Students), InternshipID (z tabeli Internships)
-    - **Pozostałe pola tabeli**:
-        - PassDate: Data zaliczenia
+- **InternshipMeetingsPassed**: Przechowuje informacje o zaliczonych praktykach przez studentów.
+    - **Klucze podstawowe**: StudentID, InternshipID
+    - **Klucze obce**: StudentID (z tabeli Students), InternshipID (z tabeli Internships)
+    - **Pola tabeli**:
+        - StudentID: ID studenta
+        - InternshipID: ID praktyk
         
-        ![Kod tabeli InternshipMeetingPassed](img/tables/internshipMeetingPassed_table.png)
+    ```sql
+    CREATE TABLE InternshipMeetingsPassed(
+        StudentID INT,
+        InternshipID INT,
+        PRIMARY KEY (StudentID, InternshipID),
+        FOREIGN KEY (InternshipID) REFERENCES Internships (InternshipID),
+        FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
+    )
+    ```
 
 - **OrderStudies**: Przechowuje informacje o studiach w zamówieniach.
-    - **Klucz podstawowy**: OrderStudyID
-    - **Klucz obcy**: OrderID (z tabeli Orders), StudyID (z tabeli Studies)
-    - **Pozostałe pola tabeli**:
-        - Quantity: Ilość
+    - **Klucz podstawowy**: OrderStudiesID
+    - **Klucze obce**: OrderDetailID (z tabeli OrderDetails), StudiesID (z tabeli Studies)
+    - **Pola tabeli**:
+        - OrderStudiesID: ID studiów w zamówieniu
+        - StudiesID: ID studiów
+        - OrderDetailID: ID szczegółu zamówienia
         
-        ![Kod tabeli OrderStudies](img/tables/orderStudies_table.png)
+    ```sql
+    CREATE TABLE OrderStudies(
+        OrderStudiesID INT PRIMARY KEY IDENTITY(1,1),
+        StudiesID INT NOT NULL,
+        OrderDetailID INT NOT NULL,
+        FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
+        FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
+    )
+    ```
+
+- **OrderSessions**: Przechowuje informacje o sesjach w zamówieniach.
+    - **Klucz podstawowy**: OrderSessionID
+    - **Klucze obce**: OrderDetailID (z tabeli OrderDetails), SessionID (z tabeli StudiesSessions)
+    - **Pola tabeli**:
+        - OrderSessionID: ID sesji w zamówieniu
+        - SessionID: ID sesji
+        - OrderDetailID: ID szczegółu zamówienia
+        
+    ```sql
+    CREATE TABLE OrderSessions(
+        OrderSessionID INT PRIMARY KEY IDENTITY(1,1),
+        SessionID INT NOT NULL,
+        OrderDetailID INT NOT NULL,
+        FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails (OrderDetailID),
+        FOREIGN KEY (SessionID) REFERENCES StudiesSessions (SessionID)
+    )
+    ```
 
 - **RODOSigns**: Przechowuje informacje o zgodach RODO użytkowników.
-    - **Klucz podstawowy**: RODOSignID
+    - **Klucz podstawowy**: SignID
     - **Klucz obcy**: UserID (z tabeli Users)
-    - **Pozostałe pola tabeli**:
-        - ConsentDate: Data zgody
+    - **Pola tabeli**:
+        - SignID: ID zgody
+        - UserID: ID użytkownika
+        - IsSigned: Czy zgoda została wyrażona
+        - SignDate: Data wyrażenia zgody
         
-        ![Kod tabeli RODOSigns](img/tables/RODOSigns_table.png)
+    ```sql
+    CREATE TABLE RODOSigns (
+        SignID INT PRIMARY KEY IDENTITY(1,1),
+        UserID INT NOT NULL,
+        IsSigned BIT NOT NULL,
+        SignDate DATE NOT NULL,
+        FOREIGN KEY (UserID) REFERENCES Users (UserID)
+    )
+    ```
 
 
 ## Widoki
@@ -1473,4 +2059,86 @@ BEGIN
         AND StudiesStartDate > GETDATE())
     END
 END;
+```
+
+## Indeksy
+
+### Users
+
+Indeksuje po kolumnie `UserEmail`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_users_email ON Users(UserEmail);
+```
+
+### Employees
+
+Indeksuje po kolumnie `UserID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_employees_userid ON Employees(UserID);
+```
+
+### Students
+
+Indeksuje po kolumnie `UserID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_students_userid ON Students(UserID);
+```
+
+### Webinars
+
+Indeksuje po kolumnie `WebinarLanguageID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_webinars_languageid ON Webinars(WebinarLanguageID);
+```
+
+### Courses
+
+Indeksuje po kolumnie `CourseLanguageID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_courses_languageid ON Courses(CourseLanguageID);
+```
+
+### Orders
+
+Indeksuje po kolumnie `UserID`.
+
+```sql
+CREATE CLUSTERED INDEX idx_orders_userid ON Orders(UserID);
+```
+
+### OrderDetails
+
+Indeksuje po kolumnie `OrderID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_orderdetails_orderid ON OrderDetails(OrderID);
+```
+
+### StudentBoughtWebinars
+
+Indeksuje po kolumnie `StudentID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_studentboughtwebinars_studentid ON StudentBoughtWebinars(StudentID);
+```
+
+### CourseModules
+
+Indeksuje po kolumnie `CourseID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_coursemodules_courseid ON CourseModules(CourseID);
+```
+
+### CourseLessons
+
+Indeksuje po kolumnie `ModuleID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_courselessons_moduleid ON CourseLessons(ModuleID);
 ```
