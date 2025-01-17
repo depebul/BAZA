@@ -1,4 +1,4 @@
-# Dokumentacja projekt bazy danych 2024
+# Dokumentacja projekt bazy danych 2024/2025
 
 ## Zespół
  - Błażej Naziemiec - 33%
@@ -2198,20 +2198,53 @@ END;
 ## Indeksy
 
 ### Users
-
-Indeksuje po kolumnie `UserEmail`.
+Indeksuje po kolumnach `UserEmail` i `UserCity`.
 
 ```sql
 CREATE NONCLUSTERED INDEX idx_users_email ON Users(UserEmail);
+CREATE NONCLUSTERED INDEX idx_users_city ON Users(UserCity);
+```
+
+### Languages
+
+Indeksuje po kolumnie `LanguageName`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_languages_name ON Languages(LanguageName);
+```
+
+### CurrencyRates
+
+Indeksuje po kolumnie `CurrencyName`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_currencyrates_name ON CurrencyRates(CurrencyName);
+```
+
+### EmployeeTypes
+
+Indeksuje po kolumnie `EmployeeTypeName`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_employeetypes_name ON EmployeeTypes(EmployeeTypeName);
 ```
 
 ### Employees
-
-Indeksuje po kolumnie `UserID`.
+Indeksuje po kolumnach `UserID` i `EmployeeTypeID`.
 
 ```sql
 CREATE NONCLUSTERED INDEX idx_employees_userid ON Employees(UserID);
+CREATE NONCLUSTERED INDEX idx_employees_employeetypeid ON Employees(EmployeeTypeID);
 ```
+
+### TeachingLanguages
+
+Indeksuje po kolumnie `EmployeeID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_teachinglanguages_employeeid ON TeachingLanguages(EmployeeID);
+```
+<div style="page-break-after: always;"></div>
 
 ### Students
 
@@ -2219,6 +2252,22 @@ Indeksuje po kolumnie `UserID`.
 
 ```sql
 CREATE NONCLUSTERED INDEX idx_students_userid ON Students(UserID);
+```
+
+### StudyingLanguages
+
+Indeksuje po kolumnie `StudentID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_studyinglanguages_studentid ON StudyingLanguages(StudentID);
+```
+
+### TranslatingLanguages
+
+Indeksuje po kolumnie `EmployeeID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_translatinglanguages_employeeid ON TranslatingLanguages(EmployeeID);
 ```
 
 ### Webinars
@@ -2229,12 +2278,104 @@ Indeksuje po kolumnie `WebinarLanguageID`.
 CREATE NONCLUSTERED INDEX idx_webinars_languageid ON Webinars(WebinarLanguageID);
 ```
 
+### StudentBoughtWebinars
+
+Indeksuje po kolumnie `StudentID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_studentboughtwebinars_studentid ON StudentBoughtWebinars(StudentID);
+```
+
+### Cities
+
+Indeksuje po kolumnie `CityName`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_cities_cityname ON Cities(CityName);
+```
+
+<div style="page-break-after: always;"></div>
+
+### UserAvailableCities
+
+Indeksuje po kolumnie `UserID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_useravailablecities_userid ON UserAvailableCities(UserID);
+```
+
 ### Courses
 
 Indeksuje po kolumnie `CourseLanguageID`.
 
 ```sql
 CREATE NONCLUSTERED INDEX idx_courses_languageid ON Courses(CourseLanguageID);
+```
+
+### StudentBoughtCourses
+
+Indeksuje po kolumnie `StudentID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_studentboughtcourses_studentid ON StudentBoughtCourses(StudentID);
+```
+
+### CourseModuleMeetingTypes
+
+Indeksuje po kolumnie `MeetingTypeName`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_coursemodulemeetingtypes_name ON CourseModuleMeetingTypes(MeetingTypeName);
+```
+
+### CourseModules
+
+Indeksuje po kolumnie `CourseID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_coursemodules_courseid ON CourseModules(CourseID);
+```
+
+### CourseLessonMeetingTypes
+
+Indeksuje po kolumnie `MeetingTypeName`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_courselessonmeetingtypes_name ON CourseLessonMeetingTypes(MeetingTypeName);
+```
+
+<div style="page-break-after: always;"></div>
+
+### CourseLessons
+
+Indeksuje po kolumnie `ModuleID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_courselessons_moduleid ON CourseLessons(ModuleID);
+```
+
+### CourseModulesPassed
+
+Indeksuje po kolumnie `StudentID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_coursemodulespassed_studentid ON CourseModulesPassed(StudentID);
+```
+
+### CourseLessonsPassed
+
+Indeksuje po kolumnie `StudentID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_courselessonspassed_studentid ON CourseLessonsPassed(StudentID);
+```
+
+### WebinarsPassed
+
+Indeksuje po kolumnie `StudentID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_webinarspassed_studentid ON WebinarsPassed(StudentID);
 ```
 
 ### Orders
@@ -2253,26 +2394,152 @@ Indeksuje po kolumnie `OrderID`.
 CREATE NONCLUSTERED INDEX idx_orderdetails_orderid ON OrderDetails(OrderID);
 ```
 
-### StudentBoughtWebinars
+<div style="page-break-after: always;"></div>
+
+### OrderWebinars
+
+Indeksuje po kolumnie `OrderDetailID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_orderwebinars_orderdetailid ON OrderWebinars(OrderDetailID);
+```
+
+### OrderCourses
+
+Indeksuje po kolumnie `OrderDetailID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_ordercourses_orderdetailid ON OrderCourses(OrderDetailID);
+```
+
+### Studies
+
+Indeksuje po kolumnie `StudiesName`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_studies_name ON Studies(StudiesName);
+```
+
+### Syllabuses
+
+Indeksuje po kolumnie `StudiesID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_syllabuses_studiesid ON Syllabuses(StudiesID);
+```
+
+### Subjects
+
+Indeksuje po kolumnie `CoordinatorID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_subjects_coordinatorid ON Subjects(CoordinatorID);
+```
+
+### StudiesLessonMeetingTypes
+
+Indeksuje po kolumnie `MeetingTypeName`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_studieslessonmeetingtypes_name ON StudiesLessonMeetingTypes(MeetingTypeName);
+```
+
+<div style="page-break-after: always;"></div>
+
+### StudiesSessions
+
+Indeksuje po kolumnie `StudiesID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_studiessessions_studiesid ON StudiesSessions(StudiesID);
+```
+
+### StudentLessons
 
 Indeksuje po kolumnie `StudentID`.
 
 ```sql
-CREATE NONCLUSTERED INDEX idx_studentboughtwebinars_studentid ON StudentBoughtWebinars(StudentID);
+CREATE NONCLUSTERED INDEX idx_studentlessons_studentid ON StudentLessons(StudentID);
 ```
 
-### CourseModules
+### StudiesLessonsPassed
 
-Indeksuje po kolumnie `CourseID`.
+Indeksuje po kolumnie `StudentID`.
 
 ```sql
-CREATE NONCLUSTERED INDEX idx_coursemodules_courseid ON CourseModules(CourseID);
+CREATE NONCLUSTERED INDEX idx_studieslessonspassed_studentid ON StudiesLessonsPassed(StudentID);
 ```
 
-### CourseLessons
+### StudentStudiesGrades
 
-Indeksuje po kolumnie `ModuleID`.
+Indeksuje po kolumnie `StudentID`.
 
 ```sql
-CREATE NONCLUSTERED INDEX idx_courselessons_moduleid ON CourseLessons(ModuleID);
+CREATE NONCLUSTERED INDEX idx_studentstudiesgrades_studentid ON StudentStudiesGrades(StudentID);
+```
+
+### StudentBoughtStudies
+
+Indeksuje po kolumnie `StudentID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_studentboughtstudies_studentid ON StudentBoughtStudies(StudentID);
+```
+
+### StudentBoughtSessions
+
+Indeksuje po kolumnie `StudentID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_studentboughtsessions_studentid ON StudentBoughtSessions(StudentID);
+```
+
+<div style="page-break-after: always;"></div>
+
+### InternshipMeetingTypes
+
+Indeksuje po kolumnie `InternshipMeetingTypeName`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_internshipmeetingtypes_name ON InternshipMeetingTypes(InternshipMeetingTypeName);
+```
+
+### Internships
+
+Indeksuje po kolumnie `StudiesID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_internships_studiesid ON Internships(StudiesID);
+```
+
+### InternshipMeetingsPassed
+
+Indeksuje po kolumnie `StudentID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_internshipmeetingspassed_studentid ON InternshipMeetingsPassed(StudentID);
+```
+
+### OrderStudies
+
+Indeksuje po kolumnie `OrderDetailID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_orderstudies_orderdetailid ON OrderStudies(OrderDetailID);
+```
+
+### OrderSessions
+
+Indeksuje po kolumnie `OrderDetailID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_ordersessions_orderdetailid ON OrderSessions(OrderDetailID);
+```
+
+### RODOSigns
+
+Indeksuje po kolumnie `UserID`.
+
+```sql
+CREATE NONCLUSTERED INDEX idx_rodosigns_userid ON RODOSigns(UserID);
 ```

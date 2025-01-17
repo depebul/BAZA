@@ -1,0 +1,28 @@
+@page {
+    margin-top: 0.25in; /* Zmniejsz górny margines do 0.5 cala */
+    margin-right: 0.2in; /* Standardowy margines prawy */
+    margin-bottom: 0.5in; /* Standardowy margines dolny */
+    margin-left: 0.2in; /* Standardowy margines lewy */
+}
+
+
+body {
+    font-size: 12px; /* Zmień na rozmiar, który Ci odpowiada */
+    line-height: 1.6; /* Opcjonalnie dostosuj odstępy między wierszami */
+}
+
+h1 {
+    font-size: 20px; /* Nagłówki 1. poziomu */
+}
+
+h2 {
+    font-size: 18px; /* Nagłówki 2. poziomu */
+}
+
+h3 {
+    font-size: 16px; /* Nagłówki 3. poziomu */
+}
+
+pre, code {
+    font-size: 11px; /* Rozmiar tekstu w blokach kodu */
+}
