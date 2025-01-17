@@ -6,6 +6,7 @@
  - Szymon Żuk - 33%
 
 Grupa 10, wtorek 18:30
+<div style="page-break-after: always;"></div>
 
 ## Role
 
@@ -17,6 +18,7 @@ W bazie danych utworzone są następujące role:
 - Student
 - SchoolDirector
 - Accountant
+<div style="page-break-after: always;"></div>
 
 ## Uprawnienia
 
@@ -45,6 +47,7 @@ GRANT INSERT, UPDATE, DELETE ON OrderDetails TO Administrator;
 GRANT SELECT ON Orders TO Administrator;
 GRANT SELECT ON OrderDetails TO Administrator;
 ```
+<div style="page-break-after: always;"></div>
 
 ### Lecturer
 
@@ -65,6 +68,7 @@ GRANT SELECT ON CourseLessonsPassed TO Lecturer;
 GRANT SELECT ON WebinarsPassed TO Lecturer;
 GRANT SELECT ON StudiesLessonPassed TO Lecturer;
 ```
+<div style="page-break-after: always;"></div>
 
 ### Translator
 
@@ -79,6 +83,7 @@ GRANT SELECT ON Webinars TO Translator;
 GRANT SELECT ON Courses TO Translator;
 GRANT SELECT ON Studies TO Translator;
 ```
+<div style="page-break-after: always;"></div>
 
 ### Student
 
@@ -103,6 +108,7 @@ GRANT SELECT ON CourseLessonsPassed TO Student;
 GRANT SELECT ON WebinarsPassed TO Student;
 GRANT SELECT ON StudiesLessonPassed TO Student;
 ```
+<div style="page-break-after: always;"></div>
 
 ### SchoolDirector
 
@@ -125,6 +131,7 @@ GRANT ALL ON Studies TO SchoolDirector;
 GRANT ALL ON Orders TO SchoolDirector;
 GRANT ALL ON OrderDetails TO SchoolDirector;
 ```
+<div style="page-break-after: always;"></div>
 
 ### Accountant
 
@@ -137,10 +144,12 @@ Rola `Accountant` ma następujące uprawnienia:
 GRANT SELECT ON Orders TO Accountant;
 GRANT SELECT ON OrderDetails TO Accountant;
 ```
+<div style="page-break-after: always;"></div>
 
 ## Diagram bazy danych
 
 ![Diagram bazy danych](BAZA_diagram.png)
+<div style="page-break-after: always;"></div>
 
 ## Opis tabel
 
@@ -175,6 +184,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         UserPostalCode  VARCHAR(10) NOT NULL
     )
     ```
+<div style="page-break-after: always;"></div>
 
 - **Languages**: Przechowuje informacje o językach.
     - **Klucz podstawowy**: LanguageID
@@ -189,6 +199,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         LanguageName VARCHAR(50) NOT NULL
     )
     ```
+<div style="page-break-after: always;"></div>
 
 - **CurrencyRates**: Przechowuje kursy walut.
     - **Klucz podstawowy**: CurrencyID
@@ -204,6 +215,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         RateToPLN MONEY NOT NULL
     )
     ```
+<div style="page-break-after: always;"></div>
 
 - **EmployeeTypes**: Przechowuje typy pracowników.
     - **Klucz podstawowy**: EmployeeTypeID
@@ -218,6 +230,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         EmployeeTypeName VARCHAR(50) NOT NULL
     )
     ```
+<div style="page-break-after: always;"></div>
 
 - **Employees**: Przechowuje informacje o pracownikach.
     - **Klucz podstawowy**: EmployeeID
@@ -241,6 +254,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (EmployeeTypeID) REFERENCES EmployeeTypes (EmployeeTypeID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **TeachingLanguages**: Przechowuje informacje o językach, w których uczą pracownicy.
     - **Klucze podstawowe**: EmployeeID, LanguageID
@@ -258,6 +272,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (LanguageID) REFERENCES Languages (LanguageID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **Students**: Przechowuje informacje o studentach.
     - **Klucz podstawowy**: StudentID
@@ -274,6 +289,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (UserID) REFERENCES Users (UserID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **StudyingLanguages**: Przechowuje informacje o językach, w których chce uczyć się student.
     - **Klucze podstawowe**: StudentID, LanguageID
@@ -291,6 +307,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (LanguageID) REFERENCES Languages (LanguageID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **TranslatingLanguages**: Przechowuje informacje o języku, jaki może tłumaczyć tłumacz.
     - **Klucze podstawowe**: EmployeeID, LanguageID
@@ -308,6 +325,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (LanguageID) REFERENCES Languages (LanguageID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **Webinars**: Przechowuje informacje o webinarach.
     - **Klucz podstawowy**: WebinarID
@@ -345,6 +363,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (WebinarTeacherID) REFERENCES Employees (EmployeeID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **StudentBoughtWebinars**: Przechowuje informacje o zakupionych webinarach przez studentów.
     - **Klucze podstawowe**: StudentID, WebinarID
@@ -366,6 +385,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (WebinarID) REFERENCES Webinars (WebinarID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **Cities**: Przechowuje informacje o miastach.
     - **Klucz podstawowy**: CityID
@@ -379,6 +399,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         CityName VARCHAR(50) NOT NULL
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **UserAvailableCities**: Przechowuje informacje o dostępnych miastach dla użytkowników.
     - **Klucze podstawowe**: UserID, CityID
@@ -396,6 +417,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (CityID) REFERENCES Cities (CityID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **Courses**: Przechowuje informacje o kursach.
     - **Klucz podstawowy**: CourseID
@@ -427,6 +449,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (CourseLanguageID) REFERENCES Languages (LanguageID),
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **StudentBoughtCourses**: Przechowuje powiązanie studenta z zakupionymi kursami.
     - **Klucze podstawowe**: StudentID, CourseID
@@ -444,6 +467,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (CourseID) REFERENCES Courses (CourseID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **CourseModuleMeetingTypes**: Przechowuje typy spotkań modułów kursów.
     - **Klucz podstawowy**: CourseModuleMeetingTypeID
@@ -457,6 +481,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         CourseModuleMeetingTypeName VARCHAR(50) NOT NULL
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **CourseModules**: Przechowuje informacje o modułach kursów.
     - **Klucz podstawowy**: CourseModuleID
@@ -484,6 +509,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (CourseModuleMeetingTypeID) REFERENCES CourseModuleMeetingTypes (CourseModuleMeetingTypeID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **CourseLessonMeetingTypes**: Przechowuje typy spotkań lekcji kursów.
     - **Klucz podstawowy**: CourseLessonMeetingTypeID
@@ -497,6 +523,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         CourseLessonMeetingTypeName VARCHAR(50) NOT NULL
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **CourseLessons**: Przechowuje informacje o lekcjach kursów.
     - **Klucz podstawowy**: CourseLessonID
@@ -543,6 +570,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (TeacherID) REFERENCES Employees (EmployeeID),
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **CourseModulesPassed**: Przechowuje informacje o zaliczonych modułach kursów przez studentów.
     - **Klucze podstawowe**: StudentID, CourseID
@@ -560,6 +588,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **CourseLessonsPassed**: Przechowuje informacje o zaliczonych lekcjach kursów przez studentów.
     - **Klucze podstawowe**: StudentID, LessonID
@@ -577,6 +606,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **WebinarsPassed**: Przechowuje informacje o zaliczonych webinarach przez studentów.
     - **Klucze podstawowe**: StudentID, WebinarID
@@ -594,6 +624,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **Orders**: Przechowuje informacje o zamówieniach.
     - **Klucz podstawowy**: OrderID
@@ -613,6 +644,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (UserID) REFERENCES Users (UserID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **OrderDetails**: Przechowuje szczegóły zamówień.
     - **Klucz podstawowy**: OrderDetailID
@@ -641,6 +673,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (CurrencyID) REFERENCES CurrencyRates (CurrencyID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **OrderWebinars**: Przechowuje informacje o webinarach w zamówieniach.
     - **Klucz podstawowy**: OrderWebinarID
@@ -659,6 +692,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (WebinarID) REFERENCES Webinars (WebinarID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **OrderCourses**: Przechowuje informacje o zamówionych kursach.
     - **Klucz podstawowy**: OrderCourseID
@@ -677,6 +711,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (CourseID) REFERENCES Courses (CourseID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **Studies**: Przechowuje informacje o studiach.
     - **Klucz podstawowy**: StudiesID
@@ -700,6 +735,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         StudiesCapacity INT NOT NULL
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **Syllabuses**: Przechowuje informacje o sylabusach.
     - **Klucz podstawowy**: SyllabusID
@@ -717,6 +753,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **Subjects**: Przechowuje informacje o przedmiotach.
     - **Klucz podstawowy**: SubjectID
@@ -741,6 +778,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (SyllabusID) REFERENCES Syllabuses (SyllabusID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **StudiesLessonMeetingTypes**: Przechowuje typy spotkań lekcji studiów.
     - **Klucz podstawowy**: StudiesLessonMeetingTypeID
@@ -754,6 +792,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         StudiesLessonMeetingTypeName VARCHAR(50) NOT NULL
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **StudiesSessions**: Przechowuje informacje o semestrach na studiach.
     - **Klucz podstawowy**: SessionID
@@ -782,6 +821,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (SubjectID) REFERENCES Subjects (SubjectID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **StudiesLessons**: Przechowuje informacje o lekcjach studiów.
     - **Klucz podstawowy**: LessonID
@@ -834,6 +874,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (StudiesLessonMeetingTypeID) REFERENCES StudiesLessonMeetingTypes (StudiesLessonMeetingTypeID),
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **StudiesLessonsPassed**: Przechowuje informacje o zaliczonych lekcjach studiów przez studentów.
     - **Klucze podstawowe**: StudentID, LessonID
@@ -851,6 +892,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **StudentStudiesGrades**: Przechowuje oceny studentów za studia.
     - **Klucze podstawowe**: StudentID, StudiesID
@@ -870,6 +912,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **StudentBoughtStudies**: Przechowuje informacje o zakupionych studiach przez studentów.
     - **Klucze podstawowe**: StudentID, StudiesID
@@ -887,6 +930,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **StudentBoughtSessions**: Przechowuje informacje o zakupionych sesjach przez studentów.
     - **Klucze podstawowe**: StudentID, SessionID
@@ -904,6 +948,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (SessionID) REFERENCES StudiesSessions (SessionID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **InternshipMeetingTypes**: Przechowuje typy spotkań praktyk.
     - **Klucz podstawowy**: InternshipMeetingTypeID
@@ -917,6 +962,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         InternshipMeetingTypeName VARCHAR(50) NOT NULL
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **Internships**: Przechowuje informacje o praktykach.
     - **Klucz podstawowy**: InternshipID
@@ -939,6 +985,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (InternshipMeetingType) REFERENCES InternshipMeetingTypes (InternshipMeetingTypeID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **InternshipMeetingsPassed**: Przechowuje informacje o zaliczonych praktykach przez studentów.
     - **Klucze podstawowe**: StudentID, InternshipID
@@ -956,6 +1003,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **OrderStudies**: Przechowuje informacje o studiach w zamówieniach.
     - **Klucz podstawowy**: OrderStudiesID
@@ -974,6 +1022,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (StudiesID) REFERENCES Studies (StudiesID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **OrderSessions**: Przechowuje informacje o sesjach w zamówieniach.
     - **Klucz podstawowy**: OrderSessionID
@@ -992,6 +1041,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (SessionID) REFERENCES StudiesSessions (SessionID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 - **RODOSigns**: Przechowuje informacje o zgodach RODO użytkowników.
     - **Klucz podstawowy**: SignID
@@ -1011,6 +1061,7 @@ GRANT SELECT ON OrderDetails TO Accountant;
         FOREIGN KEY (UserID) REFERENCES Users (UserID)
     )
     ```
+    <div style="page-break-after: always;"></div>
 
 
 ## Widoki
@@ -1039,6 +1090,7 @@ INNER JOIN
 WHERE
     OrderDetails.AmountPaid < OrderDetails.AmountToPay;
 ```
+<div style="page-break-after: always;"></div>
 
 ### PaymentStatus
 
@@ -1064,6 +1116,7 @@ INNER JOIN
 INNER JOIN
     Users ON Orders.UserID = Users.UserID;
 ```
+<div style="page-break-after: always;"></div>
 
 ### RegisteredParticipants
 
@@ -1116,6 +1169,7 @@ INNER JOIN
 WHERE
     StudiesLessons.TeacherID = CURRENT_USER;
 ```
+<div style="page-break-after: always;"></div>
 
 ### EventDetails
 
@@ -1154,6 +1208,7 @@ FROM
 WHERE
     StudiesLessons.TeacherID = CURRENT_USER;
 ```
+<div style="page-break-after: always;"></div>
 
 ### AttendanceReports
 
@@ -1209,6 +1264,7 @@ INNER JOIN
 WHERE
     StudiesLessons.TeacherID = CURRENT_USER;
 ```
+<div style="page-break-after: always;"></div>
 
 ### TranslatedEvents
 
@@ -1247,6 +1303,7 @@ FROM
 WHERE
     StudiesLessons.TranslatorID = CURRENT_USER;
 ```
+<div style="page-break-after: always;"></div>
 
 ### TranslatorEventDetails
 
@@ -1285,6 +1342,7 @@ FROM
 WHERE
     StudiesLessons.TranslatorID = CURRENT_USER;
 ```
+<div style="page-break-after: always;"></div>
 
 ### AvailableEvents
 
@@ -1320,6 +1378,7 @@ FROM
 WHERE
     StudiesLessons.LessonMeetingDateStart > CURRENT_DATE;
 ```
+<div style="page-break-after: always;"></div>
 
 ### RegisteredEventDetails
 
@@ -1365,6 +1424,7 @@ INNER JOIN
 WHERE
     StudiesLessonPassed.StudentID = CURRENT_USER;
 ```
+<div style="page-break-after: always;"></div>
 
 ### CompletionStatus
 
@@ -1404,6 +1464,7 @@ SELECT
 FROM
     StudiesLessonPassed;
 ```
+<div style="page-break-after: always;"></div>
 
 ### StudentPaymentStatus
 
@@ -1431,6 +1492,7 @@ INNER JOIN
 WHERE
     Orders.UserID = CURRENT_USER;
 ```
+<div style="page-break-after: always;"></div>
 
 ## Funkcje
 
@@ -1449,6 +1511,7 @@ UNION
 SELECT StudiesID AS ID, StudiesName AS Name, 'Studies' AS Type
 FROM Studies;
 ```
+<div style="page-break-after: always;"></div>
 
 ### SyllabusesAndSchedules
 
@@ -1462,6 +1525,7 @@ UNION
 SELECT LessonID, StudiesID, LessonMeetingDateStart, LessonMeetingDateEnd
 FROM StudiesLessons;
 ```
+<div style="page-break-after: always;"></div>
 
 ### EventDetails
 
@@ -1477,6 +1541,7 @@ FROM Courses
 UNION
 SELECT StudiesID AS EventID, StudiesName AS EventName, StudiesStartDate AS StartDate, StudiesEndDate AS EndDate, NULL AS MeetingLink, StudiesDescription AS Description;
 ```
+<div style="page-break-after: always;"></div>
 
 ### CompletionStatus
 
@@ -1496,6 +1561,7 @@ UNION
 SELECT StudentID, LessonID AS ItemID, 'StudiesLesson' AS ItemType, 'Passed' AS Status
 FROM StudiesLessonPassed;
 ```
+<div style="page-break-after: always;"></div>
 
 ### PaymentStatus
 
@@ -1510,6 +1576,7 @@ CASE
 END AS Status
 FROM OrderDetails;
 ```
+<div style="page-break-after: always;"></div>
 
 ### FinancialReports
 
@@ -1532,6 +1599,7 @@ FROM OrderStudies
 INNER JOIN OrderDetails ON OrderStudies.OrderDetailID = OrderDetails.OrderDetailID
 GROUP BY StudiesID;
 ```
+<div style="page-break-after: always;"></div>
 
 ### EnrollmentReport
 
@@ -1551,6 +1619,7 @@ SELECT 'Studies' AS EventType, StudiesID AS EventID, COUNT(StudentID) AS Enrollm
 FROM StudentStudies
 GROUP BY StudiesID;
 ```
+<div style="page-break-after: always;"></div>
 
 ### AttendanceReports
 
@@ -1566,6 +1635,7 @@ SELECT 'StudiesLesson' AS EventType, LessonID AS EventID, COUNT(StudentID) AS At
 FROM StudiesLessonPassed
 GROUP BY LessonID;
 ```
+<div style="page-break-after: always;"></div>
 
 ### FilteredEvents
 
@@ -1582,6 +1652,7 @@ UNION
 SELECT StudiesID AS EventID, StudiesName AS EventName, 'Studies' AS EventType, NULL AS LanguageID, NULL AS Price, NULL AS Capacity
 FROM Studies;
 ```
+<div style="page-break-after: always;"></div>
 
 ## Procedury
 
@@ -1607,6 +1678,7 @@ BEGIN
     VALUES (@UserName, @UserSurname, @UserDateOfBirth, @UserSex, @UserEmail, @UserPhoneNumber, @UserAddress, @UserCity, @UserCountry, @UserPostalCode);
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### UpdateUserProfile
 
@@ -1641,6 +1713,7 @@ BEGIN
     WHERE UserID = @UserID;
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### DeleteUser
 
@@ -1655,6 +1728,7 @@ BEGIN
     WHERE UserID = @UserID;
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### AddRole
 
@@ -1670,6 +1744,7 @@ BEGIN
     VALUES (@UserID, @RoleID);
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### RemoveRole
 
@@ -1685,6 +1760,7 @@ BEGIN
     WHERE UserID = @UserID AND RoleID = @RoleID;
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### AddEvent
 
@@ -1721,6 +1797,7 @@ BEGIN
     END
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### UpdateEventDetails
 
@@ -1775,6 +1852,7 @@ BEGIN
     END
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### DeleteEvent
 
@@ -1803,6 +1881,7 @@ BEGIN
     END
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### CreatePaymentLink
 
@@ -1819,6 +1898,7 @@ BEGIN
     WHERE OrderID = @OrderID;
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### ProcessPaymentResult
 
@@ -1837,6 +1917,7 @@ BEGIN
     WHERE OrderDetailID = @OrderDetailID;
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### ApplyPaymentException
 
@@ -1853,6 +1934,7 @@ BEGIN
     WHERE OrderDetailID = @OrderDetailID;
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### RegisterForEvent
 
@@ -1882,6 +1964,7 @@ BEGIN
     END
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### CancelRegistration
 
@@ -1911,6 +1994,7 @@ BEGIN
     END
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ## Triggery
 
@@ -1958,6 +2042,7 @@ BEGIN
     END
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### HandleCoursePayment
 Ten trigger obsługuje płatności za kursy i dodaje studenta do listy zakupionych kursów, jeśli płatność jest pełna lub odroczona.
@@ -2002,6 +2087,7 @@ BEGIN
     END
 END
 ```
+<div style="page-break-after: always;"></div>
 
 ### HandleSessionPayment
 Ten trigger obsługuje płatności za sesje studiów i dodaje studenta do listy zakupionych sesji, jeśli płatność jest pełna lub odroczona.
@@ -2046,6 +2132,7 @@ BEGIN
     END
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### HandleStudiesPayment
 Ten trigger obsługuje płatności za studia i dodaje studenta do listy zakupionych studiów, jeśli płatność jest pełna lub odroczona.
@@ -2090,6 +2177,7 @@ BEGIN
     END
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ### VerifyOnlineParticipation
 Ten trigger automatyczne weryfikowanie udziału w wydarzeniach online
@@ -2105,6 +2193,7 @@ BEGIN
     WHERE WebinarAccessDateEnd IS NULL;
 END;
 ```
+<div style="page-break-after: always;"></div>
 
 ## Indeksy
 
