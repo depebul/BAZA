@@ -1496,144 +1496,277 @@ WHERE
 
 ## Funkcje
 
-### AvailableWebinarsCoursesStudies
+### GetAvailableEvents
 
 Przechowywanie listy dostępnych webinarów, kursów i studiów
 
 ```sql
-CREATE VIEW AvailableWebinarsCoursesStudies AS
-SELECT WebinarID AS ID, WebinarName AS Name, 'Webinar' AS Type
-FROM Webinars
-UNION
-SELECT CourseID AS ID, CourseName AS Name, 'Course' AS Type
-FROM Courses
-UNION
-SELECT StudiesID AS ID, StudiesName AS Name, 'Studies' AS Type
-FROM Studies;
+CREATE FUNCTION GetAvailableEvents()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        'Webinar' AS EventType,
+        WebinarID AS EventID,
+        WebinarName AS EventName,
+        WebinarDate AS EventDate,
+        WebinarLanguageID AS LanguageID
+    FROM Webinars
+    UNION ALL
+    SELECT
+        'Course' AS EventType,
+        CourseID AS EventID,
+        CourseName AS EventName,
+        CourseStartDate AS EventDate,
+        CourseLanguageID AS LanguageID
+    FROM Courses
+    UNION ALL
+    SELECT
+        'Study' AS EventType,
+        StudiesID AS EventID,
+        StudiesName AS EventName,
+        StudiesStartDate AS EventDate,
+        StudiesLanguageID AS LanguageID
+    FROM Studies
+);
 ```
 <div style="page-break-after: always;"></div>
 
-### SyllabusesAndSchedules
+### GetSyllabusesAndSchedules
 
 Przechowywanie sylabusów i harmonogramów
 
 ```sql
-CREATE VIEW SyllabusesAndSchedules AS
-SELECT SyllabusID, StudiesID, SemesterNumber
-FROM Syllabuses
-UNION
-SELECT LessonID, StudiesID, LessonMeetingDateStart, LessonMeetingDateEnd
-FROM StudiesLessons;
+CREATE FUNCTION GetSyllabusesAndSchedules()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        s.StudiesID,
+        s.StudiesName,
+        sy.SyllabusID,
+        sy.SyllabusContent,
+        sl.ScheduleID,
+        sl.ScheduleContent
+    FROM Studies s
+    JOIN Syllabuses sy ON s.StudiesID = sy.StudiesID
+    JOIN Schedules sl ON s.StudiesID = sl.StudiesID
+);
 ```
 <div style="page-break-after: always;"></div>
 
-### EventDetails
+### GetEventDetails
 
 Przechowywanie szczegółów wydarzenia (np. daty, miejsca, linków do spotkań online)
 
 ```sql
-CREATE VIEW EventDetails AS
-SELECT WebinarID AS EventID, WebinarName AS EventName, WebinarStartDate AS StartDate, WebinarEndDate AS EndDate, WebinarMeetingLink AS MeetingLink, WebinarDescription AS Description
-FROM Webinars
-UNION
-SELECT CourseID AS EventID, CourseName AS EventName, NULL AS StartDate, NULL AS EndDate, NULL AS MeetingLink, CourseDescription AS Description
-FROM Courses
-UNION
-SELECT StudiesID AS EventID, StudiesName AS EventName, StudiesStartDate AS StartDate, StudiesEndDate AS EndDate, NULL AS MeetingLink, StudiesDescription AS Description;
+CREATE FUNCTION GetEventDetails()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        'Webinar' AS EventType,
+        WebinarID AS EventID,
+        WebinarName AS EventName,
+        WebinarDate AS EventDate,
+        WebinarLocation AS EventLocation,
+        WebinarLink AS EventLink
+    FROM Webinars
+    UNION ALL
+    SELECT
+        'Course' AS EventType,
+        CourseID AS EventID,
+        CourseName AS EventName,
+        CourseStartDate AS EventDate,
+        CourseLocation AS EventLocation,
+        CourseLink AS EventLink
+    FROM Courses
+    UNION ALL
+    SELECT
+        'Study' AS EventType,
+        StudiesID AS EventID,
+        StudiesName AS EventName,
+        StudiesStartDate AS EventDate,
+        StudiesLocation AS EventLocation,
+        StudiesLink AS EventLink
+    FROM Studies
+);
 ```
 <div style="page-break-after: always;"></div>
 
-### CompletionStatus
+### GetCompletionStatus
 
 Przechowywanie statusu zaliczeń (moduły kursowe, frekwencja na studiach)
 
 ```sql
-CREATE VIEW CompletionStatus AS
-SELECT StudentID, ModuleID AS ItemID, 'CourseModule' AS ItemType, 'Passed' AS Status
-FROM CourseModulesPassed
-UNION
-SELECT StudentID, LessonID AS ItemID, 'CourseLesson' AS ItemType, 'Passed' AS Status
-FROM CourseLessonsPassed
-UNION
-SELECT StudentID, WebinarID AS ItemID, 'Webinar' AS ItemType, 'Passed' AS Status
-FROM WebinarsPassed
-UNION
-SELECT StudentID, LessonID AS ItemID, 'StudiesLesson' AS ItemType, 'Passed' AS Status
-FROM StudiesLessonPassed;
+CREATE FUNCTION GetCompletionStatus()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        'CourseModule' AS CompletionType,
+        cm.ModuleID AS CompletionID,
+        cm.ModuleName AS CompletionName,
+        cmp.StudentID,
+        cmp.CompletionDate
+    FROM CourseModules cm
+    JOIN CourseModulesPassed cmp ON cm.ModuleID = cmp.ModuleID
+    UNION ALL
+    SELECT
+        'StudyAttendance' AS CompletionType,
+        sl.LessonID AS CompletionID,
+        sl.LessonName AS CompletionName,
+        slp.StudentID,
+        slp.AttendanceDate AS CompletionDate
+    FROM StudiesLessons sl
+    JOIN StudiesLessonsPassed slp ON sl.LessonID = slp.LessonID
+);
 ```
 <div style="page-break-after: always;"></div>
 
-### PaymentStatus
+### GetPaymentStatus
 
 Sprawdzanie statusu płatności
 
 ```sql
-CREATE VIEW PaymentStatus AS
-SELECT OrderID, UserID, AmountPaid, AmountToPay,
-CASE
-    WHEN AmountPaid >= AmountToPay THEN 'Paid'
-    ELSE 'Pending'
-END AS Status
-FROM OrderDetails;
+CREATE FUNCTION GetPaymentStatus()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        o.OrderID,
+        o.UserID,
+        u.UserName,
+        u.UserSurname,
+        od.AmountPaid,
+        od.AmountToPay,
+        CASE
+            WHEN od.AmountPaid >= od.AmountToPay THEN 'Paid'
+            ELSE 'Pending'
+        END AS PaymentStatus
+    FROM
+        Orders o
+    JOIN
+        OrderDetails od ON o.OrderID = od.OrderID
+    JOIN
+        Users u ON o.UserID = u.UserID
+);
 ```
 <div style="page-break-after: always;"></div>
 
-### FinancialReports
+### GetFinancialReports
 
 Generowanie raportów finansowych (przychody dla każdego typu wydarzeń)
 
 ```sql
-CREATE VIEW FinancialReports AS
-SELECT 'Webinar' AS EventType, WebinarID AS EventID, SUM(AmountPaid) AS TotalRevenue
-FROM OrderWebinars
-INNER JOIN OrderDetails ON OrderWebinars.OrderDetailID = OrderDetails.OrderDetailID
-GROUP BY WebinarID
-UNION
-SELECT 'Course' AS EventType, CourseID AS EventID, SUM(AmountPaid) AS TotalRevenue
-FROM OrderCourses
-INNER JOIN OrderDetails ON OrderCourses.OrderDetailID = OrderDetails.OrderDetailID
-GROUP BY CourseID
-UNION
-SELECT 'Studies' AS EventType, StudiesID AS EventID, SUM(AmountPaid) AS TotalRevenue
-FROM OrderStudies
-INNER JOIN OrderDetails ON OrderStudies.OrderDetailID = OrderDetails.OrderDetailID
-GROUP BY StudiesID;
+CREATE FUNCTION GetFinancialReports()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        'Webinar' AS EventType,
+        w.WebinarID AS EventID,
+        w.WebinarName AS EventName,
+        SUM(od.AmountPaid) AS TotalRevenue
+    FROM Webinars w
+    JOIN OrderDetails od ON w.WebinarID = od.EventID
+    GROUP BY w.WebinarID, w.WebinarName
+    UNION ALL
+    SELECT
+        'Course' AS EventType,
+        c.CourseID AS EventID,
+        c.CourseName AS EventName,
+        SUM(od.AmountPaid) AS TotalRevenue
+    FROM Courses c
+    JOIN OrderDetails od ON c.CourseID = od.EventID
+    GROUP BY c.CourseID, c.CourseName
+    UNION ALL
+    SELECT
+        'Study' AS EventType,
+        s.StudiesID AS EventID,
+        s.StudiesName AS EventName,
+        SUM(od.AmountPaid) AS TotalRevenue
+    FROM Studies s
+    JOIN OrderDetails od ON s.StudiesID = od.EventID
+    GROUP BY s.StudiesID, s.StudiesName
+);
 ```
 <div style="page-break-after: always;"></div>
 
-### EnrollmentReport
+### GetEnrollmentReports
 
 Wyświetlanie raportu liczby zapisanych osób
 
 ```sql
-CREATE VIEW EnrollmentReport AS
-SELECT 'Webinar' AS EventType, WebinarID AS EventID, COUNT(StudentID) AS EnrollmentCount
-FROM StudentBoughtWebinars
-GROUP BY WebinarID
-UNION
-SELECT 'Course' AS EventType, CourseID AS EventID, COUNT(StudentID) AS EnrollmentCount
-FROM CourseModulesPassed
-GROUP BY CourseID
-UNION
-SELECT 'Studies' AS EventType, StudiesID AS EventID, COUNT(StudentID) AS EnrollmentCount
-FROM StudentStudies
-GROUP BY StudiesID;
+CREATE FUNCTION GetEnrollmentReports()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        'Webinar' AS EventType,
+        w.WebinarID AS EventID,
+        w.WebinarName AS EventName,
+        COUNT(sbw.StudentID) AS EnrollmentCount
+    FROM Webinars w
+    JOIN StudentBoughtWebinars sbw ON w.WebinarID = sbw.WebinarID
+    GROUP BY w.WebinarID, w.WebinarName
+    UNION ALL
+    SELECT
+        'Course' AS EventType,
+        c.CourseID AS EventID,
+        c.CourseName AS EventName,
+        COUNT(sbc.StudentID) AS EnrollmentCount
+    FROM Courses c
+    JOIN StudentBoughtCourses sbc ON c.CourseID = sbc.CourseID
+    GROUP BY c.CourseID, c.CourseName
+    UNION ALL
+    SELECT
+        'Study' AS EventType,
+        s.StudiesID AS EventID,
+        s.StudiesName AS EventName,
+        COUNT(sbs.StudentID) AS EnrollmentCount
+    FROM Studies s
+    JOIN StudentBoughtStudies sbs ON s.StudiesID = sbs.StudiesID
+    GROUP BY s.StudiesID, s.StudiesName
+);
 ```
 <div style="page-break-after: always;"></div>
 
-### AttendanceReports
+### GetAttendanceReports
 
 Tworzenie list obecności oraz raportów dotyczących frekwencji
 
 ```sql
-CREATE VIEW AttendanceReports AS
-SELECT 'CourseLesson' AS EventType, LessonID AS EventID, COUNT(StudentID) AS AttendanceCount
-FROM CourseLessonsPassed
-GROUP BY LessonID
-UNION
-SELECT 'StudiesLesson' AS EventType, LessonID AS EventID, COUNT(StudentID) AS AttendanceCount
-FROM StudiesLessonPassed
-GROUP BY LessonID;
+CREATE FUNCTION GetAttendanceReports()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        'CourseModule' AS EventType,
+        cm.ModuleID AS EventID,
+        cm.ModuleName AS EventName,
+        COUNT(cmp.StudentID) AS AttendanceCount
+    FROM CourseModules cm
+    JOIN CourseModulesPassed cmp ON cm.ModuleID = cmp.ModuleID
+    GROUP BY cm.ModuleID, cm.ModuleName
+    UNION ALL
+    SELECT
+        'StudyLesson' AS EventType,
+        sl.LessonID AS EventID,
+        sl.LessonName AS EventName,
+        COUNT(slp.StudentID) AS AttendanceCount
+    FROM StudiesLessons sl
+    JOIN StudiesLessonsPassed slp ON sl.LessonID = slp.LessonID
+    GROUP BY sl.LessonID, sl.LessonName
+);
 ```
 <div style="page-break-after: always;"></div>
 
@@ -1642,15 +1775,20 @@ GROUP BY LessonID;
 Filtrowanie po rodzaju (webinary, kursy, studia), formie (stacjonarne, online, hybrydowe), języku, dostępności miejsc, cenie
 
 ```sql
-CREATE VIEW FilteredEvents AS
-SELECT WebinarID AS EventID, WebinarName AS EventName, 'Webinar' AS EventType, WebinarLanguageID AS LanguageID, WebinarPrice AS Price, NULL AS Capacity
-FROM Webinars
-UNION
-SELECT CourseID AS EventID, CourseName AS EventName, 'Course' AS EventType, CourseLanguageID AS LanguageID, CoursePrice AS Price, NULL AS Capacity
-FROM Courses
-UNION
-SELECT StudiesID AS EventID, StudiesName AS EventName, 'Studies' AS EventType, NULL AS LanguageID, NULL AS Price, NULL AS Capacity
-FROM Studies;
+CREATE FUNCTION FilteredEvents()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT WebinarID AS EventID, WebinarName AS EventName, 'Webinar' AS EventType, WebinarLanguageID AS LanguageID, WebinarPrice AS Price, NULL AS Capacity
+    FROM Webinars
+    UNION
+    SELECT CourseID AS EventID, CourseName AS EventName, 'Course' AS EventType, CourseLanguageID AS LanguageID, CoursePrice AS Price, NULL AS Capacity
+    FROM Courses
+    UNION
+    SELECT StudiesID AS EventID, StudiesName AS EventName, 'Studies' AS EventType, NULL AS LanguageID, NULL AS Price, NULL AS Capacity
+    FROM Studies
+);
 ```
 <div style="page-break-after: always;"></div>
 
