@@ -2,6 +2,34 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/creation_of_database.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/functions/filteredEvents.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/functions/getAttendanceReports.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/functions/getEnrollemntReports.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/functions/getPaymentStatus.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/kod/indexes.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/kod/permissions.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/procedures/addEvent.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/procedures/addUser.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/procedures/applyPaymentException.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/procedures/createPaymentLink.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/procedures/deleteEvent.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/procedures/deleteUser.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/procedures/processPaymentResult.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/procedures/updateEventDetails.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/procedures/updateUserProfile.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/triggers.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/triggers/handleCoursePayment.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/triggers/handleSessionPayment.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/triggers/handleWebinarPayment.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/triggers/verifyOnlineParticipation.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/views/attendanceReports.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/views/availableEvents.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/views/debtorsList.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/views/eventDetails.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/views/paymentStatus.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/views/registeredParticipants.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/views/studentPaymentsStatus.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/views/translatedEvents.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/views/translatorEventDetails.sql" dialect="TSQL" />
   </component>
 </project>

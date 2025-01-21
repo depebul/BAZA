@@ -23,7 +23,7 @@ GRANT SELECT ON StudentBoughtWebinars TO Lecturer;
 GRANT SELECT ON CourseModulesPassed TO Lecturer;
 GRANT SELECT ON CourseLessonsPassed TO Lecturer;
 GRANT SELECT ON WebinarsPassed TO Lecturer;
-GRANT SELECT ON StudiesLessonPassed TO Lecturer;
+GRANT SELECT ON StudiesLessonsPassed TO Lecturer;
 
 -- Grant permissions to Translator
 GRANT SELECT ON Webinars TO Translator;
@@ -38,8 +38,8 @@ GRANT SELECT ON StudentBoughtWebinars TO Student;
 GRANT SELECT ON CourseModulesPassed TO Student;
 GRANT SELECT ON CourseLessonsPassed TO Student;
 GRANT SELECT ON WebinarsPassed TO Student;
-GRANT SELECT ON StudiesLessonPassed TO Student;
-GRANT SELECT ON StudentStudies TO Student;
+GRANT SELECT ON StudiesLessonsPassed TO Student;
+GRANT SELECT ON StudentBoughtStudies TO Student;
 
 -- Grant permissions to School Director
 GRANT ALL ON Users TO SchoolDirector;
