@@ -1,0 +1,2883 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>dokumentacja.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///c%3A/Users/dawid/Documents/GitHub/BAZA/custom.css" type="text/css">
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="dokumentacja-projekt-bazy-danych-20242025">Dokumentacja projekt bazy danych 2024/2025</h1>
+<h2 id="zesp%C3%B3%C5%82">Zespół</h2>
+<ul>
+<li>Błażej Naziemiec - 33%</li>
+<li>Dawid Żak - 33%</li>
+<li>Szymon Żuk - 33%</li>
+</ul>
+<p>Grupa 10, wtorek 18:30</p>
+<h2 id="role">Role</h2>
+<p>W bazie danych utworzone są następujące role:</p>
+<ul>
+<li>Administrator</li>
+<li>Lecturer</li>
+<li>Translator</li>
+<li>Student</li>
+<li>SchoolDirector</li>
+<li>Accountant</li>
+</ul>
+<div style="page-break-after: always;"></div>
+<h2 id="uprawnienia">Uprawnienia</h2>
+<h3 id="administrator">Administrator</h3>
+<p>Rola <code>Administrator</code> ma następujące uprawnienia:</p>
+<ul>
+<li>Może dodawać, zmieniać i usuwać dane dla: użytkowników</li>
+<li>Może dodawać, zmieniać i usuwać dane dla: pracowników</li>
+<li>Może dodawać, zmieniać i usuwać dane dla: webinarów</li>
+<li>Może dodawać, zmieniać i usuwać dane dla: kursów</li>
+<li>Może dodawać, zmieniać i usuwać dane dla: studiów</li>
+<li>Może dodawać, zmieniać i usuwać dane dla: zamówień</li>
+<li>Może dodawać, zmieniać i usuwać dane dla: szczegółów zamówień</li>
+<li>Może przeglądać dane dla: zamówień</li>
+<li>Może przeglądać dane dla: szczegółów zamówień</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>, <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">Users</span> <span class="hljs-keyword">TO</span> Administrator;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>, <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> Employees <span class="hljs-keyword">TO</span> Administrator;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>, <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> Webinars <span class="hljs-keyword">TO</span> Administrator;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>, <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> Courses <span class="hljs-keyword">TO</span> Administrator;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>, <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> Studies <span class="hljs-keyword">TO</span> Administrator;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>, <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> Orders <span class="hljs-keyword">TO</span> Administrator;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>, <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> OrderDetails <span class="hljs-keyword">TO</span> Administrator;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> Orders <span class="hljs-keyword">TO</span> Administrator;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> OrderDetails <span class="hljs-keyword">TO</span> Administrator;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="lecturer">Lecturer</h3>
+<p>Rola <code>Lecturer</code> ma następujące uprawnienia:</p>
+<ul>
+<li>Może przeglądać dane: studentów</li>
+<li>Może przeglądać dane: zakupionych webinarów przez studentów</li>
+<li>Może przeglądać dane: zaliczonych modułów kursów</li>
+<li>Może przeglądać dane: zaliczonych lekcji kursów</li>
+<li>Może przeglądać dane: zaliczonych webinarów</li>
+<li>Może przeglądać dane: zaliczonych lekcji studiów</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> Students <span class="hljs-keyword">TO</span> Lecturer;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> StudentBoughtWebinars <span class="hljs-keyword">TO</span> Lecturer;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> CourseModulesPassed <span class="hljs-keyword">TO</span> Lecturer;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> CourseLessonsPassed <span class="hljs-keyword">TO</span> Lecturer;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> WebinarsPassed <span class="hljs-keyword">TO</span> Lecturer;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> StudiesLessonPassed <span class="hljs-keyword">TO</span> Lecturer;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="translator">Translator</h3>
+<p>Rola <code>Translator</code> ma następujące uprawnienia:</p>
+<ul>
+<li>Może przeglądać dane: webinarów</li>
+<li>Może przeglądać dane: kursów</li>
+<li>Może przeglądać dane: studiów</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> Webinars <span class="hljs-keyword">TO</span> Translator;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> Courses <span class="hljs-keyword">TO</span> Translator;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> Studies <span class="hljs-keyword">TO</span> Translator;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="student">Student</h3>
+<p>Rola <code>Student</code> ma następujące uprawnienia:</p>
+<ul>
+<li>Może przeglądać dane dla: webinarów</li>
+<li>Może przeglądać dane dla: kursów</li>
+<li>Może przeglądać dane dla: studiów</li>
+<li>Może przeglądać dane dla: zakupionych webinarów przez studentów</li>
+<li>Może przeglądać dane dla: zaliczonych modułów kursów</li>
+<li>Może przeglądać dane dla: zaliczonych lekcji kursów</li>
+<li>Może przeglądać dane dla: zaliczonych webinarów</li>
+<li>Może przeglądać dane dla: zaliczonych lekcji studiów</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> Webinars <span class="hljs-keyword">TO</span> Student;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> Courses <span class="hljs-keyword">TO</span> Student;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> Studies <span class="hljs-keyword">TO</span> Student;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> StudentBoughtWebinars <span class="hljs-keyword">TO</span> Student;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> CourseModulesPassed <span class="hljs-keyword">TO</span> Student;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> CourseLessonsPassed <span class="hljs-keyword">TO</span> Student;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> WebinarsPassed <span class="hljs-keyword">TO</span> Student;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> StudiesLessonPassed <span class="hljs-keyword">TO</span> Student;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="schooldirector">SchoolDirector</h3>
+<p>Rola <code>SchoolDirector</code> ma następujące uprawnienia:</p>
+<ul>
+<li>Ma pełne uprawnienia (dodawanie, zmienianie, usuwanie, przeglądanie) do danych dla: użytkowników</li>
+<li>Ma pełne uprawnienia (dodawanie, zmienianie, usuwanie, przeglądanie) do danych dla: pracowników</li>
+<li>Ma pełne uprawnienia (dodawanie, zmienianie, usuwanie, przeglądanie) do danych dla: webinarów</li>
+<li>Ma pełne uprawnienia (dodawanie, zmienianie, usuwanie, przeglądanie) do danych dla: kursów</li>
+<li>Ma pełne uprawnienia (dodawanie, zmienianie, usuwanie, przeglądanie) do danych dla: studiów</li>
+<li>Ma pełne uprawnienia (dodawanie, zmienianie, usuwanie, przeglądanie) do danych dla: zamówień</li>
+<li>Ma pełne uprawnienia (dodawanie, zmienianie, usuwanie, przeglądanie) do danych dla: szczegółów zamówień</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">Users</span> <span class="hljs-keyword">TO</span> SchoolDirector;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> Employees <span class="hljs-keyword">TO</span> SchoolDirector;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> Webinars <span class="hljs-keyword">TO</span> SchoolDirector;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> Courses <span class="hljs-keyword">TO</span> SchoolDirector;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> Studies <span class="hljs-keyword">TO</span> SchoolDirector;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> Orders <span class="hljs-keyword">TO</span> SchoolDirector;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> OrderDetails <span class="hljs-keyword">TO</span> SchoolDirector;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="accountant">Accountant</h3>
+<p>Rola <code>Accountant</code> ma następujące uprawnienia:</p>
+<ul>
+<li>Może przeglądać dane dla: zamówień</li>
+<li>Może przeglądać dane dla: szczegółów zamówień</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> Orders <span class="hljs-keyword">TO</span> Accountant;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> OrderDetails <span class="hljs-keyword">TO</span> Accountant;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h2 id="diagram-bazy-danych">Diagram bazy danych</h2>
+<p><img src="BAZA_diagram.png" alt="Diagram bazy danych"></p>
+<div style="page-break-after: always;"></div>
+<h2 id="opis-tabel">Opis tabel</h2>
+<ul>
+<li>
+<p><strong>Users</strong>: Przechowuje informacje o użytkownikach systemu.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: UserID</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>UserID: ID użytkownika</li>
+<li>UserName: Imię użytkownika</li>
+<li>UserSurname: Nazwisko użytkownika</li>
+<li>UserDateOfBirth: Data urodzenia użytkownika</li>
+<li>UserSex: Płeć użytkownika</li>
+<li>UserEmail: Adres email użytkownika</li>
+<li>UserPhoneNumber: Numer telefonu użytkownika</li>
+<li>UserAddress: Adres użytkownika</li>
+<li>UserCity: Miasto użytkownika</li>
+<li>UserCountry: Kraj użytkownika</li>
+<li>UserPostalCode: Kod pocztowy użytkownika</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">Users</span>
+(
+    UserID          <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    UserName        <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)  <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    UserSurname     <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)  <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    UserDateOfBirth <span class="hljs-built_in">DATE</span>         <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    UserSex         <span class="hljs-built_in">CHAR</span>(<span class="hljs-number">1</span>)      <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    UserEmail       <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    UserPhoneNumber <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">20</span>),
+    UserAddress     <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    UserCity        <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    UserCountry     <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    UserPostalCode  <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+)
+</div></code></pre>
+</li>
+</ul>
+<div style="page-break-after: always;"></div>
+<ul>
+<li>
+<p><strong>Languages</strong>: Przechowuje informacje o językach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: LanguageID</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>LanguageID: ID języka</li>
+<li>LanguageName: Nazwa języka</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Languages
+(
+    LanguageID   <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    LanguageName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+)
+</div></code></pre>
+</li>
+</ul>
+<div style="page-break-after: always;"></div>
+<ul>
+<li>
+<p><strong>CurrencyRates</strong>: Przechowuje kursy walut.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: CurrencyID</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>CurrencyID: ID waluty</li>
+<li>CurrencyName: Nazwa waluty</li>
+<li>RateToPLN: Kurs waluty do PLN</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CurrencyRates(
+    CurrencyID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    CurrencyName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    RateToPLN MONEY <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+)
+</div></code></pre>
+</li>
+</ul>
+<div style="page-break-after: always;"></div>
+<ul>
+<li>
+<p><strong>EmployeeTypes</strong>: Przechowuje typy pracowników.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: EmployeeTypeID</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>EmployeeTypeID: ID typu pracownika</li>
+<li>EmployeeTypeName: Nazwa typu pracownika</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> EmployeeTypes
+(
+    EmployeeTypeID   <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    EmployeeTypeName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+)
+</div></code></pre>
+</li>
+</ul>
+<div style="page-break-after: always;"></div>
+<ul>
+<li>
+<p><strong>Employees</strong>: Przechowuje informacje o pracownikach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: EmployeeID</li>
+<li><strong>Klucze obce</strong>: UserID (z tabeli Users), EmployeeTypeID (z tabeli EmployeeTypes)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>EmployeeID: ID pracownika</li>
+<li>UserID: ID użytkownika</li>
+<li>EmployeeTypeID: ID typu pracownika</li>
+<li>HireDate: Data zatrudnienia</li>
+<li>Salary: Wynagrodzenie</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Employees
+(
+    EmployeeID     <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    UserID         <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    EmployeeTypeID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    HireDate       <span class="hljs-built_in">DATE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    Salary         MONEY <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (UserID) <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">Users</span> (UserID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (EmployeeTypeID) <span class="hljs-keyword">REFERENCES</span> EmployeeTypes (EmployeeTypeID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>TeachingLanguages</strong>: Przechowuje informacje o językach, w których uczą pracownicy.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: EmployeeID, LanguageID</li>
+<li><strong>Klucze obce</strong>: EmployeeID (z tabeli Employees), LanguageID (z tabeli Languages)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>EmployeeID: ID pracownika</li>
+<li>LanguageID: ID języka</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> TeachingLanguages(
+    EmployeeID <span class="hljs-built_in">INT</span>,
+    LanguageID <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (EmployeeID, LanguageID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (EmployeeID) <span class="hljs-keyword">REFERENCES</span> Employees (EmployeeID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (LanguageID) <span class="hljs-keyword">REFERENCES</span> Languages (LanguageID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>Students</strong>: Przechowuje informacje o studentach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: StudentID</li>
+<li><strong>Klucz obcy</strong>: UserID (z tabeli Users)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>UserID: ID użytkownika</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Students
+(
+    StudentID  <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    UserID     <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (UserID) <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">Users</span> (UserID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>StudyingLanguages</strong>: Przechowuje informacje o językach, w których chce uczyć się student.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, LanguageID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), LanguageID (z tabeli Languages)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>LanguageID: ID języka</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudyingLanguages(
+    StudentID <span class="hljs-built_in">INT</span>,
+    LanguageID <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, LanguageID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (LanguageID) <span class="hljs-keyword">REFERENCES</span> Languages (LanguageID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>TranslatingLanguages</strong>: Przechowuje informacje o języku, jaki może tłumaczyć tłumacz.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: EmployeeID, LanguageID</li>
+<li><strong>Klucze obce</strong>: EmployeeID (z tabeli Employees), LanguageID (z tabeli Languages)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>EmployeeID: ID pracownika</li>
+<li>LanguageID: ID języka</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> TranslatingLanguages(
+   EmployeeID <span class="hljs-built_in">INT</span>,
+   LanguageID <span class="hljs-built_in">INT</span>,
+   PRIMARY <span class="hljs-keyword">KEY</span> (EmployeeID, LanguageID),
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (EmployeeID) <span class="hljs-keyword">REFERENCES</span> Employees (EmployeeID),
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (LanguageID) <span class="hljs-keyword">REFERENCES</span> Languages (LanguageID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>Webinars</strong>: Przechowuje informacje o webinarach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: WebinarID</li>
+<li><strong>Klucze obce</strong>: WebinarLanguageID (z tabeli Languages), WebinarTranslatorID (z tabeli Employees), WebinarTeacherID (z tabeli Employees)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>WebinarID: ID webinaru</li>
+<li>WebinarName: Nazwa webinaru</li>
+<li>WebinarStartDate: Data rozpoczęcia webinaru</li>
+<li>WebinarEndDate: Data zakończenia webinaru</li>
+<li>WebinarDescription: Opis webinaru</li>
+<li>WebinarLanguageID: ID języka webinaru</li>
+<li>WebinarPrice: Cena webinaru</li>
+<li>WebinarTranslatorID: ID tłumacza webinaru</li>
+<li>WebinarTeacherID: ID nauczyciela webinaru</li>
+<li>WebinarMeetingLink: Link do spotkania webinaru</li>
+<li>WebinarAccessDateEnd: Data zakończenia dostępu do webinaru</li>
+<li>WebinarRecordingLink: Link do nagrania webinaru</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Webinars(
+   WebinarID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+   WebinarName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   WebinarStartDate SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   WebinarEndDate SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   WebinarDescription <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-keyword">MAX</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   WebinarLanguageID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   WebinarPrice MONEY,
+   WebinarTranslatorID <span class="hljs-built_in">INT</span>,
+   WebinarTeacherID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   WebinarMeetingLink <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+   WebinarAccessDateEnd SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   WebinarRecordingLink <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (WebinarLanguageID) <span class="hljs-keyword">REFERENCES</span> Languages (LanguageID),
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (WebinarTranslatorID) <span class="hljs-keyword">REFERENCES</span> Employees (EmployeeID),
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (WebinarTeacherID) <span class="hljs-keyword">REFERENCES</span> Employees (EmployeeID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>StudentBoughtWebinars</strong>: Przechowuje informacje o zakupionych webinarach przez studentów.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, WebinarID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), WebinarID (z tabeli Webinars)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>WebinarID: ID webinaru</li>
+<li>WebinarBoughtDate: Data zakupu webinaru</li>
+<li>WebinarAccessDateEnd: Data zakończenia dostępu do webinaru</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">Table</span> StudentBoughtWebinars(
+   StudentID <span class="hljs-built_in">INT</span>,
+   WebinarID <span class="hljs-built_in">INT</span>,
+   WebinarBoughtDate SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   WebinarAccessDateEnd SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, WebinarID),
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID),
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (WebinarID) <span class="hljs-keyword">REFERENCES</span> Webinars (WebinarID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>Cities</strong>: Przechowuje informacje o miastach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: CityID</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>CityID: ID miasta</li>
+<li>CityName: Nazwa miasta</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Cities(
+   CityID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+   CityName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>UserAvailableCities</strong>: Przechowuje informacje o dostępnych miastach dla użytkowników.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: UserID, CityID</li>
+<li><strong>Klucze obce</strong>: UserID (z tabeli Users), CityID (z tabeli Cities)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>UserID: ID użytkownika</li>
+<li>CityID: ID miasta</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> UserAvailableCities(
+   UserID <span class="hljs-built_in">INT</span>,
+   CityID <span class="hljs-built_in">INT</span>,
+   PRIMARY <span class="hljs-keyword">KEY</span> (UserID, CityID),
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (UserID) <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">Users</span> (UserID),
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (CityID) <span class="hljs-keyword">REFERENCES</span> Cities (CityID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>Courses</strong>: Przechowuje informacje o kursach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: CourseID</li>
+<li><strong>Klucz obcy</strong>: CourseLanguageID (z tabeli Languages)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>CourseID: ID kursu</li>
+<li>CourseName: Nazwa kursu</li>
+<li>CourseModuleQuantity: Ilość modułów kursu</li>
+<li>CourseDescription: Opis kursu</li>
+<li>CourseLanguageID: ID języka kursu</li>
+<li>CoursePrice: Cena kursu</li>
+<li>CourseStartDate: Data rozpoczęcia kursu</li>
+<li>CourseEndDate: Data zakończenia kursu</li>
+<li>CourseCapacity: Maksymalna ilość osób w kursie</li>
+<li>CourseRecordingLink: Link do nagrania kursu</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Courses(
+   CourseID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+   CourseName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   CourseModuleQuantity <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   CourseDescription <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-keyword">MAX</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   CourseLanguageID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   CoursePrice MONEY <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   CourseStartDate SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   CourseEndDate SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   CourseCapacity <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   CourseRecordingLink <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (CourseLanguageID) <span class="hljs-keyword">REFERENCES</span> Languages (LanguageID),
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>StudentBoughtCourses</strong>: Przechowuje powiązanie studenta z zakupionymi kursami.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, CourseID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), CourseID (z tabeli Courses)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>CourseID: ID kursu</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">Table</span> StudentBoughtCourses(
+    StudentID <span class="hljs-built_in">INT</span>,
+    CourseID <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, CourseID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (CourseID) <span class="hljs-keyword">REFERENCES</span> Courses (CourseID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>CourseModuleMeetingTypes</strong>: Przechowuje typy spotkań modułów kursów.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: CourseModuleMeetingTypeID</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>CourseModuleMeetingTypeID: ID typu spotkania modułu</li>
+<li>CourseModuleMeetingTypeName: Nazwa typu spotkania</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CourseModuleMeetingTypes(
+   CourseModuleMeetingTypeID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+   CourseModuleMeetingTypeName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>CourseModules</strong>: Przechowuje informacje o modułach kursów.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: CourseModuleID</li>
+<li><strong>Klucze obce</strong>: CourseID (z tabeli Course), ModuleLanguageID (z tabeli Languages), CourseModuleMeetingTypeID (z tabeli CourseModuleMeetingTypes)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>ModuleID: ID modułu</li>
+<li>CourseID: ID kursu</li>
+<li>ModuleName: Nazwa modułu</li>
+<li>ModuleDescription: Opis modułu</li>
+<li>ModuleLanguageID: ID języka modułu</li>
+<li>CourseModuleMeetingTypeID: ID typu spotkania modułu</li>
+<li>CourseModuleLessonQuantity: Ilość lekcji modułu</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CourseModules(
+   ModuleID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+   CourseID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   ModuleName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   ModuleDescription <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-keyword">MAX</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   ModuleLanguageID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   CourseModuleMeetingTypeID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   CourseModuleLessonQuantity <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (CourseID) <span class="hljs-keyword">REFERENCES</span> Courses (CourseID),
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (ModuleLanguageID) <span class="hljs-keyword">REFERENCES</span> Languages (LanguageID),
+   <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (CourseModuleMeetingTypeID) <span class="hljs-keyword">REFERENCES</span> CourseModuleMeetingTypes (CourseModuleMeetingTypeID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>CourseLessonMeetingTypes</strong>: Przechowuje typy spotkań lekcji kursów.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: CourseLessonMeetingTypeID</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>CourseLessonMeetingTypeID: ID typu spotkania lekcji</li>
+<li>CourseLessonMeetingTypeName: Nazwa typu spotkania</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CourseLessonMeetingTypes(
+   CourseLessonMeetingTypeID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+   CourseLessonMeetingTypeName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>CourseLessons</strong>: Przechowuje informacje o lekcjach kursów.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: CourseLessonID</li>
+<li><strong>Klucze obce</strong>: ModuleID (z tabeli CourseModules), CourseID (z tabeli Courses), LessonLanguageID (z tabeli Languages), CourseLessonMeetingTypeID (z tabeli CourseLessonMeetingTypes) TranslatorID (z tabeli Employees), TeacherID (z tabeli Employees)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>LessonID: ID lekcji</li>
+<li>ModuleID: ID modułu</li>
+<li>CourseID: ID kursu</li>
+<li>LessonName: Nazwa lekcji</li>
+<li>LessonDescription: Opis lekcji</li>
+<li>LessonLanguageID: ID języka lekcji</li>
+<li>LessonMeetingLink: Link do spotkania lekcji</li>
+<li>LessonMeetingPlace: Miejsce spotkania lekcji</li>
+<li>LessonMeetingDateStart: Data rozpoczęcia spotkania lekcji</li>
+<li>LessonMeetingDateEnd: Data zakończenia spotkania lekcji</li>
+<li>LessonCapacity: Maksymalna ilość osób na lekcji</li>
+<li>CourseLessonMeetingTypeID: ID typu spotkania lekcji</li>
+<li>IsTranslatedToPolish: Czy lekcja jest tłumaczona na polski</li>
+<li>TranslatorID: ID tłumacza</li>
+<li>TeacherID: ID nauczyciela</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CourseLessons(
+    LessonID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    ModuleID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    CourseID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonDescription <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-keyword">MAX</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonLanguageID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonMeetingLink <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonMeetingPlace <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonMeetingDateStart SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonMeetingDateEnd SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonCapacity <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    CourseLessonMeetingTypeID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    IsTranslatedToPolish <span class="hljs-built_in">BIT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    TranslatorID <span class="hljs-built_in">INT</span>,
+    TeacherID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (ModuleID) <span class="hljs-keyword">REFERENCES</span> CourseModules (ModuleID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (CourseID) <span class="hljs-keyword">REFERENCES</span> Courses (CourseID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (LessonLanguageID) <span class="hljs-keyword">REFERENCES</span> Languages (LanguageID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (CourseLessonMeetingTypeID) <span class="hljs-keyword">REFERENCES</span> CourseLessonMeetingTypes (CourseLessonMeetingTypeID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (TranslatorID) <span class="hljs-keyword">REFERENCES</span> Employees (EmployeeID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (TeacherID) <span class="hljs-keyword">REFERENCES</span> Employees (EmployeeID),
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>CourseModulesPassed</strong>: Przechowuje informacje o zaliczonych modułach kursów przez studentów.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, CourseID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), ModuleID (z tabeli CourseModules)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>ModuleID: ID modułu</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CourseModulesPassed(
+    StudentID <span class="hljs-built_in">INT</span>,
+    ModuleID <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, ModuleID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (ModuleID) <span class="hljs-keyword">REFERENCES</span> CourseModules (ModuleID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>CourseLessonsPassed</strong>: Przechowuje informacje o zaliczonych lekcjach kursów przez studentów.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, LessonID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), LessonID (z tabeli CourseLessons)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>LessonID: ID lekcji</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CourseLessonsPassed(
+    StudentID <span class="hljs-built_in">INT</span>,
+    LessonID <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, LessonID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (LessonID) <span class="hljs-keyword">REFERENCES</span> CourseLessons (LessonID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>WebinarsPassed</strong>: Przechowuje informacje o zaliczonych webinarach przez studentów.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, WebinarID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), WebinarID (z tabeli Webinars)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>WebinarID: ID webinaru</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> WebinarsPassed(
+    StudentID <span class="hljs-built_in">INT</span>,
+    WebinarID <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, WebinarID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (WebinarID) <span class="hljs-keyword">REFERENCES</span> Webinars (WebinarID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>Orders</strong>: Przechowuje informacje o zamówieniach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: OrderID</li>
+<li><strong>Klucz obcy</strong>: UserID (z tabeli Users)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>OrderID: ID zamówienia</li>
+<li>UserID: ID użytkownika</li>
+<li>OrderDate: Data zamówienia</li>
+<li>OrderPaymentLink: Link do płatności zamówienia</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Orders(
+    OrderID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    UserID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    OrderDate SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    OrderPaymentLink <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (UserID) <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">Users</span> (UserID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>OrderDetails</strong>: Przechowuje szczegóły zamówień.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: OrderDetailID</li>
+<li><strong>Klucze obce</strong>: OrderID (z tabeli Orders), CurrencyID (z tabeli CurrencyRates)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>OrderDetailID: ID szczegółu zamówienia</li>
+<li>OrderID: ID zamówienia</li>
+<li>AmountPaid: Kwota zapłacona</li>
+<li>AmountToPay: Kwota do zapłaty</li>
+<li>CurrencyID: ID waluty</li>
+<li>CurrencyRate: Kurs waluty</li>
+<li>PaidDate: Data płatności</li>
+<li>PostponementDate: Data odroczenia płatności</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> OrderDetails(
+    OrderDetailID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    OrderID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    AmountPaid MONEY <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    AmountToPay MONEY <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    CurrencyID <span class="hljs-built_in">INT</span>,
+    CurrencyRate MONEY,
+    PaidDate SMALLDATETIME,
+    PostponementDate SMALLDATETIME,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (OrderID) <span class="hljs-keyword">REFERENCES</span> Orders (OrderID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (CurrencyID) <span class="hljs-keyword">REFERENCES</span> CurrencyRates (CurrencyID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>OrderWebinars</strong>: Przechowuje informacje o webinarach w zamówieniach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: OrderWebinarID</li>
+<li><strong>Klucze obce</strong>: OrderDetailID (z tabeli OrderDetails), WebinarID (z tabeli Webinars)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>OrderWebinarID: ID webinaru w zamówieniu</li>
+<li>WebinarID: ID webinaru</li>
+<li>OrderDetailID: ID szczegółu zamówienia</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> OrderWebinars(
+    OrderWebinarID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    WebinarID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    OrderDetailID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (OrderDetailID) <span class="hljs-keyword">REFERENCES</span> OrderDetails (OrderDetailID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (WebinarID) <span class="hljs-keyword">REFERENCES</span> Webinars (WebinarID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>OrderCourses</strong>: Przechowuje informacje o zamówionych kursach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: OrderCourseID</li>
+<li><strong>Klucze obce</strong>: OrderDetailID (z tabeli OrderDetails), CourseID (z tabeli Courses)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>OrderCourseID: ID kursu w zamówieniu</li>
+<li>CourseID: ID kursu</li>
+<li>OrderDetailID: ID szczegółu zamówienia</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> OrderCourses(
+    OrderCourseID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    CourseID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    OrderDetailID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (OrderDetailID) <span class="hljs-keyword">REFERENCES</span> OrderDetails (OrderDetailID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (CourseID) <span class="hljs-keyword">REFERENCES</span> Courses (CourseID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>Studies</strong>: Przechowuje informacje o studiach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: StudiesID</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudiesID: ID studiów</li>
+<li>StudiesDescription: Opis studiów</li>
+<li>StudiesName: Nazwa studiów</li>
+<li>StudiesEntryFee: Opłata za studia</li>
+<li>StudiesStartDate: Data rozpoczęcia studiów</li>
+<li>StudiesEndDate: Data zakończenia studiów</li>
+<li>StudiesCapacity: Maksymalna ilość osób na studiach</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Studies(
+    StudiesID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    StudiesDescription <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-keyword">MAX</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    StudiesName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    StudiesEntryFee MONEY <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    StudiesStartDate <span class="hljs-built_in">DATE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    StudiesEndDate <span class="hljs-built_in">DATE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    StudiesCapacity <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>Syllabuses</strong>: Przechowuje informacje o sylabusach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: SyllabusID</li>
+<li><strong>Klucz obcy</strong>: StudiesID (z tabeli Studies)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>SyllabusID: ID sylabusa</li>
+<li>StudiesID: ID studiów</li>
+<li>SemesterNumber: Numer semestru</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Syllabuses(
+    SyllabusID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    StudiesID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SemesterNumber <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudiesID) <span class="hljs-keyword">REFERENCES</span> Studies (StudiesID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>Subjects</strong>: Przechowuje informacje o przedmiotach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: SubjectID</li>
+<li><strong>Klucze obce</strong>: CoordinatorID (z tabeli Employees), SyllabusID (z tabeli Syllabuses)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>SubjectID: ID przedmiotu</li>
+<li>SubjectName: Nazwa przedmiotu</li>
+<li>SubjectDescription: Opis przedmiotu</li>
+<li>SubjectsCount: Liczba zajęć na przedmiocie</li>
+<li>CoordinatorID: ID koordynatora</li>
+<li>SyllabusID: ID sylabusa</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Subjects(
+    SubjectID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    SubjectName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SubjectDescription <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-keyword">MAX</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SubjectsCount <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    CoordinatorID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SyllabusID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (CoordinatorID) <span class="hljs-keyword">REFERENCES</span> Employees (EmployeeID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (SyllabusID) <span class="hljs-keyword">REFERENCES</span> Syllabuses (SyllabusID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>StudiesLessonMeetingTypes</strong>: Przechowuje typy spotkań lekcji studiów.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: StudiesLessonMeetingTypeID</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudiesLessonMeetingTypeID: ID typu spotkania lekcji</li>
+<li>StudiesLessonMeetingTypeName: Nazwa typu spotkania</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudiesLessonMeetingTypes(
+    StudiesLessonMeetingTypeID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    StudiesLessonMeetingTypeName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>StudiesSessions</strong>: Przechowuje informacje o semestrach na studiach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: SessionID</li>
+<li><strong>Klucze obce</strong>: StudiesID (z tabeli Studies), SubjectID (z tabeli Subjects)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>SessionID: ID semestru</li>
+<li>StudiesID: ID studiów</li>
+<li>SubjectID: ID przedmiotu</li>
+<li>SessionStartDate: Data rozpoczęcia semestru</li>
+<li>SessionEndDate: Data zakończenia semestru</li>
+<li>SessionCapacity: Ilość osób na semestrze</li>
+<li>SessionGuestCapacity: Ilość gości na semestrze</li>
+<li>SessionPrice: Cena za semestr</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudiesSessions(
+    SessionID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    StudiesID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SubjectID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SessionStartDate <span class="hljs-built_in">DATE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SessionEndDate <span class="hljs-built_in">DATE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SessionCapacity <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SessionGuestCapacity <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SessionPrice MONEY <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudiesID) <span class="hljs-keyword">REFERENCES</span> Studies (StudiesID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (SubjectID) <span class="hljs-keyword">REFERENCES</span> Subjects (SubjectID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>StudiesLessons</strong>: Przechowuje informacje o lekcjach studiów.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: LessonID</li>
+<li><strong>Klucze obce</strong>: SessionID (z tabeli StudiesSessions), SubjectID (z tabeli Subjects), LessonLanguageID (z tabeli Languages), TranslatorID (z tabeli Employees), TeacherID (z tabeli Employees), StudiesLessonMeetingTypeID (z tabeli StudiesLessonMeetingTypes)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>LessonID: ID lekcji</li>
+<li>SessionID: ID semestru</li>
+<li>SubjectID: ID przedmiotu</li>
+<li>LessonName: Nazwa lekcji</li>
+<li>LessonDescription: Opis lekcji</li>
+<li>LessonLanguageID: ID języka lekcji</li>
+<li>LessonMeetingLink: Link do spotkania lekcji</li>
+<li>LessonMeetingPlace: Miejsce spotkania lekcji</li>
+<li>LessonMeetingDateStart: Data rozpoczęcia spotkania lekcji</li>
+<li>LessonMeetingDateEnd: Data zakończenia spotkania lekcji</li>
+<li>LessonCapacity: Ilość osób na lekcji</li>
+<li>LessonGuestCapacity: Ilość gości na lekcji</li>
+<li>LessonPrice: Cena lekcji</li>
+<li>LessonGuestPrice: Cena dla gości</li>
+<li>IsTranslatedToPolish: Czy lekcja jest tłumaczona na polski</li>
+<li>TranslatorID: ID tłumacza</li>
+<li>TeacherID: ID nauczyciela</li>
+<li>StudiesLessonMeetingTypeID: ID typu spotkania lekcji</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudiesLessons(
+    LessonID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    SessionID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SubjectID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonDescription <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-keyword">MAX</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonLanguageID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonMeetingLink <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    LessonMeetingPlace <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    LessonMeetingDateStart SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonMeetingDateEnd SMALLDATETIME <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonCapacity <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonGuestCapacity <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonPrice MONEY <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    LessonGuestPrice MONEY <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    IsTranslatedToPolish <span class="hljs-built_in">BIT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    TranslatorID <span class="hljs-built_in">INT</span>,
+    TeacherID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    StudiesLessonMeetingTypeID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (SessionID) <span class="hljs-keyword">REFERENCES</span> StudiesSessions (SessionID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (SubjectID) <span class="hljs-keyword">REFERENCES</span> Subjects (SubjectID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (LessonLanguageID) <span class="hljs-keyword">REFERENCES</span> Languages (LanguageID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (TranslatorID) <span class="hljs-keyword">REFERENCES</span> Employees (EmployeeID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (TeacherID) <span class="hljs-keyword">REFERENCES</span> Employees (EmployeeID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudiesLessonMeetingTypeID) <span class="hljs-keyword">REFERENCES</span> StudiesLessonMeetingTypes (StudiesLessonMeetingTypeID),
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>StudiesLessonsPassed</strong>: Przechowuje informacje o zaliczonych lekcjach studiów przez studentów.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, LessonID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), LessonID (z tabeli StudiesLessons)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>LessonID: ID lekcji</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudiesLessonsPassed(
+    StudentID <span class="hljs-built_in">INT</span>,
+    LessonID <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, LessonID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (LessonID) <span class="hljs-keyword">REFERENCES</span> StudiesLessons (LessonID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>StudentStudiesGrades</strong>: Przechowuje oceny studentów za studia.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, StudiesID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), StudiesID (z tabeli Studies)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>StudiesID: ID studiów</li>
+<li>StudentGrade: Ocena studenta</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudentStudiesGrades(
+    StudentID <span class="hljs-built_in">INT</span>,
+    StudiesID <span class="hljs-built_in">INT</span>,
+    StudentGrade <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, StudiesID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudiesID) <span class="hljs-keyword">REFERENCES</span> Studies (StudiesID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>StudentBoughtStudies</strong>: Przechowuje informacje o zakupionych studiach przez studentów.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, StudiesID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), StudiesID (z tabeli Studies)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>StudiesID: ID studiów</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudentBoughtStudies(
+    StudentID <span class="hljs-built_in">INT</span>,
+    StudiesID <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, StudiesID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudiesID) <span class="hljs-keyword">REFERENCES</span> Studies (StudiesID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>StudentBoughtSessions</strong>: Przechowuje informacje o zakupionych sesjach przez studentów.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, SessionID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), SessionID (z tabeli StudiesSessions)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>SessionID: ID sesji</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudentBoughtSessions(
+    StudentID <span class="hljs-built_in">INT</span>,
+    SessionID <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, SessionID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (SessionID) <span class="hljs-keyword">REFERENCES</span> StudiesSessions (SessionID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>InternshipMeetingTypes</strong>: Przechowuje typy spotkań praktyk.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: InternshipMeetingTypeID</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>InternshipMeetingTypeID: ID typu spotkania</li>
+<li>InternshipMeetingTypeName: Nazwa typu spotkania</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> InternshipMeetingTypes(
+    InternshipMeetingTypeID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    InternshipMeetingTypeName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>Internships</strong>: Przechowuje informacje o praktykach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: InternshipID</li>
+<li><strong>Klucze obce</strong>: StudiesID (z tabeli Studies), InternshipMeetingType (z tabeli InternshipMeetingTypes)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>InternshipID: ID praktyk</li>
+<li>InternshipCompany: Firma praktyk</li>
+<li>InternshipStartDate: Data rozpoczęcia praktyk</li>
+<li>StudiesID: ID studiów</li>
+<li>InternshipMeetingType: ID typu spotkania</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Internships(
+    InternshipID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    InternshipCompany <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    InternshipStartDate <span class="hljs-built_in">DATE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    StudiesID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    InternshipMeetingType <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudiesID) <span class="hljs-keyword">REFERENCES</span> Studies (StudiesID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (InternshipMeetingType) <span class="hljs-keyword">REFERENCES</span> InternshipMeetingTypes (InternshipMeetingTypeID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>InternshipMeetingsPassed</strong>: Przechowuje informacje o zaliczonych praktykach przez studentów.</p>
+<ul>
+<li><strong>Klucze podstawowe</strong>: StudentID, InternshipID</li>
+<li><strong>Klucze obce</strong>: StudentID (z tabeli Students), InternshipID (z tabeli Internships)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>StudentID: ID studenta</li>
+<li>InternshipID: ID praktyk</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> InternshipMeetingsPassed(
+    StudentID <span class="hljs-built_in">INT</span>,
+    InternshipID <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (StudentID, InternshipID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (InternshipID) <span class="hljs-keyword">REFERENCES</span> Internships (InternshipID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudentID) <span class="hljs-keyword">REFERENCES</span> Students (StudentID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>OrderStudies</strong>: Przechowuje informacje o studiach w zamówieniach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: OrderStudiesID</li>
+<li><strong>Klucze obce</strong>: OrderDetailID (z tabeli OrderDetails), StudiesID (z tabeli Studies)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>OrderStudiesID: ID studiów w zamówieniu</li>
+<li>StudiesID: ID studiów</li>
+<li>OrderDetailID: ID szczegółu zamówienia</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> OrderStudies(
+    OrderStudiesID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    StudiesID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    OrderDetailID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (OrderDetailID) <span class="hljs-keyword">REFERENCES</span> OrderDetails (OrderDetailID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (StudiesID) <span class="hljs-keyword">REFERENCES</span> Studies (StudiesID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>OrderSessions</strong>: Przechowuje informacje o sesjach w zamówieniach.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: OrderSessionID</li>
+<li><strong>Klucze obce</strong>: OrderDetailID (z tabeli OrderDetails), SessionID (z tabeli StudiesSessions)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>OrderSessionID: ID sesji w zamówieniu</li>
+<li>SessionID: ID sesji</li>
+<li>OrderDetailID: ID szczegółu zamówienia</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> OrderSessions(
+    OrderSessionID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    SessionID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    OrderDetailID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (OrderDetailID) <span class="hljs-keyword">REFERENCES</span> OrderDetails (OrderDetailID),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (SessionID) <span class="hljs-keyword">REFERENCES</span> StudiesSessions (SessionID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+<li>
+<p><strong>RODOSigns</strong>: Przechowuje informacje o zgodach RODO użytkowników.</p>
+<ul>
+<li><strong>Klucz podstawowy</strong>: SignID</li>
+<li><strong>Klucz obcy</strong>: UserID (z tabeli Users)</li>
+<li><strong>Pola tabeli</strong>:
+<ul>
+<li>SignID: ID zgody</li>
+<li>UserID: ID użytkownika</li>
+<li>IsSigned: Czy zgoda została wyrażona</li>
+<li>SignDate: Data wyrażenia zgody</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> RODOSigns (
+    SignID <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    UserID <span class="hljs-built_in">INT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    IsSigned <span class="hljs-built_in">BIT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    SignDate <span class="hljs-built_in">DATE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (UserID) <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">Users</span> (UserID)
+)
+</div></code></pre>
+  <div style="page-break-after: always;"></div>
+</li>
+</ul>
+<h2 id="widoki">Widoki</h2>
+<h3 id="debtorslist">DebtorsList</h3>
+<p>Ten widok zapewnia listę dłużników, pokazując kwotę należną dla każdego użytkownika.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> DebtorsList <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname,
+    Orders.OrderID,
+    Orders.OrderDate,
+    OrderDetails.AmountToPay,
+    OrderDetails.AmountPaid,
+    (OrderDetails.AmountToPay - OrderDetails.AmountPaid) <span class="hljs-keyword">AS</span> AmountDue
+<span class="hljs-keyword">FROM</span>
+    <span class="hljs-keyword">Users</span>
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    Orders <span class="hljs-keyword">ON</span> Users.UserID = Orders.UserID
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    OrderDetails <span class="hljs-keyword">ON</span> Orders.OrderID = OrderDetails.OrderID
+<span class="hljs-keyword">WHERE</span>
+    OrderDetails.AmountPaid &lt; OrderDetails.AmountToPay;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="paymentstatus">PaymentStatus</h3>
+<p>Ten widok zapewnia status płatności zamówień, wskazując, czy są opłacone(<code>Paid</code>), czy oczekujące(<code>Pending</code>).</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> PaymentStatus <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    Orders.OrderID,
+    Orders.UserID,
+    Users.UserName,
+    Users.UserSurname,
+    OrderDetails.AmountPaid,
+    OrderDetails.AmountToPay,
+    <span class="hljs-keyword">CASE</span>
+        <span class="hljs-keyword">WHEN</span> OrderDetails.AmountPaid &gt;= OrderDetails.AmountToPay <span class="hljs-keyword">THEN</span> <span class="hljs-string">'Paid'</span>
+        <span class="hljs-keyword">ELSE</span> <span class="hljs-string">'Pending'</span>
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> PaymentStatus
+<span class="hljs-keyword">FROM</span>
+    Orders
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    OrderDetails <span class="hljs-keyword">ON</span> Orders.OrderID = OrderDetails.OrderID
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    <span class="hljs-keyword">Users</span> <span class="hljs-keyword">ON</span> Orders.UserID = Users.UserID;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="registeredparticipants">RegisteredParticipants</h3>
+<p>Ten widok zapewnia listę zarejestrowanych uczestników wydarzeń wykładowcy.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> RegisteredParticipants <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    Webinars.WebinarID <span class="hljs-keyword">AS</span> EventID,
+    Webinars.WebinarName <span class="hljs-keyword">AS</span> EventName,
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname
+<span class="hljs-keyword">FROM</span>
+    Webinars
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    StudentBoughtWebinars <span class="hljs-keyword">ON</span> Webinars.WebinarID = StudentBoughtWebinars.WebinarID
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    <span class="hljs-keyword">Users</span> <span class="hljs-keyword">ON</span> StudentBoughtWebinars.StudentID = Users.UserID
+<span class="hljs-keyword">WHERE</span>
+    Webinars.WebinarTeacherID = <span class="hljs-keyword">CURRENT_USER</span>
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    Courses.CourseID <span class="hljs-keyword">AS</span> EventID,
+    Courses.CourseName <span class="hljs-keyword">AS</span> EventName,
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname
+<span class="hljs-keyword">FROM</span>
+    Courses
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    CourseModulesPassed <span class="hljs-keyword">ON</span> Courses.CourseID = CourseModulesPassed.ModuleID
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    <span class="hljs-keyword">Users</span> <span class="hljs-keyword">ON</span> CourseModulesPassed.StudentID = Users.UserID
+<span class="hljs-keyword">WHERE</span>
+    Courses.CourseID <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> CourseID <span class="hljs-keyword">FROM</span> CourseModules <span class="hljs-keyword">WHERE</span> ModuleID = CourseModulesPassed.ModuleID)
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    StudiesLessons.LessonID <span class="hljs-keyword">AS</span> EventID,
+    StudiesLessons.LessonName <span class="hljs-keyword">AS</span> EventName,
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname
+<span class="hljs-keyword">FROM</span>
+    StudiesLessons
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    StudiesLessonPassed <span class="hljs-keyword">ON</span> StudiesLessons.LessonID = StudiesLessonPassed.LessonID
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    <span class="hljs-keyword">Users</span> <span class="hljs-keyword">ON</span> StudiesLessonPassed.StudentID = Users.UserID
+<span class="hljs-keyword">WHERE</span>
+    StudiesLessons.TeacherID = <span class="hljs-keyword">CURRENT_USER</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="eventdetails">EventDetails</h3>
+<p>Ten widok zapewnia szczegóły wydarzeń dla wykładowcy.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> EventDetails <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    Webinars.WebinarID <span class="hljs-keyword">AS</span> EventID,
+    Webinars.WebinarName <span class="hljs-keyword">AS</span> EventName,
+    Webinars.WebinarStartDate <span class="hljs-keyword">AS</span> EventDate,
+    Webinars.WebinarDescription <span class="hljs-keyword">AS</span> EventDescription,
+    Webinars.WebinarTeacherID <span class="hljs-keyword">AS</span> LecturerID
+<span class="hljs-keyword">FROM</span>
+    Webinars
+<span class="hljs-keyword">WHERE</span>
+    Webinars.WebinarTeacherID = <span class="hljs-keyword">CURRENT_USER</span>
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    Courses.CourseID <span class="hljs-keyword">AS</span> EventID,
+    Courses.CourseName <span class="hljs-keyword">AS</span> EventName,
+    <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> EventDate,
+    Courses.CourseDescription <span class="hljs-keyword">AS</span> EventDescription,
+    <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> LecturerID
+<span class="hljs-keyword">FROM</span>
+    Courses
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    StudiesLessons.LessonID <span class="hljs-keyword">AS</span> EventID,
+    StudiesLessons.LessonName <span class="hljs-keyword">AS</span> EventName,
+    StudiesLessons.LessonMeetingDateStart <span class="hljs-keyword">AS</span> EventDate,
+    StudiesLessons.LessonDescription <span class="hljs-keyword">AS</span> EventDescription,
+    StudiesLessons.TeacherID <span class="hljs-keyword">AS</span> LecturerID
+<span class="hljs-keyword">FROM</span>
+    StudiesLessons
+<span class="hljs-keyword">WHERE</span>
+    StudiesLessons.TeacherID = <span class="hljs-keyword">CURRENT_USER</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="attendancereports">AttendanceReports</h3>
+<p>Ten widok zapewnia raporty frekwencji dla wydarzeń wykładowcy.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> AttendanceReports <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    Webinars.WebinarID <span class="hljs-keyword">AS</span> EventID,
+    Webinars.WebinarName <span class="hljs-keyword">AS</span> EventName,
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname,
+    WebinarsPassed.PassedDate <span class="hljs-keyword">AS</span> AttendanceDate
+<span class="hljs-keyword">FROM</span>
+    Webinars
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    WebinarsPassed <span class="hljs-keyword">ON</span> Webinars.WebinarID = WebinarsPassed.WebinarID
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    <span class="hljs-keyword">Users</span> <span class="hljs-keyword">ON</span> WebinarsPassed.StudentID = Users.UserID
+<span class="hljs-keyword">WHERE</span>
+    Webinars.WebinarTeacherID = <span class="hljs-keyword">CURRENT_USER</span>
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    Courses.CourseID <span class="hljs-keyword">AS</span> EventID,
+    Courses.CourseName <span class="hljs-keyword">AS</span> EventName,
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname,
+    CourseLessonsPassed.PassedDate <span class="hljs-keyword">AS</span> AttendanceDate
+<span class="hljs-keyword">FROM</span>
+    Courses
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    CourseLessonsPassed <span class="hljs-keyword">ON</span> Courses.CourseID = CourseLessonsPassed.LessonID
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    <span class="hljs-keyword">Users</span> <span class="hljs-keyword">ON</span> CourseLessonsPassed.StudentID = Users.UserID
+<span class="hljs-keyword">WHERE</span>
+    Courses.CourseID <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> CourseID <span class="hljs-keyword">FROM</span> CourseModules <span class="hljs-keyword">WHERE</span> ModuleID = CourseLessonsPassed.LessonID)
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    StudiesLessons.LessonID <span class="hljs-keyword">AS</span> EventID,
+    StudiesLessons.LessonName <span class="hljs-keyword">AS</span> EventName,
+    Users.UserID,
+    Users.UserName,
+    Users.UserSurname,
+    StudiesLessonPassed.PassedDate <span class="hljs-keyword">AS</span> AttendanceDate
+<span class="hljs-keyword">FROM</span>
+    StudiesLessons
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    StudiesLessonPassed <span class="hljs-keyword">ON</span> StudiesLessons.LessonID = StudiesLessonPassed.LessonID
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    <span class="hljs-keyword">Users</span> <span class="hljs-keyword">ON</span> StudiesLessonPassed.StudentID = Users.UserID
+<span class="hljs-keyword">WHERE</span>
+    StudiesLessons.TeacherID = <span class="hljs-keyword">CURRENT_USER</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="translatedevents">TranslatedEvents</h3>
+<p>Ten widok zapewnia listę wydarzeń, do których przypisany jest tłumacz.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> TranslatedEvents <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    Webinars.WebinarID <span class="hljs-keyword">AS</span> EventID,
+    Webinars.WebinarName <span class="hljs-keyword">AS</span> EventName,
+    Webinars.WebinarStartDate <span class="hljs-keyword">AS</span> EventDate,
+    Webinars.WebinarDescription <span class="hljs-keyword">AS</span> EventDescription,
+    Webinars.WebinarTranslatorID <span class="hljs-keyword">AS</span> TranslatorID
+<span class="hljs-keyword">FROM</span>
+    Webinars
+<span class="hljs-keyword">WHERE</span>
+    Webinars.WebinarTranslatorID = <span class="hljs-keyword">CURRENT_USER</span>
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    Courses.CourseID <span class="hljs-keyword">AS</span> EventID,
+    Courses.CourseName <span class="hljs-keyword">AS</span> EventName,
+    <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> EventDate,
+    Courses.CourseDescription <span class="hljs-keyword">AS</span> EventDescription,
+    <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> TranslatorID
+<span class="hljs-keyword">FROM</span>
+    Courses
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    StudiesLessons.LessonID <span class="hljs-keyword">AS</span> EventID,
+    StudiesLessons.LessonName <span class="hljs-keyword">AS</span> EventName,
+    StudiesLessons.LessonMeetingDateStart <span class="hljs-keyword">AS</span> EventDate,
+    StudiesLessons.LessonDescription <span class="hljs-keyword">AS</span> EventDescription,
+    StudiesLessons.TranslatorID <span class="hljs-keyword">AS</span> TranslatorID
+<span class="hljs-keyword">FROM</span>
+    StudiesLessons
+<span class="hljs-keyword">WHERE</span>
+    StudiesLessons.TranslatorID = <span class="hljs-keyword">CURRENT_USER</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="translatoreventdetails">TranslatorEventDetails</h3>
+<p>Ten widok zapewnia szczegóły wydarzeń dla tłumacza.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> TranslatorEventDetails <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    Webinars.WebinarID <span class="hljs-keyword">AS</span> EventID,
+    Webinars.WebinarName <span class="hljs-keyword">AS</span> EventName,
+    Webinars.WebinarStartDate <span class="hljs-keyword">AS</span> EventDate,
+    Webinars.WebinarDescription <span class="hljs-keyword">AS</span> EventDescription,
+    Webinars.WebinarTranslatorID <span class="hljs-keyword">AS</span> TranslatorID
+<span class="hljs-keyword">FROM</span>
+    Webinars
+<span class="hljs-keyword">WHERE</span>
+    Webinars.WebinarTranslatorID = <span class="hljs-keyword">CURRENT_USER</span>
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    Courses.CourseID <span class="hljs-keyword">AS</span> EventID,
+    Courses.CourseName <span class="hljs-keyword">AS</span> EventName,
+    <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> EventDate,
+    Courses.CourseDescription <span class="hljs-keyword">AS</span> EventDescription,
+    <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> TranslatorID
+<span class="hljs-keyword">FROM</span>
+    Courses
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    StudiesLessons.LessonID <span class="hljs-keyword">AS</span> EventID,
+    StudiesLessons.LessonName <span class="hljs-keyword">AS</span> EventName,
+    StudiesLessons.LessonMeetingDateStart <span class="hljs-keyword">AS</span> EventDate,
+    StudiesLessons.LessonDescription <span class="hljs-keyword">AS</span> EventDescription,
+    StudiesLessons.TranslatorID <span class="hljs-keyword">AS</span> TranslatorID
+<span class="hljs-keyword">FROM</span>
+    StudiesLessons
+<span class="hljs-keyword">WHERE</span>
+    StudiesLessons.TranslatorID = <span class="hljs-keyword">CURRENT_USER</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="availableevents">AvailableEvents</h3>
+<p>Ten widok zapewnia listę dostępnych wydarzeń dla studentów.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> AvailableEvents <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    Webinars.WebinarID <span class="hljs-keyword">AS</span> EventID,
+    Webinars.WebinarName <span class="hljs-keyword">AS</span> EventName,
+    Webinars.WebinarStartDate <span class="hljs-keyword">AS</span> EventDate,
+    Webinars.WebinarDescription <span class="hljs-keyword">AS</span> EventDescription
+<span class="hljs-keyword">FROM</span>
+    Webinars
+<span class="hljs-keyword">WHERE</span>
+    Webinars.WebinarStartDate &gt; <span class="hljs-keyword">CURRENT_DATE</span>
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    Courses.CourseID <span class="hljs-keyword">AS</span> EventID,
+    Courses.CourseName <span class="hljs-keyword">AS</span> EventName,
+    <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> EventDate,
+    Courses.CourseDescription <span class="hljs-keyword">AS</span> EventDescription
+<span class="hljs-keyword">FROM</span>
+    Courses
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    StudiesLessons.LessonID <span class="hljs-keyword">AS</span> EventID,
+    StudiesLessons.LessonName <span class="hljs-keyword">AS</span> EventName,
+    StudiesLessons.LessonMeetingDateStart <span class="hljs-keyword">AS</span> EventDate,
+    StudiesLessons.LessonDescription <span class="hljs-keyword">AS</span> EventDescription
+<span class="hljs-keyword">FROM</span>
+    StudiesLessons
+<span class="hljs-keyword">WHERE</span>
+    StudiesLessons.LessonMeetingDateStart &gt; <span class="hljs-keyword">CURRENT_DATE</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="registeredeventdetails">RegisteredEventDetails</h3>
+<p>Ten widok zapewnia szczegóły zarejestrowanych wydarzeń dla studentów.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span>
+    Webinars.WebinarID <span class="hljs-keyword">AS</span> EventID,
+    Webinars.WebinarName <span class="hljs-keyword">AS</span> EventName,
+    Webinars.WebinarStartDate <span class="hljs-keyword">AS</span> EventDate,
+    Webinars.WebinarDescription <span class="hljs-keyword">AS</span> EventDescription,
+    StudentBoughtWebinars.StudentID
+<span class="hljs-keyword">FROM</span>
+    Webinars
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    StudentBoughtWebinars <span class="hljs-keyword">ON</span> Webinars.WebinarID = StudentBoughtWebinars.WebinarID
+<span class="hljs-keyword">WHERE</span>
+    StudentBoughtWebinars.StudentID = <span class="hljs-keyword">CURRENT_USER</span>
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    Courses.CourseID <span class="hljs-keyword">AS</span> EventID,
+    Courses.CourseName <span class="hljs-keyword">AS</span> EventName,
+    <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> EventDate,
+    Courses.CourseDescription <span class="hljs-keyword">AS</span> EventDescription,
+    CourseModulesPassed.StudentID
+<span class="hljs-keyword">FROM</span>
+    Courses
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    CourseModulesPassed <span class="hljs-keyword">ON</span> Courses.CourseID = CourseModulesPassed.ModuleID
+<span class="hljs-keyword">WHERE</span>
+    CourseModulesPassed.StudentID = <span class="hljs-keyword">CURRENT_USER</span>
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    StudiesLessons.LessonID <span class="hljs-keyword">AS</span> EventID,
+    StudiesLessons.LessonName <span class="hljs-keyword">AS</span> EventName,
+    StudiesLessons.LessonMeetingDateStart <span class="hljs-keyword">AS</span> EventDate,
+    StudiesLessons.LessonDescription <span class="hljs-keyword">AS</span> EventDescription,
+    StudiesLessonPassed.StudentID
+<span class="hljs-keyword">FROM</span>
+    StudiesLessons
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    StudiesLessonPassed <span class="hljs-keyword">ON</span> StudiesLessons.LessonID = StudiesLessonPassed.LessonID
+<span class="hljs-keyword">WHERE</span>
+    StudiesLessonPassed.StudentID = <span class="hljs-keyword">CURRENT_USER</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="completionstatus">CompletionStatus</h3>
+<p>Ten widok zapewnia status ukończenia dla studentów.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> CompletionStatus <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    CourseModulesPassed.StudentID,
+    CourseModulesPassed.ModuleID <span class="hljs-keyword">AS</span> ItemID,
+    <span class="hljs-string">'CourseModule'</span> <span class="hljs-keyword">AS</span> ItemType,
+    <span class="hljs-string">'Passed'</span> <span class="hljs-keyword">AS</span> <span class="hljs-keyword">Status</span>
+<span class="hljs-keyword">FROM</span>
+    CourseModulesPassed
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    CourseLessonsPassed.StudentID,
+    CourseLessonsPassed.LessonID <span class="hljs-keyword">AS</span> ItemID,
+    <span class="hljs-string">'CourseLesson'</span> <span class="hljs-keyword">AS</span> ItemType,
+    <span class="hljs-string">'Passed'</span> <span class="hljs-keyword">AS</span> <span class="hljs-keyword">Status</span>
+<span class="hljs-keyword">FROM</span>
+    CourseLessonsPassed
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    WebinarsPassed.StudentID,
+    WebinarsPassed.WebinarID <span class="hljs-keyword">AS</span> ItemID,
+    <span class="hljs-string">'Webinar'</span> <span class="hljs-keyword">AS</span> ItemType,
+    <span class="hljs-string">'Passed'</span> <span class="hljs-keyword">AS</span> <span class="hljs-keyword">Status</span>
+<span class="hljs-keyword">FROM</span>
+    WebinarsPassed
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span>
+    StudiesLessonPassed.StudentID,
+    StudiesLessonPassed.LessonID <span class="hljs-keyword">AS</span> ItemID,
+    <span class="hljs-string">'StudiesLesson'</span> <span class="hljs-keyword">AS</span> ItemType,
+    <span class="hljs-string">'Passed'</span> <span class="hljs-keyword">AS</span> <span class="hljs-keyword">Status</span>
+<span class="hljs-keyword">FROM</span>
+    StudiesLessonPassed;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="studentpaymentstatus">StudentPaymentStatus</h3>
+<p>Ten widok zapewnia status płatności dla studentów.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> StudentPaymentStatus <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    Orders.OrderID,
+    Orders.UserID,
+    Users.UserName,
+    Users.UserSurname,
+    OrderDetails.AmountPaid,
+    OrderDetails.AmountToPay,
+    <span class="hljs-keyword">CASE</span>
+        <span class="hljs-keyword">WHEN</span> OrderDetails.AmountPaid &gt;= OrderDetails.AmountToPay <span class="hljs-keyword">THEN</span> <span class="hljs-string">'Paid'</span>
+        <span class="hljs-keyword">ELSE</span> <span class="hljs-string">'Pending'</span>
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> PaymentStatus
+<span class="hljs-keyword">FROM</span>
+    Orders
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    OrderDetails <span class="hljs-keyword">ON</span> Orders.OrderID = OrderDetails.OrderID
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span>
+    <span class="hljs-keyword">Users</span> <span class="hljs-keyword">ON</span> Orders.UserID = Users.UserID
+<span class="hljs-keyword">WHERE</span>
+    Orders.UserID = <span class="hljs-keyword">CURRENT_USER</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h2 id="funkcje">Funkcje</h2>
+<h3 id="getavailableevents">GetAvailableEvents</h3>
+<p>Przechowywanie listy dostępnych webinarów, kursów i studiów</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> GetAvailableEvents()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TABLE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">RETURN</span>
+(
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Webinar'</span> <span class="hljs-keyword">AS</span> EventType,
+        WebinarID <span class="hljs-keyword">AS</span> EventID,
+        WebinarName <span class="hljs-keyword">AS</span> EventName,
+        WebinarDate <span class="hljs-keyword">AS</span> EventDate,
+        WebinarLanguageID <span class="hljs-keyword">AS</span> LanguageID
+    <span class="hljs-keyword">FROM</span> Webinars
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Course'</span> <span class="hljs-keyword">AS</span> EventType,
+        CourseID <span class="hljs-keyword">AS</span> EventID,
+        CourseName <span class="hljs-keyword">AS</span> EventName,
+        CourseStartDate <span class="hljs-keyword">AS</span> EventDate,
+        CourseLanguageID <span class="hljs-keyword">AS</span> LanguageID
+    <span class="hljs-keyword">FROM</span> Courses
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Study'</span> <span class="hljs-keyword">AS</span> EventType,
+        StudiesID <span class="hljs-keyword">AS</span> EventID,
+        StudiesName <span class="hljs-keyword">AS</span> EventName,
+        StudiesStartDate <span class="hljs-keyword">AS</span> EventDate,
+        StudiesLanguageID <span class="hljs-keyword">AS</span> LanguageID
+    <span class="hljs-keyword">FROM</span> Studies
+);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="getsyllabusesandschedules">GetSyllabusesAndSchedules</h3>
+<p>Przechowywanie sylabusów i harmonogramów</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> GetSyllabusesAndSchedules()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TABLE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">RETURN</span>
+(
+    <span class="hljs-keyword">SELECT</span>
+        s.StudiesID,
+        s.StudiesName,
+        sy.SyllabusID,
+        sy.SyllabusContent,
+        sl.ScheduleID,
+        sl.ScheduleContent
+    <span class="hljs-keyword">FROM</span> Studies s
+    <span class="hljs-keyword">JOIN</span> Syllabuses sy <span class="hljs-keyword">ON</span> s.StudiesID = sy.StudiesID
+    <span class="hljs-keyword">JOIN</span> Schedules sl <span class="hljs-keyword">ON</span> s.StudiesID = sl.StudiesID
+);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="geteventdetails">GetEventDetails</h3>
+<p>Przechowywanie szczegółów wydarzenia (np. daty, miejsca, linków do spotkań online)</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> GetEventDetails()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TABLE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">RETURN</span>
+(
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Webinar'</span> <span class="hljs-keyword">AS</span> EventType,
+        WebinarID <span class="hljs-keyword">AS</span> EventID,
+        WebinarName <span class="hljs-keyword">AS</span> EventName,
+        WebinarDate <span class="hljs-keyword">AS</span> EventDate,
+        WebinarLocation <span class="hljs-keyword">AS</span> EventLocation,
+        WebinarLink <span class="hljs-keyword">AS</span> EventLink
+    <span class="hljs-keyword">FROM</span> Webinars
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Course'</span> <span class="hljs-keyword">AS</span> EventType,
+        CourseID <span class="hljs-keyword">AS</span> EventID,
+        CourseName <span class="hljs-keyword">AS</span> EventName,
+        CourseStartDate <span class="hljs-keyword">AS</span> EventDate,
+        CourseLocation <span class="hljs-keyword">AS</span> EventLocation,
+        CourseLink <span class="hljs-keyword">AS</span> EventLink
+    <span class="hljs-keyword">FROM</span> Courses
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Study'</span> <span class="hljs-keyword">AS</span> EventType,
+        StudiesID <span class="hljs-keyword">AS</span> EventID,
+        StudiesName <span class="hljs-keyword">AS</span> EventName,
+        StudiesStartDate <span class="hljs-keyword">AS</span> EventDate,
+        StudiesLocation <span class="hljs-keyword">AS</span> EventLocation,
+        StudiesLink <span class="hljs-keyword">AS</span> EventLink
+    <span class="hljs-keyword">FROM</span> Studies
+);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="getcompletionstatus">GetCompletionStatus</h3>
+<p>Przechowywanie statusu zaliczeń (moduły kursowe, frekwencja na studiach)</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> GetCompletionStatus()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TABLE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">RETURN</span>
+(
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'CourseModule'</span> <span class="hljs-keyword">AS</span> CompletionType,
+        cm.ModuleID <span class="hljs-keyword">AS</span> CompletionID,
+        cm.ModuleName <span class="hljs-keyword">AS</span> CompletionName,
+        cmp.StudentID,
+        cmp.CompletionDate
+    <span class="hljs-keyword">FROM</span> CourseModules cm
+    <span class="hljs-keyword">JOIN</span> CourseModulesPassed cmp <span class="hljs-keyword">ON</span> cm.ModuleID = cmp.ModuleID
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'StudyAttendance'</span> <span class="hljs-keyword">AS</span> CompletionType,
+        sl.LessonID <span class="hljs-keyword">AS</span> CompletionID,
+        sl.LessonName <span class="hljs-keyword">AS</span> CompletionName,
+        slp.StudentID,
+        slp.AttendanceDate <span class="hljs-keyword">AS</span> CompletionDate
+    <span class="hljs-keyword">FROM</span> StudiesLessons sl
+    <span class="hljs-keyword">JOIN</span> StudiesLessonsPassed slp <span class="hljs-keyword">ON</span> sl.LessonID = slp.LessonID
+);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="getpaymentstatus">GetPaymentStatus</h3>
+<p>Sprawdzanie statusu płatności</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> GetPaymentStatus()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TABLE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">RETURN</span>
+(
+    <span class="hljs-keyword">SELECT</span>
+        o.OrderID,
+        o.UserID,
+        u.UserName,
+        u.UserSurname,
+        od.AmountPaid,
+        od.AmountToPay,
+        <span class="hljs-keyword">CASE</span>
+            <span class="hljs-keyword">WHEN</span> od.AmountPaid &gt;= od.AmountToPay <span class="hljs-keyword">THEN</span> <span class="hljs-string">'Paid'</span>
+            <span class="hljs-keyword">ELSE</span> <span class="hljs-string">'Pending'</span>
+        <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> PaymentStatus
+    <span class="hljs-keyword">FROM</span>
+        Orders o
+    <span class="hljs-keyword">JOIN</span>
+        OrderDetails od <span class="hljs-keyword">ON</span> o.OrderID = od.OrderID
+    <span class="hljs-keyword">JOIN</span>
+        <span class="hljs-keyword">Users</span> u <span class="hljs-keyword">ON</span> o.UserID = u.UserID
+);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="getfinancialreports">GetFinancialReports</h3>
+<p>Generowanie raportów finansowych (przychody dla każdego typu wydarzeń)</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> GetFinancialReports()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TABLE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">RETURN</span>
+(
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Webinar'</span> <span class="hljs-keyword">AS</span> EventType,
+        w.WebinarID <span class="hljs-keyword">AS</span> EventID,
+        w.WebinarName <span class="hljs-keyword">AS</span> EventName,
+        <span class="hljs-keyword">SUM</span>(od.AmountPaid) <span class="hljs-keyword">AS</span> TotalRevenue
+    <span class="hljs-keyword">FROM</span> Webinars w
+    <span class="hljs-keyword">JOIN</span> OrderDetails od <span class="hljs-keyword">ON</span> w.WebinarID = od.EventID
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> w.WebinarID, w.WebinarName
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Course'</span> <span class="hljs-keyword">AS</span> EventType,
+        c.CourseID <span class="hljs-keyword">AS</span> EventID,
+        c.CourseName <span class="hljs-keyword">AS</span> EventName,
+        <span class="hljs-keyword">SUM</span>(od.AmountPaid) <span class="hljs-keyword">AS</span> TotalRevenue
+    <span class="hljs-keyword">FROM</span> Courses c
+    <span class="hljs-keyword">JOIN</span> OrderDetails od <span class="hljs-keyword">ON</span> c.CourseID = od.EventID
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.CourseID, c.CourseName
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Study'</span> <span class="hljs-keyword">AS</span> EventType,
+        s.StudiesID <span class="hljs-keyword">AS</span> EventID,
+        s.StudiesName <span class="hljs-keyword">AS</span> EventName,
+        <span class="hljs-keyword">SUM</span>(od.AmountPaid) <span class="hljs-keyword">AS</span> TotalRevenue
+    <span class="hljs-keyword">FROM</span> Studies s
+    <span class="hljs-keyword">JOIN</span> OrderDetails od <span class="hljs-keyword">ON</span> s.StudiesID = od.EventID
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> s.StudiesID, s.StudiesName
+);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="getenrollmentreports">GetEnrollmentReports</h3>
+<p>Wyświetlanie raportu liczby zapisanych osób</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> GetEnrollmentReports()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TABLE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">RETURN</span>
+(
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Webinar'</span> <span class="hljs-keyword">AS</span> EventType,
+        w.WebinarID <span class="hljs-keyword">AS</span> EventID,
+        w.WebinarName <span class="hljs-keyword">AS</span> EventName,
+        <span class="hljs-keyword">COUNT</span>(sbw.StudentID) <span class="hljs-keyword">AS</span> EnrollmentCount
+    <span class="hljs-keyword">FROM</span> Webinars w
+    <span class="hljs-keyword">JOIN</span> StudentBoughtWebinars sbw <span class="hljs-keyword">ON</span> w.WebinarID = sbw.WebinarID
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> w.WebinarID, w.WebinarName
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Course'</span> <span class="hljs-keyword">AS</span> EventType,
+        c.CourseID <span class="hljs-keyword">AS</span> EventID,
+        c.CourseName <span class="hljs-keyword">AS</span> EventName,
+        <span class="hljs-keyword">COUNT</span>(sbc.StudentID) <span class="hljs-keyword">AS</span> EnrollmentCount
+    <span class="hljs-keyword">FROM</span> Courses c
+    <span class="hljs-keyword">JOIN</span> StudentBoughtCourses sbc <span class="hljs-keyword">ON</span> c.CourseID = sbc.CourseID
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.CourseID, c.CourseName
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'Study'</span> <span class="hljs-keyword">AS</span> EventType,
+        s.StudiesID <span class="hljs-keyword">AS</span> EventID,
+        s.StudiesName <span class="hljs-keyword">AS</span> EventName,
+        <span class="hljs-keyword">COUNT</span>(sbs.StudentID) <span class="hljs-keyword">AS</span> EnrollmentCount
+    <span class="hljs-keyword">FROM</span> Studies s
+    <span class="hljs-keyword">JOIN</span> StudentBoughtStudies sbs <span class="hljs-keyword">ON</span> s.StudiesID = sbs.StudiesID
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> s.StudiesID, s.StudiesName
+);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="getattendancereports">GetAttendanceReports</h3>
+<p>Tworzenie list obecności oraz raportów dotyczących frekwencji</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> GetAttendanceReports()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TABLE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">RETURN</span>
+(
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'CourseModule'</span> <span class="hljs-keyword">AS</span> EventType,
+        cm.ModuleID <span class="hljs-keyword">AS</span> EventID,
+        cm.ModuleName <span class="hljs-keyword">AS</span> EventName,
+        <span class="hljs-keyword">COUNT</span>(cmp.StudentID) <span class="hljs-keyword">AS</span> AttendanceCount
+    <span class="hljs-keyword">FROM</span> CourseModules cm
+    <span class="hljs-keyword">JOIN</span> CourseModulesPassed cmp <span class="hljs-keyword">ON</span> cm.ModuleID = cmp.ModuleID
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> cm.ModuleID, cm.ModuleName
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-string">'StudyLesson'</span> <span class="hljs-keyword">AS</span> EventType,
+        sl.LessonID <span class="hljs-keyword">AS</span> EventID,
+        sl.LessonName <span class="hljs-keyword">AS</span> EventName,
+        <span class="hljs-keyword">COUNT</span>(slp.StudentID) <span class="hljs-keyword">AS</span> AttendanceCount
+    <span class="hljs-keyword">FROM</span> StudiesLessons sl
+    <span class="hljs-keyword">JOIN</span> StudiesLessonsPassed slp <span class="hljs-keyword">ON</span> sl.LessonID = slp.LessonID
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> sl.LessonID, sl.LessonName
+);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="filteredevents">FilteredEvents</h3>
+<p>Filtrowanie po rodzaju (webinary, kursy, studia), formie (stacjonarne, online, hybrydowe), języku, dostępności miejsc, cenie</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> FilteredEvents()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TABLE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">RETURN</span>
+(
+    <span class="hljs-keyword">SELECT</span> WebinarID <span class="hljs-keyword">AS</span> EventID, WebinarName <span class="hljs-keyword">AS</span> EventName, <span class="hljs-string">'Webinar'</span> <span class="hljs-keyword">AS</span> EventType, WebinarLanguageID <span class="hljs-keyword">AS</span> LanguageID, WebinarPrice <span class="hljs-keyword">AS</span> Price, <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> <span class="hljs-keyword">Capacity</span>
+    <span class="hljs-keyword">FROM</span> Webinars
+    <span class="hljs-keyword">UNION</span>
+    <span class="hljs-keyword">SELECT</span> CourseID <span class="hljs-keyword">AS</span> EventID, CourseName <span class="hljs-keyword">AS</span> EventName, <span class="hljs-string">'Course'</span> <span class="hljs-keyword">AS</span> EventType, CourseLanguageID <span class="hljs-keyword">AS</span> LanguageID, CoursePrice <span class="hljs-keyword">AS</span> Price, <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> <span class="hljs-keyword">Capacity</span>
+    <span class="hljs-keyword">FROM</span> Courses
+    <span class="hljs-keyword">UNION</span>
+    <span class="hljs-keyword">SELECT</span> StudiesID <span class="hljs-keyword">AS</span> EventID, StudiesName <span class="hljs-keyword">AS</span> EventName, <span class="hljs-string">'Studies'</span> <span class="hljs-keyword">AS</span> EventType, <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> LanguageID, <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> Price, <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AS</span> <span class="hljs-keyword">Capacity</span>
+    <span class="hljs-keyword">FROM</span> Studies
+);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h2 id="procedury">Procedury</h2>
+<h3 id="adduser">AddUser</h3>
+<p>Dodaje nowego użytkownika do systemu</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> AddUser
+    @UserName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    @UserSurname <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    @UserDateOfBirth <span class="hljs-built_in">DATE</span>,
+    @UserSex <span class="hljs-built_in">CHAR</span>(<span class="hljs-number">1</span>),
+    @UserEmail <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    @UserPhoneNumber <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">20</span>),
+    @UserAddress <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    @UserCity <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    @UserCountry <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    @UserPostalCode <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">10</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">Users</span> (UserName, UserSurname, UserDateOfBirth, UserSex, UserEmail, UserPhoneNumber, UserAddress, UserCity, UserCountry, UserPostalCode)
+    <span class="hljs-keyword">VALUES</span> (@UserName, @UserSurname, @UserDateOfBirth, @UserSex, @UserEmail, @UserPhoneNumber, @UserAddress, @UserCity, @UserCountry, @UserPostalCode);
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="updateuserprofile">UpdateUserProfile</h3>
+<p>Aktualizuje dane profilu użytkownika</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> UpdateUserProfile
+    @UserID <span class="hljs-built_in">INT</span>,
+    @UserName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    @UserSurname <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    @UserDateOfBirth <span class="hljs-built_in">DATE</span>,
+    @UserSex <span class="hljs-built_in">CHAR</span>(<span class="hljs-number">1</span>),
+    @UserEmail <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    @UserPhoneNumber <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">20</span>),
+    @UserAddress <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    @UserCity <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    @UserCountry <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    @UserPostalCode <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">10</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">Users</span>
+    <span class="hljs-keyword">SET</span> UserName = @UserName,
+        UserSurname = @UserSurname,
+        UserDateOfBirth = @UserDateOfBirth,
+        UserSex = @UserSex,
+        UserEmail = @UserEmail,
+        UserPhoneNumber = @UserPhoneNumber,
+        UserAddress = @UserAddress,
+        UserCity = @UserCity,
+        UserCountry = @UserCountry,
+        UserPostalCode = @UserPostalCode
+    <span class="hljs-keyword">WHERE</span> UserID = @UserID;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="deleteuser">DeleteUser</h3>
+<p>Usuwa użytkownika z systemu</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> DeleteUser
+    @UserID <span class="hljs-built_in">INT</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">Users</span>
+    <span class="hljs-keyword">WHERE</span> UserID = @UserID;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="addrole">AddRole</h3>
+<p>Dodawanie użytkownikowi nowej roli</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> AddRole
+    @UserID <span class="hljs-built_in">INT</span>,
+    @RoleID <span class="hljs-built_in">INT</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> UserRoles (UserID, RoleID)
+    <span class="hljs-keyword">VALUES</span> (@UserID, @RoleID);
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="removerole">RemoveRole</h3>
+<p>Usuwanie użytkownikowi roli</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> RemoveRole
+    @UserID <span class="hljs-built_in">INT</span>,
+    @RoleID <span class="hljs-built_in">INT</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> UserRoles
+    <span class="hljs-keyword">WHERE</span> UserID = @UserID <span class="hljs-keyword">AND</span> RoleID = @RoleID;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="addevent">AddEvent</h3>
+<p>Dodaje nowe wydarzenie (webinar, kurs, studium)</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> AddEvent
+    @EventName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    @EventType <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    @EventStartDate <span class="hljs-built_in">DATE</span>,
+    @EventEndDate <span class="hljs-built_in">DATE</span>,
+    @EventDescription <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-keyword">MAX</span>),
+    @EventLanguageID <span class="hljs-built_in">INT</span>,
+    @EventPrice MONEY,
+    @EventTranslatorID <span class="hljs-built_in">INT</span>,
+    @EventTeacherID <span class="hljs-built_in">INT</span>,
+    @EventMeetingLink <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Webinar'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> Webinars (WebinarName, WebinarStartDate, WebinarEndDate, WebinarDescription, WebinarLanguageID, WebinarPrice, WebinarTranslatorID, WebinarTeacherID, WebinarMeetingLink)
+        <span class="hljs-keyword">VALUES</span> (@EventName, @EventStartDate, @EventEndDate, @EventDescription, @EventLanguageID, @EventPrice, @EventTranslatorID, @EventTeacherID, @EventMeetingLink);
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span> <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Course'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> Courses (CourseName, CourseDescription, CourseLanguageID, CoursePrice)
+        <span class="hljs-keyword">VALUES</span> (@EventName, @EventDescription, @EventLanguageID, @EventPrice);
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span> <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Studies'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> Studies (StudiesName, StudiesDescription, StudiesStartDate, StudiesEndDate)
+        <span class="hljs-keyword">VALUES</span> (@EventName, @EventDescription, @EventStartDate, @EventEndDate);
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="updateeventdetails">UpdateEventDetails</h3>
+<p>Aktualizuje szczegóły wydarzenia</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> UpdateEventDetails
+    @EventID <span class="hljs-built_in">INT</span>,
+    @EventType <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    @EventName <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    @EventStartDate <span class="hljs-built_in">DATE</span>,
+    @EventEndDate <span class="hljs-built_in">DATE</span>,
+    @EventDescription <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-keyword">MAX</span>),
+    @EventLanguageID <span class="hljs-built_in">INT</span>,
+    @EventPrice MONEY,
+    @EventTranslatorID <span class="hljs-built_in">INT</span>,
+    @EventTeacherID <span class="hljs-built_in">INT</span>,
+    @EventMeetingLink <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Webinar'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">UPDATE</span> Webinars
+        <span class="hljs-keyword">SET</span> WebinarName = @EventName,
+            WebinarStartDate = @EventStartDate,
+            WebinarEndDate = @EventEndDate,
+            WebinarDescription = @EventDescription,
+            WebinarLanguageID = @EventLanguageID,
+            WebinarPrice = @EventPrice,
+            WebinarTranslatorID = @EventTranslatorID,
+            WebinarTeacherID = @EventTeacherID,
+            WebinarMeetingLink = @EventMeetingLink
+        <span class="hljs-keyword">WHERE</span> WebinarID = @EventID;
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span> <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Course'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">UPDATE</span> Courses
+        <span class="hljs-keyword">SET</span> CourseName = @EventName,
+            CourseDescription = @EventDescription,
+            CourseLanguageID = @EventLanguageID,
+            CoursePrice = @EventPrice
+        <span class="hljs-keyword">WHERE</span> CourseID = @EventID;
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span> <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Studies'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">UPDATE</span> Studies
+        <span class="hljs-keyword">SET</span> StudiesName = @EventName,
+            StudiesDescription = @EventDescription,
+            StudiesStartDate = @EventStartDate,
+            StudiesEndDate = @EventEndDate
+        <span class="hljs-keyword">WHERE</span> StudiesID = @EventID;
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="deleteevent">DeleteEvent</h3>
+<p>Usuwa wydarzenie z systemu</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> DeleteEvent
+    @EventID <span class="hljs-built_in">INT</span>,
+    @EventType <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Webinar'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> Webinars
+        <span class="hljs-keyword">WHERE</span> WebinarID = @EventID;
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span> <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Course'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> Courses
+        <span class="hljs-keyword">WHERE</span> CourseID = @EventID;
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span> <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Studies'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> Studies
+        <span class="hljs-keyword">WHERE</span> StudiesID = @EventID;
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="createpaymentlink">CreatePaymentLink</h3>
+<p>Generuje link do płatności</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> CreatePaymentLink
+    @OrderID <span class="hljs-built_in">INT</span>,
+    @PaymentLink <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">UPDATE</span> Orders
+    <span class="hljs-keyword">SET</span> OrderPaymentLink = @PaymentLink
+    <span class="hljs-keyword">WHERE</span> OrderID = @OrderID;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="processpaymentresult">ProcessPaymentResult</h3>
+<p>Przetwarza wynik płatności (udana/nieudana)</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> ProcessPaymentResult
+    @OrderDetailID <span class="hljs-built_in">INT</span>,
+    @AmountPaid MONEY,
+    @PaidDate <span class="hljs-built_in">DATE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">UPDATE</span> OrderDetails
+    <span class="hljs-keyword">SET</span> AmountPaid = @AmountPaid,
+        PaidDate = @PaidDate
+    <span class="hljs-keyword">WHERE</span> OrderDetailID = @OrderDetailID;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="applypaymentexception">ApplyPaymentException</h3>
+<p>Zapisuje wyjątek płatniczy (np. odroczenie)</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> ApplyPaymentException
+    @OrderDetailID <span class="hljs-built_in">INT</span>,
+    @PostponementDate <span class="hljs-built_in">DATE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">UPDATE</span> OrderDetails
+    <span class="hljs-keyword">SET</span> PostponementDate = @PostponementDate
+    <span class="hljs-keyword">WHERE</span> OrderDetailID = @OrderDetailID;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="registerforevent">RegisterForEvent</h3>
+<p>Rejestruje użytkownika na wydarzenie</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> RegisterForEvent
+    @UserID <span class="hljs-built_in">INT</span>,
+    @EventID <span class="hljs-built_in">INT</span>,
+    @EventType <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Webinar'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> StudentBoughtWebinars (StudentID, WebinarID, WebinarBoughtDate, WebinarAccessDateEnd)
+        <span class="hljs-keyword">VALUES</span> (@UserID, @EventID, <span class="hljs-keyword">GETDATE</span>(), <span class="hljs-keyword">DATEADD</span>(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">30</span>, <span class="hljs-keyword">GETDATE</span>()));
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span> <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Course'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> CourseModulesPassed (StudentID, ModuleID)
+        <span class="hljs-keyword">VALUES</span> (@UserID, @EventID);
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span> <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Studies'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> StudentStudies (StudentID, StudiesID)
+        <span class="hljs-keyword">VALUES</span> (@UserID, @EventID);
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="cancelregistration">CancelRegistration</h3>
+<p>Anuluje rejestrację na wydarzenie</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> CancelRegistration
+    @UserID <span class="hljs-built_in">INT</span>,
+    @EventID <span class="hljs-built_in">INT</span>,
+    @EventType <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Webinar'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> StudentBoughtWebinars
+        <span class="hljs-keyword">WHERE</span> StudentID = @UserID <span class="hljs-keyword">AND</span> WebinarID = @EventID;
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span> <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Course'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> CourseModulesPassed
+        <span class="hljs-keyword">WHERE</span> StudentID = @UserID <span class="hljs-keyword">AND</span> ModuleID = @EventID;
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span> <span class="hljs-keyword">IF</span> @EventType = <span class="hljs-string">'Studies'</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> StudentStudies
+        <span class="hljs-keyword">WHERE</span> StudentID = @UserID <span class="hljs-keyword">AND</span> StudiesID = @EventID;
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h2 id="triggery">Triggery</h2>
+<h3 id="handlewebinarpayment">HandleWebinarPayment</h3>
+<p>Ten trigger obsługuje płatności za webinary i dodaje studenta do listy zakupionych webinarów, jeśli płatność jest pełna lub odroczona.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> HandleWebinarPayment
+<span class="hljs-keyword">ON</span> OrderDetails
+<span class="hljs-keyword">AFTER</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> (
+        <span class="hljs-keyword">SELECT</span> Orders.UserID, Webinars.WebinarID
+        <span class="hljs-keyword">FROM</span> inserted
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Orders
+        <span class="hljs-keyword">ON</span> Orders.OrderID = inserted.OrderID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> OrderWebinars
+        <span class="hljs-keyword">ON</span> OrderWebinars.OrderDetailID = inserted.OrderDetailID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Webinars
+        <span class="hljs-keyword">ON</span> Webinars.WebinarID = OrderWebinars.WebinarID
+        <span class="hljs-keyword">WHERE</span> inserted.AmountPaid = inserted.AmountToPay <span class="hljs-keyword">OR</span> inserted.PostponementDate &gt; <span class="hljs-keyword">GETDATE</span>()
+        <span class="hljs-keyword">AND</span> WebinarStartDate &gt; <span class="hljs-keyword">GETDATE</span>()
+        <span class="hljs-keyword">AND</span> Orders.UserID <span class="hljs-keyword">IN</span> (
+            <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> StudentID <span class="hljs-keyword">FROM</span> StudentBoughtWebinars
+            )
+       )
+    <span class="hljs-keyword">BEGIN</span>
+        RAISERROR(<span class="hljs-string">'Student already bought that webinar'</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> StudentBoughtWebinars(StudentID, WebinarID, WebinarBoughtDate, WebinarAccessDateEnd)
+        (<span class="hljs-keyword">SELECT</span> Orders.UserID <span class="hljs-keyword">as</span> StudentID, Webinars.WebinarID, <span class="hljs-keyword">GETDATE</span>() <span class="hljs-keyword">as</span> WebinarBoughtDate,
+                <span class="hljs-keyword">DATEADD</span>(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">30</span>, <span class="hljs-keyword">GETDATE</span>()) <span class="hljs-keyword">as</span> WebinarAccessDateEnd
+        <span class="hljs-keyword">FROM</span> inserted
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Orders
+        <span class="hljs-keyword">ON</span> Orders.OrderID = inserted.OrderID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> OrderWebinars
+        <span class="hljs-keyword">ON</span> OrderWebinars.OrderDetailID = inserted.OrderDetailID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Webinars
+        <span class="hljs-keyword">ON</span> Webinars.WebinarID = OrderWebinars.WebinarID
+        <span class="hljs-keyword">WHERE</span> inserted.AmountPaid = inserted.AmountToPay <span class="hljs-keyword">OR</span> inserted.PostponementDate &gt; <span class="hljs-keyword">GETDATE</span>()
+        <span class="hljs-keyword">AND</span> WebinarStartDate &gt; <span class="hljs-keyword">GETDATE</span>())
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="handlecoursepayment">HandleCoursePayment</h3>
+<p>Ten trigger obsługuje płatności za kursy i dodaje studenta do listy zakupionych kursów, jeśli płatność jest pełna lub odroczona.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> HandleCoursePayment
+<span class="hljs-keyword">ON</span> OrderDetails
+<span class="hljs-keyword">AFTER</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> (
+        <span class="hljs-keyword">SELECT</span> Orders.UserID, Courses.CourseID
+        <span class="hljs-keyword">FROM</span> inserted
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Orders
+        <span class="hljs-keyword">ON</span> Orders.OrderID = inserted.OrderID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> OrderCourses
+        <span class="hljs-keyword">ON</span> OrderCourses.OrderDetailID = inserted.OrderDetailID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Courses
+        <span class="hljs-keyword">ON</span> Courses.CourseID = OrderCourses.CourseID
+        <span class="hljs-keyword">WHERE</span> inserted.AmountPaid = inserted.AmountToPay <span class="hljs-keyword">OR</span> inserted.PostponementDate &gt; <span class="hljs-keyword">GETDATE</span>()
+        <span class="hljs-keyword">AND</span> <span class="hljs-keyword">DATEADD</span>(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">3</span>, <span class="hljs-keyword">GETDATE</span>()) &lt; Courses.CourseStartDate
+        <span class="hljs-keyword">AND</span> Orders.UserID <span class="hljs-keyword">IN</span> (
+            <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> StudentID <span class="hljs-keyword">FROM</span> StudentBoughtCourses
+            )
+       )
+    <span class="hljs-keyword">BEGIN</span>
+        RAISERROR(<span class="hljs-string">'Student already bought that course'</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> StudentBoughtCourses(StudentID, CourseID)
+        (<span class="hljs-keyword">SELECT</span> Orders.UserID <span class="hljs-keyword">as</span> StudentID, Courses.CourseID
+        <span class="hljs-keyword">FROM</span> inserted
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Orders
+        <span class="hljs-keyword">ON</span> Orders.OrderID = inserted.OrderID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> OrderCourses
+        <span class="hljs-keyword">ON</span> OrderCourses.OrderDetailID = inserted.OrderDetailID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Courses
+        <span class="hljs-keyword">ON</span> Courses.CourseID = OrderCourses.CourseID
+        <span class="hljs-keyword">WHERE</span> inserted.AmountPaid = inserted.AmountToPay <span class="hljs-keyword">OR</span> inserted.PostponementDate &gt; <span class="hljs-keyword">GETDATE</span>()
+        <span class="hljs-keyword">AND</span> <span class="hljs-keyword">DATEADD</span>(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">3</span>, <span class="hljs-keyword">GETDATE</span>()) &lt; Courses.CourseStartDate)
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="handlesessionpayment">HandleSessionPayment</h3>
+<p>Ten trigger obsługuje płatności za sesje studiów i dodaje studenta do listy zakupionych sesji, jeśli płatność jest pełna lub odroczona.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> HandleSessionPayment
+<span class="hljs-keyword">ON</span> OrderDetails
+<span class="hljs-keyword">AFTER</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> (
+        <span class="hljs-keyword">SELECT</span> Orders.UserID, StudiesSessions.SessionID
+        <span class="hljs-keyword">FROM</span> inserted
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Orders
+        <span class="hljs-keyword">ON</span> Orders.OrderID = inserted.OrderID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> OrderSessions
+        <span class="hljs-keyword">ON</span> OrderSessions.OrderDetailID = inserted.OrderDetailID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Courses
+        <span class="hljs-keyword">ON</span> Courses.CourseID = OrderSessions.SessionID
+        <span class="hljs-keyword">WHERE</span> inserted.AmountPaid = inserted.AmountToPay <span class="hljs-keyword">OR</span> inserted.PostponementDate &gt; <span class="hljs-keyword">GETDATE</span>()
+        <span class="hljs-keyword">AND</span> <span class="hljs-keyword">DATEADD</span>(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">3</span>, <span class="hljs-keyword">GETDATE</span>()) &lt; StudiesSessions.SessionStartDay
+        <span class="hljs-keyword">AND</span> Orders.UserID <span class="hljs-keyword">IN</span> (
+            <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> StudentID <span class="hljs-keyword">FROM</span> StudentBoughtSessions
+            )
+       )
+    <span class="hljs-keyword">BEGIN</span>
+        RAISERROR(<span class="hljs-string">'Student already bought that session'</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> StudentBoughtSessions(StudentID, SessionID)
+        (<span class="hljs-keyword">SELECT</span> Orders.UserID <span class="hljs-keyword">as</span> StudentID, Courses.CourseID
+        <span class="hljs-keyword">FROM</span> inserted
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Orders
+        <span class="hljs-keyword">ON</span> Orders.OrderID = inserted.OrderID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> OrderSessions
+        <span class="hljs-keyword">ON</span> OrderSessions.OrderDetailID = inserted.OrderDetailID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> StudiesSessions
+        <span class="hljs-keyword">ON</span> StudiesSessions.SessionID = OrderSessions.SessionID
+        <span class="hljs-keyword">WHERE</span> inserted.AmountPaid = inserted.AmountToPay <span class="hljs-keyword">OR</span> inserted.PostponementDate &gt; <span class="hljs-keyword">GETDATE</span>()
+        <span class="hljs-keyword">AND</span> <span class="hljs-keyword">DATEADD</span>(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">3</span>, <span class="hljs-keyword">GETDATE</span>()) &lt; StudiesSessions.SessionStartDate)
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="handlestudiespayment">HandleStudiesPayment</h3>
+<p>Ten trigger obsługuje płatności za studia i dodaje studenta do listy zakupionych studiów, jeśli płatność jest pełna lub odroczona.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> HandleStudiesPayment
+<span class="hljs-keyword">ON</span> OrderDetails
+<span class="hljs-keyword">AFTER</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> (
+        <span class="hljs-keyword">SELECT</span> Orders.UserID, Studies.StudiesID
+        <span class="hljs-keyword">FROM</span> inserted
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Orders
+        <span class="hljs-keyword">ON</span> Orders.OrderID = inserted.OrderID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> OrderStudies
+        <span class="hljs-keyword">ON</span> OrderStudies.OrderDetailID = inserted.OrderDetailID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Studies
+        <span class="hljs-keyword">ON</span> Studies.StudiesID = OrderStudies.StudiesID
+        <span class="hljs-keyword">WHERE</span> inserted.AmountPaid = inserted.AmountToPay <span class="hljs-keyword">OR</span> inserted.PostponementDate &gt; <span class="hljs-keyword">GETDATE</span>()
+        <span class="hljs-keyword">AND</span> <span class="hljs-keyword">DATEADD</span>(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">3</span>, Studies.StudiesStartDate) &lt; <span class="hljs-keyword">GETDATE</span>()
+        <span class="hljs-keyword">AND</span> Orders.UserID <span class="hljs-keyword">IN</span> (
+            <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> StudentID <span class="hljs-keyword">FROM</span> StudentBoughtSessions
+            )
+       )
+    <span class="hljs-keyword">BEGIN</span>
+        RAISERROR(<span class="hljs-string">'Student already bought that studies'</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">END</span>
+    <span class="hljs-keyword">ELSE</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> StudentBoughtSessions(StudentID, StudiesID)
+        (<span class="hljs-keyword">SELECT</span> Orders.UserID <span class="hljs-keyword">as</span> StudentID, Studies.StudiesID
+        <span class="hljs-keyword">FROM</span> inserted
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Orders
+        <span class="hljs-keyword">ON</span> Orders.OrderID = inserted.OrderID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> OrderStudies
+        <span class="hljs-keyword">ON</span> OrderStudies.OrderDetailID = inserted.OrderDetailID
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Studies
+        <span class="hljs-keyword">ON</span> Studies.StudiesID = OrderStudies.StudiesID
+        <span class="hljs-keyword">WHERE</span> inserted.AmountPaid = inserted.AmountToPay <span class="hljs-keyword">OR</span> inserted.PostponementDate &gt; <span class="hljs-keyword">GETDATE</span>()
+        <span class="hljs-keyword">AND</span> StudiesStartDate &gt; <span class="hljs-keyword">GETDATE</span>())
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="verifyonlineparticipation">VerifyOnlineParticipation</h3>
+<p>Ten trigger automatyczne weryfikowanie udziału w wydarzeniach online</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> VerifyOnlineParticipation
+<span class="hljs-keyword">ON</span> StudentBoughtWebinars
+<span class="hljs-keyword">AFTER</span> <span class="hljs-keyword">INSERT</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">UPDATE</span> StudentBoughtWebinars
+    <span class="hljs-keyword">SET</span> WebinarAccessDateEnd = <span class="hljs-keyword">DATEADD</span>(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">30</span>, WebinarBoughtDate)
+    <span class="hljs-keyword">WHERE</span> WebinarAccessDateEnd <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h2 id="indeksy">Indeksy</h2>
+<h3 id="users">Users</h3>
+<p>Indeksuje po kolumnach <code>UserEmail</code> i <code>UserCity</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_users_email <span class="hljs-keyword">ON</span> <span class="hljs-keyword">Users</span>(UserEmail);
+<span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_users_city <span class="hljs-keyword">ON</span> <span class="hljs-keyword">Users</span>(UserCity);
+</div></code></pre>
+<h3 id="languages">Languages</h3>
+<p>Indeksuje po kolumnie <code>LanguageName</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_languages_name <span class="hljs-keyword">ON</span> Languages(LanguageName);
+</div></code></pre>
+<h3 id="currencyrates">CurrencyRates</h3>
+<p>Indeksuje po kolumnie <code>CurrencyName</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_currencyrates_name <span class="hljs-keyword">ON</span> CurrencyRates(CurrencyName);
+</div></code></pre>
+<h3 id="employeetypes">EmployeeTypes</h3>
+<p>Indeksuje po kolumnie <code>EmployeeTypeName</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_employeetypes_name <span class="hljs-keyword">ON</span> EmployeeTypes(EmployeeTypeName);
+</div></code></pre>
+<h3 id="employees">Employees</h3>
+<p>Indeksuje po kolumnach <code>UserID</code> i <code>EmployeeTypeID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_employees_userid <span class="hljs-keyword">ON</span> Employees(UserID);
+<span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_employees_employeetypeid <span class="hljs-keyword">ON</span> Employees(EmployeeTypeID);
+</div></code></pre>
+<h3 id="teachinglanguages">TeachingLanguages</h3>
+<p>Indeksuje po kolumnie <code>EmployeeID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_teachinglanguages_employeeid <span class="hljs-keyword">ON</span> TeachingLanguages(EmployeeID);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="students">Students</h3>
+<p>Indeksuje po kolumnie <code>UserID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_students_userid <span class="hljs-keyword">ON</span> Students(UserID);
+</div></code></pre>
+<h3 id="studyinglanguages">StudyingLanguages</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studyinglanguages_studentid <span class="hljs-keyword">ON</span> StudyingLanguages(StudentID);
+</div></code></pre>
+<h3 id="translatinglanguages">TranslatingLanguages</h3>
+<p>Indeksuje po kolumnie <code>EmployeeID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_translatinglanguages_employeeid <span class="hljs-keyword">ON</span> TranslatingLanguages(EmployeeID);
+</div></code></pre>
+<h3 id="webinars">Webinars</h3>
+<p>Indeksuje po kolumnie <code>WebinarLanguageID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_webinars_languageid <span class="hljs-keyword">ON</span> Webinars(WebinarLanguageID);
+</div></code></pre>
+<h3 id="studentboughtwebinars">StudentBoughtWebinars</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studentboughtwebinars_studentid <span class="hljs-keyword">ON</span> StudentBoughtWebinars(StudentID);
+</div></code></pre>
+<h3 id="cities">Cities</h3>
+<p>Indeksuje po kolumnie <code>CityName</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_cities_cityname <span class="hljs-keyword">ON</span> Cities(CityName);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="useravailablecities">UserAvailableCities</h3>
+<p>Indeksuje po kolumnie <code>UserID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_useravailablecities_userid <span class="hljs-keyword">ON</span> UserAvailableCities(UserID);
+</div></code></pre>
+<h3 id="courses">Courses</h3>
+<p>Indeksuje po kolumnie <code>CourseLanguageID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_courses_languageid <span class="hljs-keyword">ON</span> Courses(CourseLanguageID);
+</div></code></pre>
+<h3 id="studentboughtcourses">StudentBoughtCourses</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studentboughtcourses_studentid <span class="hljs-keyword">ON</span> StudentBoughtCourses(StudentID);
+</div></code></pre>
+<h3 id="coursemodulemeetingtypes">CourseModuleMeetingTypes</h3>
+<p>Indeksuje po kolumnie <code>MeetingTypeName</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_coursemodulemeetingtypes_name <span class="hljs-keyword">ON</span> CourseModuleMeetingTypes(MeetingTypeName);
+</div></code></pre>
+<h3 id="coursemodules">CourseModules</h3>
+<p>Indeksuje po kolumnie <code>CourseID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_coursemodules_courseid <span class="hljs-keyword">ON</span> CourseModules(CourseID);
+</div></code></pre>
+<h3 id="courselessonmeetingtypes">CourseLessonMeetingTypes</h3>
+<p>Indeksuje po kolumnie <code>MeetingTypeName</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_courselessonmeetingtypes_name <span class="hljs-keyword">ON</span> CourseLessonMeetingTypes(MeetingTypeName);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="courselessons">CourseLessons</h3>
+<p>Indeksuje po kolumnie <code>ModuleID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_courselessons_moduleid <span class="hljs-keyword">ON</span> CourseLessons(ModuleID);
+</div></code></pre>
+<h3 id="coursemodulespassed">CourseModulesPassed</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_coursemodulespassed_studentid <span class="hljs-keyword">ON</span> CourseModulesPassed(StudentID);
+</div></code></pre>
+<h3 id="courselessonspassed">CourseLessonsPassed</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_courselessonspassed_studentid <span class="hljs-keyword">ON</span> CourseLessonsPassed(StudentID);
+</div></code></pre>
+<h3 id="webinarspassed">WebinarsPassed</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_webinarspassed_studentid <span class="hljs-keyword">ON</span> WebinarsPassed(StudentID);
+</div></code></pre>
+<h3 id="orders">Orders</h3>
+<p>Indeksuje po kolumnie <code>UserID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> CLUSTERED <span class="hljs-keyword">INDEX</span> idx_orders_userid <span class="hljs-keyword">ON</span> Orders(UserID);
+</div></code></pre>
+<h3 id="orderdetails">OrderDetails</h3>
+<p>Indeksuje po kolumnie <code>OrderID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_orderdetails_orderid <span class="hljs-keyword">ON</span> OrderDetails(OrderID);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="orderwebinars">OrderWebinars</h3>
+<p>Indeksuje po kolumnie <code>OrderDetailID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_orderwebinars_orderdetailid <span class="hljs-keyword">ON</span> OrderWebinars(OrderDetailID);
+</div></code></pre>
+<h3 id="ordercourses">OrderCourses</h3>
+<p>Indeksuje po kolumnie <code>OrderDetailID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_ordercourses_orderdetailid <span class="hljs-keyword">ON</span> OrderCourses(OrderDetailID);
+</div></code></pre>
+<h3 id="studies">Studies</h3>
+<p>Indeksuje po kolumnie <code>StudiesName</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studies_name <span class="hljs-keyword">ON</span> Studies(StudiesName);
+</div></code></pre>
+<h3 id="syllabuses">Syllabuses</h3>
+<p>Indeksuje po kolumnie <code>StudiesID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_syllabuses_studiesid <span class="hljs-keyword">ON</span> Syllabuses(StudiesID);
+</div></code></pre>
+<h3 id="subjects">Subjects</h3>
+<p>Indeksuje po kolumnie <code>CoordinatorID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_subjects_coordinatorid <span class="hljs-keyword">ON</span> Subjects(CoordinatorID);
+</div></code></pre>
+<h3 id="studieslessonmeetingtypes">StudiesLessonMeetingTypes</h3>
+<p>Indeksuje po kolumnie <code>MeetingTypeName</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studieslessonmeetingtypes_name <span class="hljs-keyword">ON</span> StudiesLessonMeetingTypes(MeetingTypeName);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="studiessessions">StudiesSessions</h3>
+<p>Indeksuje po kolumnie <code>StudiesID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studiessessions_studiesid <span class="hljs-keyword">ON</span> StudiesSessions(StudiesID);
+</div></code></pre>
+<h3 id="studentlessons">StudentLessons</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studentlessons_studentid <span class="hljs-keyword">ON</span> StudentLessons(StudentID);
+</div></code></pre>
+<h3 id="studieslessonspassed">StudiesLessonsPassed</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studieslessonspassed_studentid <span class="hljs-keyword">ON</span> StudiesLessonsPassed(StudentID);
+</div></code></pre>
+<h3 id="studentstudiesgrades">StudentStudiesGrades</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studentstudiesgrades_studentid <span class="hljs-keyword">ON</span> StudentStudiesGrades(StudentID);
+</div></code></pre>
+<h3 id="studentboughtstudies">StudentBoughtStudies</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studentboughtstudies_studentid <span class="hljs-keyword">ON</span> StudentBoughtStudies(StudentID);
+</div></code></pre>
+<h3 id="studentboughtsessions">StudentBoughtSessions</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_studentboughtsessions_studentid <span class="hljs-keyword">ON</span> StudentBoughtSessions(StudentID);
+</div></code></pre>
+<div style="page-break-after: always;"></div>
+<h3 id="internshipmeetingtypes">InternshipMeetingTypes</h3>
+<p>Indeksuje po kolumnie <code>InternshipMeetingTypeName</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_internshipmeetingtypes_name <span class="hljs-keyword">ON</span> InternshipMeetingTypes(InternshipMeetingTypeName);
+</div></code></pre>
+<h3 id="internships">Internships</h3>
+<p>Indeksuje po kolumnie <code>StudiesID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_internships_studiesid <span class="hljs-keyword">ON</span> Internships(StudiesID);
+</div></code></pre>
+<h3 id="internshipmeetingspassed">InternshipMeetingsPassed</h3>
+<p>Indeksuje po kolumnie <code>StudentID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_internshipmeetingspassed_studentid <span class="hljs-keyword">ON</span> InternshipMeetingsPassed(StudentID);
+</div></code></pre>
+<h3 id="orderstudies">OrderStudies</h3>
+<p>Indeksuje po kolumnie <code>OrderDetailID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_orderstudies_orderdetailid <span class="hljs-keyword">ON</span> OrderStudies(OrderDetailID);
+</div></code></pre>
+<h3 id="ordersessions">OrderSessions</h3>
+<p>Indeksuje po kolumnie <code>OrderDetailID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_ordersessions_orderdetailid <span class="hljs-keyword">ON</span> OrderSessions(OrderDetailID);
+</div></code></pre>
+<h3 id="rodosigns">RODOSigns</h3>
+<p>Indeksuje po kolumnie <code>UserID</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_rodosigns_userid <span class="hljs-keyword">ON</span> RODOSigns(UserID);
+</div></code></pre>
+
+</body>
+</html>

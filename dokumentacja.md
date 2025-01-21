@@ -6,7 +6,7 @@
  - Szymon Żuk - 33%
 
 Grupa 10, wtorek 18:30
-<div style="page-break-after: always;"></div>
+
 
 ## Role
 
