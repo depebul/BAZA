@@ -125,3 +125,28 @@ def studies_lessons():
 def orders():
     cursor.execute("SELECT * FROM Orders;")
     return cursor.fetchall()
+
+
+def orderWebinars():
+    cursor.execute("SELECT * FROM OrderWebinars;")
+    return cursor.fetchall()
+
+
+def orderCourses():
+    cursor.execute("SELECT * FROM OrderCourses;")
+    return cursor.fetchall()
+
+
+def orderStudies():
+    cursor.execute("SELECT * FROM OrderStudies;")
+    return cursor.fetchall()
+
+
+def orderSessions():
+    cursor.execute("SELECT * FROM OrderSessions;")
+    return cursor.fetchall()
+
+
+def orderDetails():
+    cursor.execute("SELECT * FROM OrderDetails;")
+    return cursor.fetchall()

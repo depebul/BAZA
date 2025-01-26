@@ -1,3 +1,4 @@
+-- SQLBook: Code
 CREATE TRIGGER HandleSessionPayment
 ON OrderDetails
 AFTER INSERT, UPDATE
@@ -10,10 +11,10 @@ BEGIN
         ON Orders.OrderID = inserted.OrderID
         INNER JOIN OrderSessions
         ON OrderSessions.OrderDetailID = inserted.OrderDetailID
-        INNER JOIN Courses
-        ON Courses.CourseID = OrderSessions.SessionID
+        INNER JOIN StudiesSessions
+        ON StudiesSessions.SessionID = OrderSessions.SessionID
         WHERE inserted.AmountPaid = inserted.AmountToPay OR inserted.PostponementDate > GETDATE()
-        AND DATEADD(DAY, 3, GETDATE()) < StudiesSessions.SessionStartDay
+        AND DATEADD(DAY, 3, GETDATE()) < StudiesSessions.SessionStartDate
         AND Orders.UserID IN (
             SELECT DISTINCT StudentID FROM StudentBoughtSessions
             )
@@ -24,7 +25,7 @@ BEGIN
     ELSE
     BEGIN
         INSERT INTO StudentBoughtSessions(StudentID, SessionID)
-        (SELECT Orders.UserID as StudentID, Courses.CourseID
+        (SELECT Orders.UserID as StudentID, StudiesSessions.SessionID
         FROM inserted
         INNER JOIN Orders
         ON Orders.OrderID = inserted.OrderID

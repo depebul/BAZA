@@ -1,3 +1,4 @@
+-- SQLBook: Code
 CREATE TRIGGER HandleWebinarPayment
 ON OrderDetails
 AFTER INSERT, UPDATE

@@ -1,3 +1,4 @@
+-- SQLBook: Code
 CREATE TRIGGER HandleStudiesPayment
 ON OrderDetails
 AFTER INSERT, UPDATE
@@ -23,7 +24,7 @@ BEGIN
     END
     ELSE
     BEGIN
-        INSERT INTO StudentBoughtSessions(StudentID, StudiesID)
+        INSERT INTO StudentBoughtStudies(StudentID, StudiesID)
         (SELECT Orders.UserID as StudentID, Studies.StudiesID
         FROM inserted
         INNER JOIN Orders

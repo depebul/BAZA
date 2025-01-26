@@ -1,3 +1,4 @@
+-- SQLBook: Code
 CREATE TRIGGER HandleCoursePayment
 ON OrderDetails
 AFTER INSERT, UPDATE

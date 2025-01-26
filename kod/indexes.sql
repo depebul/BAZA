@@ -30,11 +30,7 @@ CREATE NONCLUSTERED INDEX idx_courses_languageid ON Courses(CourseLanguageID);
 
 CREATE NONCLUSTERED INDEX idx_studentboughtcourses_studentid ON StudentBoughtCourses(StudentID);
 
-CREATE NONCLUSTERED INDEX idx_coursemodulemeetingtypes_name ON CourseModuleMeetingTypes(MeetingTypeName);
-
 CREATE NONCLUSTERED INDEX idx_coursemodules_courseid ON CourseModules(CourseID);
-
-CREATE NONCLUSTERED INDEX idx_courselessonmeetingtypes_name ON CourseLessonMeetingTypes(MeetingTypeName);
 
 CREATE NONCLUSTERED INDEX idx_courselessons_moduleid ON CourseLessons(ModuleID);
 
@@ -58,11 +54,9 @@ CREATE NONCLUSTERED INDEX idx_syllabuses_studiesid ON Syllabuses(StudiesID);
 
 CREATE NONCLUSTERED INDEX idx_subjects_coordinatorid ON Subjects(CoordinatorID);
 
-CREATE NONCLUSTERED INDEX idx_studieslessonmeetingtypes_name ON StudiesLessonMeetingTypes(MeetingTypeName);
 
 CREATE NONCLUSTERED INDEX idx_studiessessions_studiesid ON StudiesSessions(StudiesID);
 
-CREATE NONCLUSTERED INDEX idx_studentlessons_studentid ON StudentLessons(StudentID);
 
 CREATE NONCLUSTERED INDEX idx_studieslessonspassed_studentid ON StudiesLessonsPassed(StudentID);
 
